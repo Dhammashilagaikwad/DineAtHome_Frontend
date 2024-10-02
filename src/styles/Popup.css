@@ -1,0 +1,163 @@
+/* src/components/Popup.css */
+
+/* Animation Styles */
+.popup-enter {
+  opacity: 0;
+}
+.popup-enter-active {
+  opacity: 1;
+  transition: opacity 300ms ease-in;
+}
+.popup-exit {
+  opacity: 1;
+}
+.popup-exit-active {
+  opacity: 0;
+  transition: opacity 300ms ease-in;
+}
+
+/* Popup Container */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; /* Ensures the overlay covers the full viewport */
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensures it appears above other content */
+  overflow: auto; /* Ensures scrolling if the content overflows */
+}
+
+/* Popup Content Box */
+.popup-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%; /* Adjusted width for better mobile view */
+  max-width: 500px; /* Maximum width to avoid overly wide popups on larger screens */
+  max-height: 80%; /* Sets a maximum height for the content */
+  overflow-y: auto; /* Adds scroll if content exceeds max-height */
+  position: relative;
+}
+
+/* Close Button */
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Heading and List Styles */
+.popup-h2 {
+  margin-top: 0;
+  font-size: 1.5rem; /* Responsive font size */
+}
+
+.home-cooked ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.home-cooked li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.home-cooked img {
+  width: 100px;
+  height: 80px;
+  margin-right: 10px;
+}
+
+.fresh-ingredients ul{
+  list-style-type: none;
+  padding: 0;
+}
+.fresh-ingredients li{
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.fresh-ingredients img{
+  width: 100px;
+  height: 80px;
+  margin-right: 10px;
+}
+
+/* Profile Cards Container */
+.profile-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Space between cards */
+  justify-content: center;
+}
+
+/* Individual Profile Card */
+.profile-card {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  width: 200px; /* Fixed width for profile cards */
+  text-align: center;
+}
+
+.profile-card img {
+  width: 100%; /* Makes the image responsive */
+  height: auto; /* Keeps the aspect ratio */
+  border-radius: 50%; /* Circular image */
+}
+
+.profile-card h3 {
+  margin: 10px 0;
+  font-size: 1.2rem; /* Responsive font size */
+}
+
+.profile-card p {
+  margin: 5px 0;
+  color: #555; /* Slightly lighter text color */
+}
+
+/* Mobile Styles */
+@media (max-width: 790px) {
+  .popup-content {
+    width: 95%; /* Slightly larger width for small screens */
+    max-width: 90%; /* Avoids too wide popups on very small screens */
+    padding: 15px; /* Reduces padding for smaller screens */
+  }
+  
+  .close-button {
+    font-size: 20px; /* Smaller close button for mobile */
+    top: 5px;
+    right: 5px;
+  }
+  
+  .popup-h2 {
+    font-size: 1.25rem; /* Adjust heading font size for smaller screens */
+  }
+
+  .profile-card img {
+    width: 16px; /* Smaller icons for mobile */
+    height: 16px;
+  }
+  .profile-card {
+    width: 100%; /* Full width for profile cards on small screens */
+  }
+  
+  .profile-card img {
+    width: 80px; /* Adjust image size for mobile */
+    height: 80px; /* Ensure height matches width for circular images */
+  }
+  
+  .profile-card h3 {
+    font-size: 1rem; /* Adjust font size for mobile */
+  }
+}
