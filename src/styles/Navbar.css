@@ -1,0 +1,513 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400..900&family=Inria+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f9f9f9;
+  padding: 10px 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  word-spacing: 0px;
+  align-items: center;
+  flex-wrap: wrap;
+  cursor: pointer;
+}
+.logo h3 {
+  font-size: 38px;
+  font-weight: bolder;
+  color: #218838;
+  font-family: "Dancing Script";
+}
+#Mumbai {
+  font-family: "Nunito";
+  color: black;
+  font-size: 0.9rem;
+  padding-left: 5px;
+  /* padding-top: 20px; */
+  margin: 0;
+}
+/* Navigation Links */
+.nav-links {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+.nav-links li {
+  margin: 0 30px;
+}
+.nav-links a {
+  text-decoration: none;
+  color: #000;
+  font-family: "Nunito";
+  font-weight: bold;
+  font-size: 18px;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: green;
+  text-shadow: 1px 1px 1px grey;
+
+  /* Light blue on hover */
+}
+
+/* Profile */
+/* .profile {
+  display: flex;
+  align-items: center;
+}
+
+.profile-img {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+} */
+
+/* Hamburger Menu Styling */
+.menu-toggle {
+  display: none;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.dropdown {
+  display: inline-block;
+  position: relative;
+}
+
+.dropdown-options {
+  display: none;
+  position: absolute;
+  background-color: #218837;
+  color: black;
+  list-style-type: none;
+  padding: 7px;
+  margin: 3px;
+  font-family: "Nunito";
+  font-size: 13px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.3);
+  width: 145px;
+  z-index: 1000;
+  /* Ensure dropdown is above other content */
+}
+
+.dropdown-options a {
+  display: block;
+  padding: 5px;
+  text-decoration: none;
+  color: black;
+}
+
+.dropdown-options a:hover {
+  background-color: #218837;
+  color: white;
+}
+
+.dropdown.show .dropdown-options {
+  display: block;
+}
+
+#navs #joinus {
+  /* color: black; */
+  padding: 5px;
+}
+/* Desktop Styles */
+.icons {
+  display: flex;
+  justify-content: space-around;
+  padding-left: 50px;
+  list-style: none;
+  font-size: 10px;
+}
+
+/* If needed, adjust the spacing further with margins */
+.icons li {
+  padding: 0 0px;
+  margin: 0 5px; /* Adjust as needed */
+}
+
+/** About us dropdown **/
+.aboutdropdown{
+  position: relative;
+  display: inline-block;
+}
+.aboutdropdown .aboutdropdown-options{
+  display: none;
+  position: absolute;
+  background-color: #218837;
+  color: black;
+  list-style-type: none;
+  padding: 7px;
+  margin: 3px;
+  font-family: "Nunito";
+  font-size: 13px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.3);
+  width: 120px;
+  z-index: 1000;
+}
+.aboutdropdown .aboutdropdown-options a{
+  display: block;
+  padding: 5px;
+  text-decoration: none;
+  color: black;
+}
+.aboutdropdown .aboutdropdown-options a:hover{
+  text-shadow: 1px 1px 1px white;
+  color: white;
+}
+.aboutdropdown.show .aboutdropdown-options{
+  display: block;
+}
+
+/* Language Dropdown */
+.language-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.language-dropdown .dropdown-options {
+  display: none;
+  position: absolute;
+  background-color: #218837;
+  color: black;
+  list-style-type: none;
+  padding: 7px;
+  margin: 3px;
+  font-family: "Nunito";
+  font-size: 13px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.3);
+  width: 90px;
+  z-index: 1000;
+}
+
+.language-dropdown .dropdown-options a {
+  display: block;
+  padding: 5px;
+  text-decoration: none;
+  color: black;
+}
+
+.language-dropdown .dropdown-options a:hover {
+  text-shadow: 1px 1px 1px white;
+  color: white;
+}
+
+.language-dropdown.show .dropdown-options {
+  display: block;
+}
+
+#navs-icons {
+  color: #218838;
+  padding-top: 0px;
+  padding: 0;
+  font-size: 17px;
+}
+
+#languageIcon {
+  color: #218838;
+  cursor: pointer;
+  /* padding-top:5px; */
+  /* padding-right: 10px; */
+  /* padding-left: 10px; */
+  font-size: 17px;
+}
+.howorder {
+  font-size: 17px;
+  border-radius: 10px;
+  padding: 5px;
+  margin: 0;
+  background-color: #f8f8f8;
+  color: #218837;
+  border: 1px solid white;
+  box-shadow: 1px 1px 5px grey;
+}
+.howorder:hover {
+  background-color: #218837;
+  color: white;
+  border: 1px solid transparent;
+}
+.slide-panel {
+  position: fixed; /* Stay fixed in the viewport */
+  top: 0;
+  right: 0;
+  width: 350px;
+  height: 100vh;
+  background-color: #f4f4f4;
+  border-left: 2px solid #ddd;
+  box-shadow: 4px 4px 4px black;
+  transform: translateX(100%); /* Start hidden */
+  transition: transform 0.3s ease;
+  padding: 20px;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  z-index: 1001;
+}
+
+.slide-panel.visible {
+  transform: translateX(0); /* Slide in */
+}
+
+.slide-panel-button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: none;
+  background-color: #d2af56;
+  color: black;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.slide-panel-button:hover {
+  background-color: black;
+  color: #d2af56;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-container input {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.form-container button {
+  padding: 10px;
+  margin: 5px;
+  border: none;
+  background-color: #28a745;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.form-container button:hover {
+  background-color: #218838;
+}
+.city-popup {
+  position: absolute;
+  top: 60px; /* Adjust according to your navbar height */
+  left: 20px;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+  width: 250px;
+}
+
+.city-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+}
+
+/* Scrollable City List */
+.city-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  max-height: 200px; /* Set a fixed height for the list */
+  overflow-y: auto; /* Enable vertical scroll */
+  border: 1px solid #ddd;
+}
+
+.city-list li {
+  padding: 8px 0;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+
+.city-list li:hover {
+  background-color: #f0f0f0;
+}
+
+/* Add scrollbar styles if desired */
+.city-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.city-list::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+
+.city-list::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+.mumbaiNearminilocation{
+  font-size: 1rem;
+  padding:0 5px;
+}
+
+/* Mobile Styles */
+@media (max-width: 850px) {
+  .navbar {
+    width: 100%;
+  }
+  .logo {
+    /* background-color: red; */
+    width: 10rem;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .logo h3 {
+    font-size: 20px;
+  }
+  #Mumbai {
+    font-size: 10px;
+    margin: 0;
+  }
+  .howorder {
+    font-size: 10px;
+    padding: 5px;
+    width: 100%;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 60px;
+    right: 0;
+    background-color: #f9f9f9;
+    width: 60%;
+    height: calc(100vh - 60px);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    display: none;
+    z-index: 1000;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+  .nav-links.open {
+    display: flex;
+  }
+  .nav-links li {
+    margin: 10px 0;
+  }
+  .nav-links a {
+    font-size: 12px;
+  }
+  .menu-toggle {
+    display: block;
+  }
+  .dropdown {
+    display: inline-block;
+    position: relative;
+  }
+
+  .dropdown-options a {
+    display: block;
+    padding: 5px;
+    text-decoration: none;
+    color: black;
+  }
+
+  .dropdown-options a:hover {
+    background-color: #218837;
+    color: white;
+  }
+  .dropdown-options {
+    display: none; /* Default hidden */
+  }
+  .dropdown.show .dropdown-options {
+    display: block; /* Show when the dropdown is toggled */
+    z-index: 1500;
+  }
+
+  #navs #joinus {
+    color: black;
+    padding: 5px;
+  }
+  .icons {
+    position: relative;
+    margin: 0;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    font-size: 20px;
+  }
+  #navs-icons {
+    font-size: 25px;
+  }
+  #languageIcon {
+    font-size: 20px;
+    padding: 5px;
+  }
+  .language-dropdown .dropdown-options a:hover {
+    text-shadow: 1px 1px 1px white;
+    color: white;
+  }
+
+  .slide-panel {
+    position: fixed; /* Stay fixed in the viewport */
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100vh;
+    background-color: #f4f4f4;
+    border-left: 2px solid #ddd;
+    box-shadow: 4px 4px 4px black;
+    transform: translateX(100%); /* Start hidden */
+    transition: transform 0.3s ease;
+    padding: 20px;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+  }
+
+  .mumbaiNearminilocation{
+    font-size: 1rem;
+    padding: 1px 1rem 1px .5rem;
+    /* background-color: red; */
+  }
+}
+
+/* Hamburger Icon & Close Icon */
+.menu-toggle .fa-bars,
+.menu-toggle .fa-times {
+  color: #333;
+  font-size: 20px;
+}
+
+.minilocation {
+  color: black;
+  padding: 0 0px 0 10px;
+  font-size: 15px;
+}
+
+.mumbaiLocation{
+  display: flex;
+}

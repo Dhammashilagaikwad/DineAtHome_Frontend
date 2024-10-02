@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400..900&family=Inria+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+
+
+
+.ReqCont{
+    background-color: rgb(255, 255, 255);
+    height: auto;
+    display: flex;
+    align-items: center;
+    position: relative;
+    flex-direction: column;
+    top: 5rem;
+}
+
+.mainBoxR{
+    display: flex;
+    background-color: rgb(255, 255, 255);
+    flex-direction: column;
+    justify-content: center;
+    height: 8rem;
+    width: 95%;
+    border: 2px solid black;
+    border-radius: 1rem;
+    margin: 2rem 0 2rem 0;
+    box-shadow: 5px 5px 10px gray;
+}
+
+
+
+/* .boxR{
+    position: absolute;
+    top: 5rem;
+    left: 1rem;
+    width: 90%;
+    border: 1px solid black;
+} */
+
+
+
+
+.co{
+    clear: top;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.customerName{
+    font-size: 1.2rem;
+    top: 2.5rem;
+    left: 3rem;
+}
+
+
+.item-price{
+    font-weight: 900;
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    justify-content: end;
+}

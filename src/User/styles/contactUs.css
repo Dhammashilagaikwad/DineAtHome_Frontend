@@ -1,0 +1,173 @@
+/* General styles */
+.contactUs {
+    width: 100%;
+    display: flex;
+    top: 0rem;
+    flex-direction: column;
+    align-items: center;
+}
+/* Styles for the ContactUs component */
+.contactUs-ourinfo_row {
+    width: 100%;
+    height: 300px;
+    position: relative;
+}
+
+.contactUs-ourinfo_row .image_text {
+    width: 100%;
+    height:100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.contactUs-ourinfo_row .imgFood{
+    width: 100%;
+    height:100%;
+    object-fit: cover;
+}
+
+.contactUs-ourinfo_row .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Black with 50% opacity */
+    z-index: 1;
+}
+
+.contactUs-ourinfo_row .text_overlay {
+    position: absolute;
+    z-index: 2;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    font-family: 'Cinzel', serif;
+}
+.contactForm{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* Form styles */
+.contact-form-container{
+    max-width: 600px;
+    /* margin-left: 650px;
+    margin-top: -30%; */
+    bottom: 20%;
+    padding: 20px;
+    font-family: 'Nunito', sans-serif;
+}
+
+.contact-form-container .form-heading {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.contact-form-container .form {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-form-container .form-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1px;
+}
+
+.contact-form-container .input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: #E7E7E7;
+}
+
+.contact-form-container .halfInput {
+    width: 48%;
+    margin-right: 5px;
+}
+
+.contact-form-container .textarea {
+    width: 100%;
+    padding: 10px;
+    height: 100px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    resize: vertical;
+    background-color: #E7E7E7;
+}
+
+.contact-form-container .submitButton {
+    background-color: white;
+    border: 2px solid black;
+    color: black;
+    padding: 10px 20px;
+    margin-top: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    align-self: flex-end;
+}
+.chef{
+    width: 500px;
+    padding: 10px;
+    left: 0;
+    height:500px;
+}
+
+/* MEDIA QUERIES for MOBILE VIEW */
+@media (max-width: 790px) {
+    .contactUs {
+        height: auto; /* Adjust height for mobile */
+    }
+    .contactUs-ourinfo_row{
+        height:250px
+    }
+    .form-container {
+        margin: 0;
+        padding: 10px;
+    }
+
+    .contactUs-ourinfo_row .imgFood {
+        height: 100%; /* Example adjustment for smaller screens */
+    }
+
+    .contactUs-ourinfo_row .text_overlay {
+        font-size: 1.5rem; /* Smaller text for mobile */
+    }
+    .chef{
+        width: 300px;
+        height: 300px;
+    }
+    .contact-form-container{
+        flex-direction: column;
+        width: 100%;
+        padding: 10px;
+    }
+    .contact-form-container .form{
+        width: 100%; /* Full width for mobile view */
+        padding-left: 0; 
+    }
+    .contact-form-container .form-row {
+        flex-direction: column;
+    }
+    .contact-form-container .input{
+        width: 100%; /* Full width inputs for mobile */
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+    .contactForm{
+        flex-direction: column;
+    }
+}
