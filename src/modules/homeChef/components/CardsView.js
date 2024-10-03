@@ -2,6 +2,7 @@ import React from "react";
 import Card from "./Card";
 
 const CardsView = () => {
+  // Get data from API and remove below constants
   const cardInfo = [
     {
       id: 123,
