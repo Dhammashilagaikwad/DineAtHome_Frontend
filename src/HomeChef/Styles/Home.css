@@ -1,0 +1,86 @@
+.bgPicForHomeinitForMobile {
+  display: none;
+}
+
+.bgPicForHomeinit {
+  background-size: cover;
+  width: 100%;
+  position: fixed;
+  background: rgba(255, 255, 255, 0.2);
+  /* backdrop-filter: blur(5px);  */
+  filter: blur(2px);
+}
+
+.addItemBtBOx {
+  display: flex;
+  justify-content: end;
+  /* background-color: rgb(229, 20, 20); */
+  padding: 2rem;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Space between each card */
+  justify-content: center; /* Align items to the left */
+  padding: 1rem; /* Space around the entire container */
+}
+
+.addItemBt {
+  background-color: rgb(247, 227, 111);
+  /* background-color: transparent; */
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  position: fixed;
+  top: 6rem;
+  z-index: 800;
+}
+
+/* .addItemBt:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(151, 146, 146, 0.5); 
+} */
+
+/* 
+@media (max-width: 1382px){
+  .bgPicForHomeinit{
+  }
+} */
+
+@media (max-width: 1520px) and (min-width: 1272px) {
+  .addItemBt {
+    top: 5rem;
+  }
+}
+
+@media (max-width: 1106px) and (min-width: 846px) {
+  .addItemBt {
+    top: 5rem;
+  }
+}
+
+@media (max-width: 800px) {
+  .addItemBt {
+    top: 5rem;
+  }
+}
+
+@media (max-width: 1380px) {
+  .bgPicForHomeinit {
+    display: none;
+  }
+
+  .bgPicForHomeinitForMobile {
+    /* top: 12rem; */
+    display: block;
+    width: 100%;
+    background-size: cover;
+    filter: blur(2px);
+
+    position: fixed;
+  }
+}

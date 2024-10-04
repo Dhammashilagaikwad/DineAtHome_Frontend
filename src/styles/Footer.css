@@ -1,0 +1,130 @@
+/*****************************************Footer*********************************/
+.footer {
+    width: 100%;
+    height: auto; /* Adjust height for mobile view */
+    background-color: white;
+    display: flex;
+    flex-direction:row; /* Stack content vertically on mobile */
+    align-items: center; 
+}
+
+.footer-content {
+    width: 100%;
+    display: flex;
+    flex-direction: row; /* Stack items vertically */
+    justify-content: space-evenly; /* Center content vertically */
+    align-items: center; /* Center items horizontally */
+    padding: 20px 0; /* Add padding for mobile */
+}
+
+.footer-left {
+    width: auto;
+    height: 100px;
+    text-align: center;
+    display: flex;
+    justify-content: flex-start; /* Center align for mobile */
+}
+
+.footer-left #logo1 {
+    height: 80px; /* Adjust logo size for mobile */
+    width: auto;
+    margin-bottom: 20px; 
+    font-family: 'Dancing Script';
+    color: #04550d;
+    padding: 20px;
+}
+
+.footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+    display: flex;
+    flex-direction: row; /* Stack list items vertically */
+    align-items: center; /* Center align list items */
+}
+
+#points2 {
+    color: #04550d;
+    font-family: 'Nunito';
+    font-size: 16px; /* Slightly smaller font size for mobile */
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    padding: 10px 0; /* Add padding for mobile spacing */
+    margin: 5px 0;
+}
+
+#points2 a {
+    color: #04550d;
+    font-family: 'Nunito';
+    text-decoration: none;
+    flex-direction: row;
+    font-size: 16px;
+}
+
+#smallicons1 {
+    width: 25px; /* Reduce icon size for mobile */
+    height: 25px;
+    padding: 5px;
+    margin: 5px;
+}
+
+#lastline {
+    font-family: 'Nunito';
+    font-size: 14px; /* Slightly smaller text for mobile */
+    color: #04550d;
+    margin-top: 20px; /* Adjust margin for better spacing */
+    text-align: center; 
+    padding: 20px;/* Center align for mobile */
+}
+
+#lastline span {
+    font-family: 'Nunito';
+    font-size: 14px;
+    color: #04550d;
+}
+
+@media (max-width: 790px) {
+    .footer {
+        height: auto;
+        flex-direction: column;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+        padding: 5px;
+        gap: 0;
+    }
+
+    #logo1{
+        padding-bottom: 0;
+        margin-bottom: 0;
+    }
+
+    .footer-left {
+        width: auto;
+        height: auto;
+        text-align: center;
+    }
+
+    .footer ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #points2 {
+        font-size: 10px;
+        padding: 0px 0;
+    }
+
+    #smallicons1 {
+        width: 20px;
+        height: 20px;
+    }
+
+    #lastline {
+        font-size: 12px;
+        margin-top: 0px;
+    }
+}

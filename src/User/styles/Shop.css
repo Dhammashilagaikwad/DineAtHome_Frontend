@@ -1,0 +1,134 @@
+/* General styles */
+.shop-container {
+    width: 100%;
+    /* height: 140vh; */
+    position: relative;
+}
+
+.shop-row {
+    width: 100%;
+    height: 300px;
+    position: relative;
+}
+
+.shop-row .imagee-text {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white; /* Set text color */
+}
+
+.imagee-text .imgFood {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.overlayy {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Black color with 50% opacity */
+    z-index: 1; /* Position overlay on top of the image */
+}
+
+.text-overlayy {
+    position: absolute;
+    z-index: 2; /* Position text above the overlay */
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    font-family: 'Cinzel';
+}
+
+.content-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.sidebar {
+    width: 20%;
+    padding: 30px;
+    margin: 0;
+}
+
+.sort-button {
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 5px;
+    margin-top: 10px;
+}
+
+.product-list {
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+}
+
+.product-list .card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    width: 200px;
+    text-align: center;
+}
+
+.card-image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+
+/* Mobile specific styles */
+@media (max-width: 790px) {
+    .shop-container{
+        height: auto;
+        width: 100%;
+    }
+    .shop-row{
+        height:250px;
+    }
+    /* .shop-row .imagee-text img{
+        /* width: 100%; 
+        height:auto;
+        background-color: rgba(0, 0, 0, 0.5);  
+    } */
+    /* .text-overlayy{
+        font-size: 1rem;
+    } */
+    .content-wrapper {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .sort-button {
+        display: none;
+    }
+
+    .sort-dropdown {
+        width: 100%;
+        padding: 5px;
+        margin-top: 10px;
+    }
+
+    .product-list {
+        width: 100%;
+        justify-content: center;
+    }
+}
