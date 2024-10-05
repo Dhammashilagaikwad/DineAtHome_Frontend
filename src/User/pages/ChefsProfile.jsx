@@ -4,7 +4,7 @@ import DatePicker from "react-datepicker";
 import "../styles/ChefProfile.css";
 import "react-datepicker/dist/react-datepicker.css";
 import AfterLoginNavbar from "../components/AfterLoginNavbar";
-import axios from "axios";
+import axiosInstance from "../../utils/axiosService";
 import {jwtDecode} from 'jwt-decode'; // Correct import
 import { useNavigate } from 'react-router-dom';
 
@@ -37,7 +37,7 @@ function UserChefProfile() {
   useEffect(() => {
     const fetchPreOrders = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/preOrderRoutes/get-preOrder`);
+        const response = await axiosInstance.get(`/preOrderRoutes/get-preOrder`);
         setPreOrders(response.data);
       } catch (error) {
         console.error("Error fetching pre-orders:", error);
@@ -50,11 +50,11 @@ function UserChefProfile() {
   useEffect(() => {
     const fetchChefData = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/api/chefs/${id}`);
+        const response = await axiosInstance.get(`/api/chefs/${id}`);
         setChefData(response.data);
 
         // Use the chef ID dynamically in the URL
-        const menuResponse = await axios.get(`http://localhost:4000/addItem/getitembychefid/${id}`);
+        const menuResponse = await axiosInstance.get(`/addItem/getitembychefid/${id}`);
         setMenuItems(menuResponse.data);
       } catch (error) {
         console.error("Error fetching chef data:", error);
@@ -96,7 +96,7 @@ function UserChefProfile() {
     e.preventDefault();
   
     try {
-      await axios.post(`http://localhost:4000/preOrderRoutes/preOrder`, {
+      await axiosInstance.post(`/preOrder/add-preOrder`, {
         ...customizedOrder,
         // priceRange: {
         //   minPrice: parseFloat(customizedOrder.priceRange.minPrice),
@@ -121,7 +121,7 @@ function UserChefProfile() {
 
   const updatePreOrder = async (id, updatedData) => {
     try {
-      const response = await axios.put(`http://localhost:4000/preOrderRoutes/edit-preOrder/${id}`, updatedData);
+      const response = await axiosInstance.put(`/preOrderRoutes/edit-preOrder/${id}`, updatedData);
       alert("Pre-order updated successfully!");
       // Update local state as needed
     } catch (error) {
@@ -131,7 +131,7 @@ function UserChefProfile() {
 
   const deletePreOrder = async (id) => {
     try {
-      await axios.delete(`http://localhost:4000/preOrderRoutes/delete-preOrder/${id}`);
+      await axiosInstance.delete(`/preOrderRoutes/delete-preOrder/${id}`);
       alert("Pre-order deleted successfully!");
       // Update local state as needed
     } catch (error) {
@@ -172,7 +172,7 @@ const addToMenuCart = async (itemId) => {
       return;
     }
 
-    const response = await axios.post('http://localhost:4000/api/menuCart/addToMenuCart', { itemId, userId },
+    const response = await axiosInstance.post('/api/menuCart/addToMenuCart', { itemId, userId },
       { headers: { Authorization: `Bearer ${token}` } }  // Pass the token here
 
     );
@@ -247,7 +247,7 @@ const addToMenuCart = async (itemId) => {
           menuItems.map((item) => (
             <div key={item._id} style={styles.menuItem}>
               {item.foodPhoto ? (
-                <img src={`http://localhost:4000/${item.foodPhoto}`} alt={item.foodName} style={styles.image} />
+                <img src={`/${item.foodPhoto}`} alt={item.foodName} style={styles.image} />
               ) : (
                 <div style={styles.imagePlaceholder}>No Image Available</div>
               )}
