@@ -7,6 +7,9 @@ import AfterLoginNavbar from "../components/AfterLoginNavbar";
 import axios from "axios";
 
 function ChefsNearYou() {
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top when the page is loaded
+}, []);
   const navigate = useNavigate();
   const [chefs, setChefs] = useState([]);
   const [loading, setLoading] = useState(true);

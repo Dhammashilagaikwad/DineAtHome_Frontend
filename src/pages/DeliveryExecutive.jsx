@@ -2,8 +2,12 @@ import food from '../images/food11.jpg';
 import deliver from '../images/delivery-boy-riding-scooter.jpg';
 import '../styles/DeliveryExecutive.css';
 import DeliverForm from '../components/DeliveryForm';
+import { useEffect } from 'react';
 
 function DeliveryExecutive() {
+    useEffect(() => {
+        window.scrollTo(0, 0); // Scroll to the top when the page is loaded
+      }, []);
     return (
         <>
             <div className="deliver-container">

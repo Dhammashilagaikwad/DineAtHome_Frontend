@@ -1,0 +1,147 @@
+.payment-containerBox{
+    width: 100%;
+    /* background-color: red; */
+}
+
+.payment-container {
+    font-family: Arial, sans-serif;
+    width: 70%;
+    background-color: #eee;
+    margin: auto;
+    padding: 20px;
+  }
+  
+  .payment-method {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  .payment-method h2 {
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .add-button {
+    display: block;
+    background-color: #ff4500;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .add-button:hover {
+    background-color: #e63900;
+  }
+  
+  .payment-method p {
+    font-size: 14px;
+    color: #666;
+    padding: 1rem 0 0 0 ;
+    margin-bottom: 0;
+  }
+  
+  .more-options {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+  }
+  
+  .more-options h3 {
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .option {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    /* background-color: #000000; */
+  }
+
+
+
+  
+  .option:last-child {
+    border-bottom: none;
+
+  }
+
+  
+  .icon {
+    font-size: 24px;
+    margin-right: 10px;
+  }
+  
+  .description {
+    color: #999;
+    font-size: 14px;
+    padding: 0 0 0 2rem;
+    /* background-color: red; */
+    text-align: justify;
+  }
+  
+
+  input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .h4ForCard {
+    margin-top: 20px;
+  }
+  
+  .shown ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .shown li {
+    margin: 5px 0;
+    padding: 5px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+
+  .Scannerr{
+    width: 50%;
+    object-fit: cover;
+  }
+  
+
+  
+  @media (max-width:700px){
+    .payment-container {
+      width: 100%;
+    }
+
+    .option {
+      /* flex-direction: column; */
+      justify-content: space-between;
+      padding: 10px 0;
+      /* text-align: justify; */
+
+
+    }
+
+    .optionIcon{
+      display: flex;
+      flex-direction: column;
+
+    }
+
+
+  }

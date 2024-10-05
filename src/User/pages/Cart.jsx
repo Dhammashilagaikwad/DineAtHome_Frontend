@@ -3,8 +3,12 @@ import CartC from '../components/CartC';
 import AfterLoginNavbar from '../components/AfterLoginNavbar';
 import axios from 'axios';
 import '../styles/Cart.css';
+import { Link } from 'react-router-dom';
 
 export default function UserCart() {
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top when the page is loaded
+}, []);
   const [cartItems, setCartItems] = useState([]);
   const [tip, setTip] = useState(20);
   const today = new Date();
@@ -266,6 +270,13 @@ export default function UserCart() {
       <div className="totalAmountForCart">
         <h3>Total Amount: ₹ {totalAmount.toFixed(2)}</h3>
       </div>
+          <div className="placeOrderForCartBox">
+
+            <Link to="/PaymentOptions">
+              <button className='placeOrderForCart'>Place Order</button>
+            </Link>
+
+          </div>
     </>
   );
 }

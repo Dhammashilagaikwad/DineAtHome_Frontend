@@ -1,0 +1,91 @@
+.secondPg {
+  /* background-color: red; */
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  /* justify-content: center; */
+  align-items: center;
+  padding: 2rem;
+}
+
+.secondPgP {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  /* justify-content: center; */
+  align-items: center;
+  align-content: center;
+}
+
+.secondPgP p {
+  margin: 0;
+}
+
+.secondPgLogo {
+  display: flex;
+  justify-content: space-between;
+  width: 95%;
+  align-items: center;
+  padding: 3rem 0;
+  /* background-color: rgb(0, 255, 4); */
+}
+
+.secondPgLogoOne,
+.secondPgLogoTwo,
+.secondPgLogoThree,
+.secondPgLogoFour {
+  width: 25%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  /* background-color: black; */
+}
+
+.secondPgLogoOneImage {
+  width: 80%;
+  /* height: 200px; */
+  background-size: cover;
+  /* background-color: yellow; */
+}
+.secondPgLogoTwoImage {
+  /* width: 200px; */
+  width: 50%;
+
+  /* background-color: rgb(189, 189, 90); */
+
+  background-size: cover;
+}
+
+.secondPgLogoThreeImage {
+  /* width: 210px; */
+  width: 50%;
+
+  /* background-color: rgb(41, 41, 5); */
+
+  background-size: cover;
+}
+
+.secondPgLogoFourImage {
+  /* width: 230px; */
+  width: 60%;
+
+  background-size: cover;
+  /* background-color: rgb(24, 118, 177); */
+}
+
+@media (max-width: 700px) {
+  .secondPgLogoOneImage {
+    width: 100%;
+  }
+  .secondPgLogoTwoImage {
+    width: 90%;
+  }
+
+  .secondPgLogoThreeImage {
+    width: 90%;
+  }
+
+  .secondPgLogoFourImage {
+    width: 100%;
+  }
+}

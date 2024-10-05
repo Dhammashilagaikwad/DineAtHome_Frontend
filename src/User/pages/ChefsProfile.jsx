@@ -9,6 +9,9 @@ import {jwtDecode} from 'jwt-decode'; // Correct import
 import { useNavigate } from 'react-router-dom';
 
 function UserChefProfile() {
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top when the page is loaded
+}, []);
   const { id } = useParams();
   const [chefData, setChefData] = useState(null);
   const [menuItems, setMenuItems] = useState([]);
@@ -21,10 +24,10 @@ function UserChefProfile() {
     name: "",
     description: "",
     quantity: "",
-    priceRange: {
-      minPrice: "",
-      maxPrice: "",
-    },
+    // priceRange: {
+    //   minPrice: "",
+    //   maxPrice: "",
+    // },
     deliveryDate: new Date(),
   });
 
@@ -79,26 +82,26 @@ function UserChefProfile() {
     }));
   };
 
-  const handlePriceRangeChange = (e) => {
-    const { name, value } = e.target;
-    setCustomizedOrder((prevOrder) => ({
-      ...prevOrder,
-      priceRange: {
-        ...prevOrder.priceRange,
-        [name]: value,
-      },
-    }));
-  };
+  // const handlePriceRangeChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setCustomizedOrder((prevOrder) => ({
+  //     ...prevOrder,
+  //     // priceRange: {
+  //     //   ...prevOrder.priceRange,
+  //     //   [name]: value,
+  //     // },
+  //   }));
+  // };
   const handleFormSubmit = async (e) => {
     e.preventDefault();
   
     try {
       await axios.post(`http://localhost:4000/preOrderRoutes/preOrder`, {
         ...customizedOrder,
-        priceRange: {
-          minPrice: parseFloat(customizedOrder.priceRange.minPrice),
-          maxPrice: parseFloat(customizedOrder.priceRange.maxPrice),
-        },
+        // priceRange: {
+        //   minPrice: parseFloat(customizedOrder.priceRange.minPrice),
+        //   maxPrice: parseFloat(customizedOrder.priceRange.maxPrice),
+        // },
         deliveryDate: selectedDate, // Ensure deliveryDate is set to selected date
       });
       alert("Customized order request sent successfully!");
@@ -107,7 +110,7 @@ function UserChefProfile() {
         name: "",
         description: "",
         quantity: "",
-        priceRange: { minPrice: "", maxPrice: "" },
+        // priceRange: { minPrice: "", maxPrice: "" },
         deliveryDate: new Date(),
       });
     } catch (error) {
@@ -327,7 +330,7 @@ const addToMenuCart = async (itemId) => {
                   required
                 />
               </label>
-              <label style={styles.customized_order}>
+              {/* <label style={styles.customized_order}>
                 Price Range:
                 <input
                   type="number"
@@ -347,7 +350,7 @@ const addToMenuCart = async (itemId) => {
                   style={styles.customized_input}
                   required
                 />
-              </label>
+              </label> */}
               <label style={styles.customized_order}>
                 Delivery Date:
                 <DatePicker

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import "../styles/Ourinfo.css"; // Import the CSS file
 import food from "../images/food11.jpg";
 import mission from "../images/mission.png";
@@ -8,6 +8,9 @@ import ourinfo from "../images/Cooking-rafiki.png";
 import team from "../images/team.png";
 
 function OurInfo() {
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top when the page is loaded
+}, []);
   const [hoveredImage, setHoveredImage] = useState(null);
 
   const handleMouseOver = (image) => {

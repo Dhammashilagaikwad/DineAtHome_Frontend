@@ -4,8 +4,12 @@ import chef from "../images/chef2-removebg-preview.png";
 import React from "react";
 import food from "../images/food11.jpg";
 import AfterLoginNavbar from "../components/AfterLoginNavbar";
+import { useEffect } from "react";
 
 function UserContactUs() {
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top when the page is loaded
+}, []);
   return (
     <>
     <AfterLoginNavbar></AfterLoginNavbar>

@@ -1,92 +1,115 @@
-@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400..900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400..900&family=Inria+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap");
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-}
+/* .navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f9f9f9; 
+  padding: 10px 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+} */
 
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #f9f9f9;
+  background-color: transparent; /* Initially transparent */
   padding: 10px 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  position: fixed;
-  width: 100%;
-  top: 0;
-  z-index: 100;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+  position: fixed; /* Fix the position at the top */
+  top: 0; /* Align to the top */
+  left: 0; /* Align to the left */
+  right: 0; /* Align to the right */
+  transition: background-color 0.3s ease; /* Smooth transition */
+  z-index: 1000; /* Ensure it stays on top of other content */
 }
 
+.navbar.scrolled {
+  background-color: #ffffff; /* Background color on scroll */
+}
+
+/* Other existing styles remain unchanged */
+
 .logo {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  word-spacing: 0px;
-  align-items: center;
-  flex-wrap: wrap;
-  cursor: pointer;
+  font-family: "Dancing Script", cursive;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-size: 2rem;
+  color: green;
+  font-weight: 900;
+  background-color: white;
+  border-radius: 5%;
+  padding: 5px;
 }
-.logo h3 {
-  font-size: 38px;
-  font-weight: bolder;
-  color: #218838;
-  font-family: "Dancing Script";
-}
-#Mumbai {
-  font-family: "Nunito";
-  color: black;
-  font-size: 0.9rem;
-  padding-left: 5px;
-  /* padding-top: 20px; */
-  margin: 0;
-}
+
 /* Navigation Links */
 .nav-links {
   display: flex;
   list-style: none;
-  padding: 0;
   transition: all 0.3s ease;
 }
+
 .nav-links li {
-  margin: 0 30px;
+  margin: 0 15px;
 }
-.nav-links a {
+
+.nav-links li {
   text-decoration: none;
-  color: #000;
-  font-family: "Nunito";
-  font-weight: bold;
-  font-size: 18px;
+  color: green;
   transition: color 0.3s ease;
+  font-size: 1.2rem;
+  /* background-color: rgb(0, 255, 153); */
+  padding: 0px 1rem 0px 0rem;
+  border-radius: 20px;
+  font-weight: 400;
 }
 
 .nav-links a:hover {
   color: green;
   text-shadow: 1px 1px 1px grey;
-
-  /* Light blue on hover */
 }
+/* 
+.nav-links a.active {
+  color: green;
+  text-decoration: none;
+} */
 
 /* Profile */
-/* .profile {
+.profile {
   display: flex;
   align-items: center;
+  /* display: flex; */
+  justify-content: space-around;
+  padding-left: 0px;
+  list-style: none;
+  font-size: 10px;
+}
+.profile li{
+  padding: 0 0px;
+  margin: 0 0px; 
 }
 
-.profile-img {
+/* .profile-img {
   border-radius: 50%;
   width: 40px;
   height: 40px;
-} */
-
-/* Hamburger Menu Styling */
-.menu-toggle {
-  display: none;
-  font-size: 28px;
   cursor: pointer;
+} */ 
+.howorder {
+  font-size: 17px;
+  border-radius: 10px;
+  padding: 5px;
+  margin: 0;
+  background-color: #f8f8f8;
+  color: #218837;
+  border: 1px solid white;
+  box-shadow: 1px 1px 5px grey;
+}
+.howorder:hover {
+  background-color: #218837;
+  color: white;
+  border: 1px solid transparent;
 }
 
 .dropdown {
@@ -98,7 +121,7 @@ body {
   display: none;
   position: absolute;
   background-color: #218837;
-  color: black;
+  /* color: rgb(254, 213, 51); */
   list-style-type: none;
   padding: 7px;
   margin: 3px;
@@ -116,7 +139,7 @@ body {
   display: block;
   padding: 5px;
   text-decoration: none;
-  color: black;
+  color: rgb(254, 213, 51);
 }
 
 .dropdown-options a:hover {
@@ -131,12 +154,13 @@ body {
 #navs #joinus {
   /* color: black; */
   padding: 5px;
+  text-decoration: none;
 }
 /* Desktop Styles */
 .icons {
   display: flex;
   justify-content: space-around;
-  padding-left: 50px;
+  padding-left: 0px;
   list-style: none;
   font-size: 10px;
 }
@@ -144,7 +168,7 @@ body {
 /* If needed, adjust the spacing further with margins */
 .icons li {
   padding: 0 0px;
-  margin: 0 5px; /* Adjust as needed */
+  margin: 0 0px; /* Adjust as needed */
 }
 
 /** About us dropdown **/
@@ -156,7 +180,7 @@ body {
   display: none;
   position: absolute;
   background-color: #218837;
-  color: black;
+  /* color: black; */
   list-style-type: none;
   padding: 7px;
   margin: 3px;
@@ -165,14 +189,14 @@ body {
   border: 1px solid #ddd;
   border-radius: 4px;
   box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.3);
-  width: 120px;
+  width: 140px;
   z-index: 1000;
 }
 .aboutdropdown .aboutdropdown-options a{
   display: block;
   padding: 5px;
   text-decoration: none;
-  color: black;
+  color: rgb(254, 213, 51);
 }
 .aboutdropdown .aboutdropdown-options a:hover{
   text-shadow: 1px 1px 1px white;
@@ -236,21 +260,31 @@ body {
   /* padding-left: 10px; */
   font-size: 17px;
 }
-.howorder {
+
+/* Hamburger Menu Styling */
+.menu-toggle {
+  display: none;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+#navs-icons {
+  color: #218838;
+  padding-top: 0px;
+  padding: 0;
   font-size: 17px;
-  border-radius: 10px;
-  padding: 5px;
-  margin: 0;
-  background-color: #f8f8f8;
-  color: #218837;
-  border: 1px solid white;
-  box-shadow: 1px 1px 5px grey;
 }
-.howorder:hover {
-  background-color: #218837;
-  color: white;
-  border: 1px solid transparent;
+
+#languageIcon {
+  color: #218838;
+  cursor: pointer;
+  /* padding-top:5px; */
+  /* padding-right: 10px; */
+  /* padding-left: 10px; */
+  font-size: 17px;
 }
+
+
 .slide-panel {
   position: fixed; /* Stay fixed in the viewport */
   top: 0;
@@ -372,142 +406,120 @@ body {
   padding:0 5px;
 }
 
+#navs #joinus {
+  /* color: black; */
+  padding: 5px;
+}
+/* Desktop Styles */
+.icons {
+  display: flex;
+  justify-content: space-around;
+  padding-left: 50px;
+  list-style: none;
+  font-size: 10px;
+}
+/* 
+.login-button:hover,
+.signup-button:hover {
+  background-color: #0072ec;
+  color: white;
+}
+
+.signup-button {
+  background-color: transparent; 
+}
+
+.signup-button:hover {
+  background-color: #25b945;
+} */
+
+
 /* Mobile Styles */
-@media (max-width: 850px) {
-  .navbar {
-    width: 100%;
-  }
-  .logo {
-    /* background-color: red; */
-    width: 10rem;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-  }
-  .logo h3 {
-    font-size: 20px;
-  }
-  #Mumbai {
-    font-size: 10px;
-    margin: 0;
-  }
-  .howorder {
-    font-size: 10px;
-    padding: 5px;
-    width: 100%;
+
+@media (max-width: 900px) {
+  .nav-links a {
+    padding: 5px 0rem 5px 0rem;
   }
 
+}
+
+@media (max-width: 768px) {
   .nav-links {
-    position: fixed;
-    top: 60px;
+    position: absolute;
+    top: 40px;
     right: 0;
     background-color: #f9f9f9;
-    width: 60%;
-    height: calc(100vh - 60px);
+    width: 100%;
+    height: calc(100vh - 40px);
+    color: green;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     display: none;
-    z-index: 1000;
+    z-index: 1;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   }
+
   .nav-links.open {
     display: flex;
   }
-  .nav-links li {
-    margin: 10px 0;
-  }
-  .nav-links a {
+  .logo{
     font-size: 12px;
+    background-color: transparent;
   }
+  .nav-links li {
+    margin: 20px 0;
+    color: green;
+  }
+
   .menu-toggle {
     display: block;
   }
-  .dropdown {
-    display: inline-block;
-    position: relative;
-  }
 
-  .dropdown-options a {
-    display: block;
-    padding: 5px;
-    text-decoration: none;
-    color: black;
-  }
-
-  .dropdown-options a:hover {
-    background-color: #218837;
-    color: white;
-  }
-  .dropdown-options {
-    display: none; /* Default hidden */
-  }
-  .dropdown.show .dropdown-options {
-    display: block; /* Show when the dropdown is toggled */
-    z-index: 1500;
-  }
-
-  #navs #joinus {
-    color: black;
-    padding: 5px;
-  }
-  .icons {
-    position: relative;
-    margin: 0;
-    flex-direction: row;
-    justify-content: center;
+  .navbar {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    padding: 10px;
-    font-size: 20px;
-  }
-  #navs-icons {
-    font-size: 25px;
-  }
-  #languageIcon {
-    font-size: 20px;
-    padding: 5px;
-  }
-  .language-dropdown .dropdown-options a:hover {
-    text-shadow: 1px 1px 1px white;
-    color: white;
+    background-color: #f9f9f9;
+    padding: 10px 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position:fixed;
   }
 
-  .slide-panel {
-    position: fixed; /* Stay fixed in the viewport */
-    top: 0;
-    right: 0;
-    width: 300px;
-    height: 100vh;
-    background-color: #f4f4f4;
-    border-left: 2px solid #ddd;
-    box-shadow: 4px 4px 4px black;
-    transform: translateX(100%); /* Start hidden */
-    transition: transform 0.3s ease;
-    padding: 20px;
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
-    z-index: 1001;
+  .nav-links a {
+    color: green;
   }
-
-  .mumbaiNearminilocation{
-    font-size: 1rem;
-    padding: 1px 1rem 1px .5rem;
-    /* background-color: red; */
+  .nav-links a:hover{
+    color: black;
   }
+  .nav-links a.active {
+    color: green
+  }
+  .profile {
+    display: flex;
+    align-items: center;
+    /* display: flex; */
+    justify-content: space-around;
+    padding-left: 0px;
+    list-style: none;
+    font-size: 5px;
+  }
+  .profile li{
+    padding: 0 5px;
+    margin: 0 5px; 
+    font-size: 5px;
+  }
+  #navs-icons{
+    font-size: 10px;
+  }
+  #languageIcon{
+    font-size: 10px;
+  }
+  
 }
 
 /* Hamburger Icon & Close Icon */
 .menu-toggle .fa-bars,
 .menu-toggle .fa-times {
   color: #333;
-  font-size: 20px;
-}
-
-.minilocation {
-  color: black;
-  padding: 0 0px 0 10px;
-  font-size: 15px;
-}
-
-.mumbaiLocation{
-  display: flex;
 }

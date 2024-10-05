@@ -6,6 +6,9 @@ import HomeChefProfileCard from "../components/HomeChefProfileCard";
 import self from '../images/Baker-cuate.png';
 
 export default function HomeChefsInfo() {
+    useEffect(() => {
+        window.scrollTo(0, 0); // Scroll to the top when the page is loaded
+    }, []);
     const [homeChefs, setHomeChefs] = useState([]); // State to store chefs
 
     useEffect(() => {

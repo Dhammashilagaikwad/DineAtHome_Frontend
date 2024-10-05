@@ -7,6 +7,9 @@ import axios from "axios";
 
 //ChefProfile
 function ChefProfile() {
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top when the page is loaded
+  }, []);
   const { id } = useParams();
   const [chefData, setChefData] = useState(null);
   const [menuItems, setMenuItems] = useState([]);
