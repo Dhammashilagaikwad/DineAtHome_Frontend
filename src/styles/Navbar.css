@@ -446,11 +446,11 @@
 @media (max-width: 768px) {
   .nav-links {
     position: absolute;
-    top: 40px;
+    top: 60px;
     right: 0;
     background-color: #f9f9f9;
     width: 100%;
-    height: calc(100vh - 40px);
+    height: calc(100vh - 0px);
     color: green;
     flex-direction: column;
     justify-content: center;
@@ -505,8 +505,8 @@
     font-size: 5px;
   }
   .profile li{
-    padding: 0 5px;
-    margin: 0 5px; 
+    padding: 0 0px;
+    margin: 0 0px; 
     font-size: 5px;
   }
   #navs-icons{

@@ -104,7 +104,7 @@ export default function Design() {
                   {displayedText}
                 </h1>
               </div>
-              <div className="mt-6 ml-0 sm:ml-28 border-2 border-green-800 bg-white p-2 sm:p-4  shadow-[5px_5px_rgba(2,104,0,0.8)] lg:shadow-[5px_5px_rgba(2,104,0,0.8)]">
+              <div className="mt-6 sm:mt-24 ml-0 sm:ml-28 border-2 border-green-800 bg-white p-2 sm:p-4  shadow-[5px_5px_rgba(2,104,0,0.8)] lg:shadow-[5px_5px_rgba(2,104,0,0.8)]">
                 <button className="text-xs sm:text-sm md:text-base lg:text-lg 2xl:text-xl" onClick={handleStartOrderClick}>Order Now</button>
               </div>
               <div className="mt-4 ml-0 sm:ml-28 border-2 border-green-800 bg-white p-2 sm:p-4 sm:mt-24 md:mt-36 lg:mt-48 shadow-[5px_5px_rgba(2,104,0,0.8)] lg:shadow-[5px_5px_rgba(2,104,0,0.8)]">
