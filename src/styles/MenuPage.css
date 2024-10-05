@@ -1,0 +1,100 @@
+/* General layout */
+.menu-page-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  margin-top: 4rem;
+}
+
+/* Menu list section on the left */
+.menu-list-container {
+  width: 70%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.menu-card {
+  width: 45%;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.menu-card img.dish-image {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.menu-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.add-to-cart-btn {
+  padding: 10px;
+  margin-top: 10px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-to-cart-btn:hover {
+  background-color: #218838;
+}
+
+/* Sorting section on the right */
+.sort-options {
+  width: 18%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sort-options h3 {
+  margin-bottom: 10px;
+}
+
+.sort-options button {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.sort-options button:hover {
+  background-color: #0056b3;
+}
+
+/* Mobile view: stacking elements */
+@media (max-width: 768px) {
+  .menu-page-container {
+    flex-direction: column;
+  }
+
+  .menu-list-container {
+    width: 100%;
+    display: block;
+  }
+
+  .menu-card {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .sort-options {
+    width: 100%;
+    margin-top: 20px;
+  }
+}

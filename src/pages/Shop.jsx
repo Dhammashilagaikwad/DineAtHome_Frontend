@@ -4,6 +4,9 @@ import axios from 'axios';
 import food from "../images/picklepapad.jpeg";
 
 function Shop() {
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top when the page is loaded
+  }, []);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState("asc");
   const [products, setProducts] = useState([]); 

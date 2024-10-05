@@ -7,7 +7,6 @@ import ChefsNearYou from './pages/ChefsNearYou';
 import OurInfo from './pages/OurInfo';
 import SearchPage from './pages/SearchPage';
 import Navbar from './components/Navbar';
-import Footer from './components/Footer';
 import Home from "./pages/Home";
 import Cart from './pages/Cart';
 import FAQs from "./pages/FAQs";
@@ -17,7 +16,6 @@ import ChefProfile from './pages/ChefsProfile';
 import Editprofile from './User/pages/EditProfile';
 import AfterLoginPage from './User/pages/AfterLoginPage';
 import HowtoOrder from './pages/HowtoOrder';
-import HomechefPopup from './pages/HomechefPopup';
 import Afterloginhowtoorder from './User/pages/Afterloginhowtoorder';
 import { useEffect, useState } from 'react';
 import AppFAQs from './HomeChef/Pages/Faqs';
@@ -34,23 +32,36 @@ import UserChefsNearYou from './User/pages/ChefsNearYou';
 import AppFAQsUser from './User/pages/FAQs';
 import UserCart from './User/pages/Cart';
 import UserContactUs from './User/pages/ContactUs';
-
+import FooterT from './components/FooterT'
+import LoginPage from './components/LoginPage';
+import SignupPage from './components/SignupPage';
+import MenuPage from './pages/MenuPage';
+import UserMenuPage from './User/pages/MenuPage';
+import Design from './pages/design';
+import { matchPath } from 'react-router-dom';
 import axios from 'axios';
 
 
 function AppContent() {
   const location = useLocation();
   // List of routes where the Navbar should not be visible
-  const noNavbarRoutes = ['/our-info','/notification','/history','/afterloginpage','/editprofile','/afterloginhowtoorder','/homecheffaqs',
-    '/homechefhome','/Homechefhome','/homechefourinfo','/homechefshop','/usershop','/userourinfo','/userchefsnearyou','/userfaqs','/usercontactus','/usercart'];
+  const noNavbarRoutes = ['/our-info','/notification','/history','/afterloginpage',
+    '/editprofile','/afterloginhowtoorder','/homecheffaqs',
+    '/homechefhome','/Homechefhome','/homechefourinfo','/homechefshop',
+    '/userchef-profile/:id','/usershop','/userourinfo','/userchefsnearyou',
+    '/userfaqs','/usercontactus','/usercart','/user-menu-page'];
+    
+    const isNavbarHidden = noNavbarRoutes.some((route) =>
+      matchPath(route, location.pathname)
+    );
 
   return (
     <>
       {/* Conditionally render the Navbar based on the current route */}
-      {!noNavbarRoutes.includes(location.pathname) && <Navbar />}
+      {!isNavbarHidden && <Navbar />}
       {/* <Navbar/> */}
       <Routes>
-        <Route path="/" element={<Userinterface />} />
+        <Route path="/" element={<Design />} />
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path='/chefs-near-you' element={<ChefsNearYou />} />
         <Route path='/ourinfo' element={<OurInfo />} />
@@ -66,7 +77,8 @@ function AppContent() {
         <Route path='/editprofile' element={<Editprofile/>}/>
         <Route path='/howtoorder' element={<HowtoOrder/>}/>
         <Route path='/ourchefsinfo' element={<HomeChefsInfo/>}/>
-        <Route path='/homechefpopup' element={<HomechefPopup/>}/>
+        <Route path='/login' element={<LoginPage/>}/>
+        <Route path='/signup' element={<SignupPage/>}/>
 
         <Route path='/homechefourinfo' element={<HomechefOurInfo/>}/>
         <Route path='/homecheffaqs' element={< AppFAQs/>}/>
@@ -82,8 +94,10 @@ function AppContent() {
         <Route path='/usercart' element={<UserCart/>}/>
         <Route path='/usercontactus' element={<UserContactUs/>}/>
         <Route path="/userchef-profile/:id" element={<UserChefProfile />} />
+        <Route path='/user-menu-page' element={<UserMenuPage/>}/>
+        <Route path='/menu-page' element={<MenuPage/>}/>
       </Routes>
-      <Footer />
+      <FooterT />
     </>
   );
 }
