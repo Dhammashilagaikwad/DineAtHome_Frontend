@@ -1,0 +1,82 @@
+.FourthPgMainBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 2rem 0 2rem 0;
+}
+
+.FourthPgMainBox h1{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 2.5rem;
+    padding: 20px;
+    font-weight: 700;
+  }
+
+.FourthPgBox {
+  /* background-color: yellow; */
+  display: flex;
+  justify-content: space-between;
+  /* align-items: center; */
+  width: 90%;
+}
+.ImageForFourthPg {
+  width: 100%;
+}
+
+.ImageForFourthPgImage {
+  width: 100%;
+  height: auto;
+  background-size: cover;
+  border-radius: 20px;
+}
+
+.LineBtnForFourthPg {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: start;
+  width: 100%;
+  /* background-color: red; */
+  padding: 0 0 0 1rem;
+  text-align: justify;
+}
+
+.LineBtnForFourthPg p {
+    margin: 0;
+    /* line-height: 2rem; */
+    letter-spacing: 2px;
+    /* padding: 1rem 0 0 0; */
+    font-size: 1.3rem;
+    font-family: 'Times New Roman', Times, serif;
+}
+.joinNowBtn{
+  text-decoration: none;
+}
+
+@media (max-width: 700px) {
+  .FourthPgBox {
+    flex-direction: column;
+  }
+
+  .ImageForFourthPgImage {
+    width: 100%;
+    height: auto;
+  }
+
+  .LineBtnForFourthPg {
+    padding: 0;
+  }
+
+
+
+  .LineBtnForFourthPg p{
+    margin: 0;
+    line-height: 1.7rem;
+    letter-spacing: .1px;
+    padding: 2rem 0 0 0;
+    font-size: 1rem;
+  
+  }
+}
