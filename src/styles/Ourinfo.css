@@ -47,31 +47,6 @@
     font-family: 'Cinzel';
 }
 
-.container2 {
-    width: 100%;
-    height: 350px;
-    position: relative;
-    margin-bottom: 40px;
-}
-
-.mumbai {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.9;
-}
-
-.dineathome {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    right: 20px;
-    color: white;
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 10px;
-    border-radius: 8px;
-    text-align: center;
-}
 .mission-vision {
     position: relative;
     width: 100%;
@@ -83,15 +58,14 @@
 .mission-vision-row {
     display: flex;
     flex-direction: column;
-    /* flex-wrap: wrap; */
-    width: 60%; 
+    width: 60%;
 }
+
 .mission, .vision {
     display: flex;
-    flex-direction: row; /* Ensure that the image and text are in a row */
+    flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-    margin-bottom: 0px; 
     margin-top: 20px;
     margin-left: 50px;
 }
@@ -99,112 +73,138 @@
 .mission img, .vision img {
     width: 200px;
     height: 200px;
-    margin-right: 20px; /* Add some space between the image and the text */
+    margin-right: 20px;
 }
 
 .mission p, .vision p {
     font-family: 'Nunito', sans-serif;
     color: black;
     font-size: 20px;
-    max-width: 500px; /* Set a maximum width for the text to control its size */
+    max-width: 500px;
 }
-.our-info-image{
+
+.our-info-image {
     width: 40%;
-    height: auto;
 }
-.our-info-image img{
+
+.our-info-image img {
     width: 100%;
     height: 600px;
 }
-.team-content{
+
+.team-content {
     height: 500px;
     position: relative;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
     flex-direction: column;
-     /* background-color: #f9f9f9; */
 }
-.team-heading{
+
+.team-heading {
     font-size: 32px;
-    /* padding: 20px; */
     font-weight: 800;
     font-family: 'Nunito';
 }
-.team-details{
+
+.team-details {
     position: relative;
     flex-direction: row;
     display: flex;
 }
-.left-team-content{
+
+.left-team-content {
     width: 55%;
-    /* background-color: antiquewhite; */
 }
-.left-team-content img{
+
+.left-team-content img {
     width: 100%;
     height: 100%;
     border-radius: 50px;
     box-shadow: 5px 5px 5px grey;
 }
-.right-team-content{
+
+.right-team-content {
     width: 40%;
     font-size: 17px;
     padding-left: 30px;
     font-family: 'Nunito';
 }
-.right-team-content span{
+
+.right-team-content span {
     font-weight: 700;
 }
+
+/* Mobile View Adjustments */
 @media (max-width: 790px) {
     .our-info-container {
+        margin-top: 2rem;
+    }
+
+    .ourinfo-row {
+        height: 250px;
+    }
+
+    .mission-vision {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .mission-vision-row {
+        width: 100%;
+    }
+
+    .mission, .vision {
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 0;
+        margin-top: 10px;
+    }
+
+    .mission img, .vision img {
+        width: 100px;
+        height: 100px;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .mission p, .vision p {
+        font-size: 14px;
+        text-align: center;
+    }
+
+    .our-info-image {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .our-info-image img {
         width: 100%;
         height: auto;
     }
 
-    .ourinfo-row {
-        height: 250px; /* Adjust height for mobile */
+    .team-content {
+        height: auto;
     }
 
-    .mission-vision {
-        flex-direction: column; /* Stack mission and vision vertically */
-        align-items: center; /* Center align items */
+    .team-heading {
+        font-size: 24px;
     }
 
-    .mission-vision-row {
-        width: 100%; /* Full width for mobile */
+    .team-details {
+        flex-direction: column;
+        align-items: center;
     }
 
-    .mission, .vision {
-        width: 100%; /* Full width for mobile */
-        flex-direction: row; /* Stack image and text vertically */
-        align-items: center; /* Center align items */
-        margin-left: 0; /* Reset left margin */
+    .left-team-content {
+        width: 80%;
     }
 
-    .mission img, .vision img {
-        width: 100px; /* Smaller images for mobile */
-        height: 100px; /* Maintain aspect ratio */
-        margin-right: 0; /* Reset right margin */
-        margin-bottom: 10px; /* Add spacing below images */
-    }
-
-    .mission p, .vision p {
-        font-size: 10px; /* Smaller font size for mobile */
-        text-align: center; /* Center text */
-    }
-
-    .our-info-image {
-        width: 100%; 
-    }
-
-    .our-info-image img {
-        height: auto; /* Maintain aspect ratio */
-    }
-
-    .dineathome {
-        font-size: 14px; /* Smaller font size for mobile */
-        padding: 5px; /* Less padding */
+    .right-team-content {
+        width: 90%;
+        font-size: 14px;
+        padding: 10px;
     }
 }
