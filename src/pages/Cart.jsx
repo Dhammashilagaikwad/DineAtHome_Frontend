@@ -1,7 +1,6 @@
-
-
 import React, { useState } from 'react';
 import CartC from '../components/CartC';
+import { Link } from 'react-router-dom';
 import image1 from "../assets/bhindi-fry.webp";
 import image2 from "../assets/Easy-Aloo.jpg";
 import image3 from "../assets/Chilli-Paneer.jpg";
@@ -173,9 +172,11 @@ export default function Cart() {
           </div>
 
           <div className="placeOrderForCartBox">
-            <button className='placeOrderForCart'>
-              Place Order
-            </button>
+
+            <Link>
+              <button className='placeOrderForCart'>Place Order</button>
+            </Link>
+
           </div>
         </div>
       </div>

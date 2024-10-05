@@ -1,9 +1,10 @@
 .homechefs-container {
-    margin-top: 50px;  
+    margin-top: 4rem;  
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
     gap: 20px;
+
   }
   .chef-card {
     position: relative;

@@ -1,0 +1,75 @@
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap");
+
+.FooterMainBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.FooterBox {
+  background-color: rgb(242, 242, 242);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.Footerr {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping for smaller screens */
+  justify-content: space-between;
+  width: 90%;
+  padding: 1rem 0;
+}
+
+.FooterrOne,
+.FooterrTwo,
+.FooterrThree,
+.FooterrFour {
+  flex: 1 1; 
+  margin: 0.5rem; /* Space between sections */
+}
+
+.LogoImage {
+  font-family: "Dancing Script", cursive;
+  font-size: 3rem;
+  color: green;
+  font-weight: 900;
+}
+
+.rightsReserved {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* background-color: rgb(0, 0, 0); */
+  width: 100%;
+  padding: 1rem;
+}
+
+hr {
+  border: 1px solid rgb(136, 135, 135);
+  width: 90%;
+}
+.rightsReserved p {
+  color: rgb(0, 0, 0);
+  font-size: 1.2rem;
+}
+
+@media (max-width: 700px) {
+  .Footerr {
+    flex-direction: column; /* Stack items on small screens */
+    align-items: center;
+  }
+
+  .FooterrOne {
+    text-align: center; /* Center align for mobile */
+  }
+
+  .FooterrTwo,
+  .FooterrThree,
+  .FooterrFour {
+    text-align: center; /* Center align for mobile */
+    margin: 0.5rem 0; /* Vertical spacing */
+  }
+}

@@ -10,8 +10,8 @@ const AfterLoginNavbar = () => {
   // const navigate=useNavigate();
 
   // const [isJoinUsDropdownOpen, setJoinUsDropdownOpen] = useState(false);
-  const [isLanguageDropdownOpen, setLanguageDropdownOpen] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState("en");
+  // const [isLanguageDropdownOpen, setLanguageDropdownOpen] = useState(false);
+  // const [selectedLanguage, setSelectedLanguage] = useState("en");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [items, setItems] = useState([]);
@@ -27,20 +27,20 @@ const AfterLoginNavbar = () => {
   };
 
   const searchRef = useRef(null);
-  const languageRef = useRef(null);
+  // const languageRef = useRef(null);
   const userRef=useRef(null);
 
   const toggleUserDropdown=()=>{
     setUserDropdownOpen(!isUserDropdownOpen);
   }
-  const toggleLanguageDropdown = () => {
-    setLanguageDropdownOpen(!isLanguageDropdownOpen);
-  };
+  // const toggleLanguageDropdown = () => {
+  //   setLanguageDropdownOpen(!isLanguageDropdownOpen);
+  // };
 
-  const handleLanguageChange = (lang) => {
-    setSelectedLanguage(lang);
-    setLanguageDropdownOpen(false);
-  };
+  // const handleLanguageChange = (lang) => {
+  //   setSelectedLanguage(lang);
+  //   setLanguageDropdownOpen(false);
+  // };
 
   const handleSearchIconClick = () => {
     setIsSearchOpen(!isSearchOpen);
@@ -65,9 +65,9 @@ const AfterLoginNavbar = () => {
     if (searchRef.current && !searchRef.current.contains(event.target)) {
       setIsSearchOpen(false);
     }
-    if (languageRef.current && !languageRef.current.contains(event.target)) {
-      setLanguageDropdownOpen(false);
-    }
+    // if (languageRef.current && !languageRef.current.contains(event.target)) {
+    //   setLanguageDropdownOpen(false);
+    // }
     if (userRef.current && !userRef.current.contains(event.target)) {
         setUserDropdownOpen(false);
       }
@@ -131,6 +131,11 @@ const navigate = useNavigate();
             FAQs
           </Link>
         </li>
+        <li>
+          <Link to="/userchefsnearyou" onClick={toggleMenu}>
+            Pre-Order
+          </Link>
+        </li>
 
         {/* <li
           id="navs1"
@@ -156,7 +161,7 @@ const navigate = useNavigate();
         </li> */}
 
       <div className="icons1">
-          <li ref={languageRef}>
+          {/* <li ref={languageRef}>
             <div
               className={`language-dropdown ${
                 isLanguageDropdownOpen ? "show" : ""
@@ -179,7 +184,7 @@ const navigate = useNavigate();
                 </Link>
               </div>
             </div>
-          </li>
+          </li> */}
 
           <li onClick={toggleUserDropdown}
           ref={userRef}>

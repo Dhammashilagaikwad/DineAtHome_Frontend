@@ -18,8 +18,8 @@ import lunch from "../images/Lunch time-pana.png";
 // import order from "../images/Order food-pana.png";
 import takeaway from "../images/Take Away-cuate.png";
 import { useRef,useEffect,useState } from "react";
-import HomechefPopup from '../../pages/HomechefPopup';
-import Popup from "../../pages/Popup";
+// import HomechefPopup from '../../pages/HomechefPopup';
+// import Popup from "../../pages/Popup";
 
 function Userinterface() {
   const navigate = useNavigate();
@@ -190,8 +190,8 @@ function Userinterface() {
         {/* <img src={order} alt="Order"></img> */}
         <p>The service is designed to cater to busy individuals who don’t have the time to cook or those who want to enjoy a home-cooked meal without having to prepare it themselves.</p>
       </div>
-      <Popup show={showPopup} handleClose={handleClose} content={popupContent} />
-      <HomechefPopup isOpen={showHomechefPopup} onClose={handleClose} /> 
+      {/* <Popup show={showPopup} handleClose={handleClose} content={popupContent} />
+      <HomechefPopup isOpen={showHomechefPopup} onClose={handleClose} />  */}
     </>
   );
 }
