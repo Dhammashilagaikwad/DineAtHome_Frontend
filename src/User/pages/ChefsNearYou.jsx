@@ -30,14 +30,14 @@ function ChefsNearYou() {
   }, []);
 
   const handleCardClick = (chefData) => {
-    navigate(`/userchef-profile/${chefData._id}`, { state: chefData });
+    navigate(`/user/userchef-profile/${chefData._id}`, { state: chefData });
   };
 
   if (loading) return <div>Loading chefs...</div>;
 
   return (
     <>
-    <AfterLoginNavbar/>
+    {/* <AfterLoginNavbar/> */}
     <div className="block">
       <div style={styles.back}>
         <h1 style={styles.heading}>Chefs Near You</h1>
@@ -63,7 +63,7 @@ function ChefsNearYou() {
                 key={chef._id}
                 image={chef.image || food7} // Use a default image if not provided
                 rating={chef.average_rating}
-                name={`${chef.name}'s Kitchen`}
+                name={`${chef.name}`}
                 cuisine={cuisines} // Set the cuisine directly
                 specialities={specialities} // Set the specialities directly
                 isOpen={chef.is_active}

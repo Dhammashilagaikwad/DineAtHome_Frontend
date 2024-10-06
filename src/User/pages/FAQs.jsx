@@ -28,7 +28,7 @@ function AppFAQsUser(){
 
   return (
     <>
-      <AfterLoginNavbar/>
+      {/* <AfterLoginNavbar/> */}
       <div className='faqs-container'>
       <div className="faq-ourinfo-row">
         <div className="image-text">

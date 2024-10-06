@@ -190,7 +190,7 @@ const addToMenuCart = async (itemId) => {
 
   return (
     <>
-    <AfterLoginNavbar/>
+    {/* <AfterLoginNavbar/> */}
     <div style={styles.container}>
       <div style={styles.menuCard}>
         <h5 style={{ textAlign: "center", paddingTop: "70px" }}>

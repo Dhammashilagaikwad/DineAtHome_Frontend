@@ -46,7 +46,7 @@ const LoginPage = () => {
                     navigate("/home-shefs/dashboard");
                 } else if (response.data.role === "user") {
                     console.log("User logged in");
-                    navigate("/afterloginpage");
+                    navigate("/user/afterloginpage");
                 }
             } else {
                 console.error("Token not found in response");
