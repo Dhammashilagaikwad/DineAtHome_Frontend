@@ -1,19 +1,18 @@
 import Navbar from "./Navbar";
 import CardsView from './CardsView'
-import Sidebar from './Sidebar';
+import SideBar from './Sidebar';
 import History from './History';
 import Faq from './Faq';
 import ForgotPassword from './ForgotPassword'
 
-function Dashboard(){
+function Dashboard(){   
     return(
         <>
         <Navbar/>
-        <Sidebar/>
+        <div className="flex flex-row">
+        <SideBar/>
         <CardsView/>
-        {/* <History/>
-        <Faq/> */}
-        {/* <ForgotPassword/> */}
+        </div>
         </>
     )
 }
