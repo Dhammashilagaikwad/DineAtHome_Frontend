@@ -2,8 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import '../styles/SignupPage.css'; // Import the CSS file
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import toastService from '../utils/toastService';
+import tokenService from '../utils/tokenService';
 import { useState, useEffect, useRef } from "react";
+import axiosInstance from '../utils/axiosService';
 
 const SignupPage = () => {
   
@@ -16,7 +18,7 @@ const SignupPage = () => {
 
     try {
       // Send form data to the backend
-      const response = await axios.post("http://localhost:4000/api/user/signup", { username, email, password });
+      const response =await axiosInstance.post("/api/user/signup", { username, email, password });
       
 
       if (response.data.status) {
