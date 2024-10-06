@@ -1,114 +1,13 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import './App.css';
-import Userinterface from './pages/UserInterface';
-import ContactUs from './pages/ContactUs';
-import ChefsNearYou from './pages/ChefsNearYou';
-import OurInfo from './pages/OurInfo';
-import SearchPage from './pages/SearchPage';
-import Navbar from './components/Navbar';
-import Home from "./pages/Home";
-import Cart from './pages/Cart';
-import FAQs from "./pages/FAQs";
-import DeliveryExecutive from './pages/DeliveryExecutive';
-import Shop from './pages/Shop';
-import ChefProfile from './pages/ChefsProfile';
-import Editprofile from './User/pages/EditProfile';
-import AfterLoginPage from './User/pages/AfterLoginPage';
-import HowtoOrder from './pages/HowtoOrder';
-import Afterloginhowtoorder from './User/pages/Afterloginhowtoorder';
-import { useEffect, useState } from 'react';
-import AppFAQs from './HomeChef/Pages/Faqs';
-import HomechefHome from './HomeChef/Pages/Home';
-import History from './HomeChef/Pages/History';
-import  Notification from './HomeChef/Pages/Notification';
-import HomechefOurInfo from './HomeChef/Pages/OurInfo';
-import HomeChefShop from './HomeChef/Pages/Shop';
-import HomeChefsInfo from './pages/HomeChefsInfo';
-import Usershop from './User/pages/Shop'
-import UserOurInfo from './User/pages/OurInfo';
-import UserChefProfile from './User/pages/ChefsProfile';
-import UserChefsNearYou from './User/pages/ChefsNearYou';
-import AppFAQsUser from './User/pages/FAQs';
-import UserCart from './User/pages/Cart';
-import UserContactUs from './User/pages/ContactUs';
-import FooterT from './components/FooterT'
-import LoginPage from './components/LoginPage';
-import SignupPage from './components/SignupPage';
-import MenuPage from './pages/MenuPage';
-import UserMenuPage from './User/pages/MenuPage';
-import Design from './pages/design';
-import { matchPath } from 'react-router-dom';
-import axios from 'axios';
+import React from 'react';
+import Body from './Body.jsx';
 
-
-function AppContent() {
-  const location = useLocation();
-  // List of routes where the Navbar should not be visible
-  const noNavbarRoutes = ['/our-info','/notification','/history','/afterloginpage',
-    '/editprofile','/afterloginhowtoorder','/homecheffaqs',
-    '/homechefhome','/Homechefhome','/homechefourinfo','/homechefshop',
-    '/userchef-profile/:id','/usershop','/userourinfo','/userchefsnearyou',
-    '/userfaqs','/usercontactus','/usercart','/user-menu-page'];
-    
-    const isNavbarHidden = noNavbarRoutes.some((route) =>
-      matchPath(route, location.pathname)
-    );
-
-  return (
-    <>
-      {/* Conditionally render the Navbar based on the current route */}
-      {!isNavbarHidden && <Navbar />}
-      {/* <Navbar/> */}
-      <Routes>
-        <Route path="/" element={<Design />} />
-        <Route path="/contact-us" element={<ContactUs />} />
-        <Route path='/chefs-near-you' element={<ChefsNearYou />} />
-        <Route path='/ourinfo' element={<OurInfo />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/delivery" element={<DeliveryExecutive />} />
-        <Route path='/shop' element={<Shop/>}/>
-        <Route path="/chef-profile/:id" element={<ChefProfile />} />
-        <Route path="/search" element={<SearchPage />} />
-        <Route path="/history" element={<History />} />
-        <Route path="/faqs" element={<FAQs />} />
-        <Route path='/cart' element={<Cart/>}/>
-        <Route path='/afterloginpage' element={<AfterLoginPage/>}/>
-        <Route path='/editprofile' element={<Editprofile/>}/>
-        <Route path='/howtoorder' element={<HowtoOrder/>}/>
-        <Route path='/ourchefsinfo' element={<HomeChefsInfo/>}/>
-        <Route path='/login' element={<LoginPage/>}/>
-        <Route path='/signup' element={<SignupPage/>}/>
-
-        <Route path='/homechefourinfo' element={<HomechefOurInfo/>}/>
-        <Route path='/homecheffaqs' element={< AppFAQs/>}/>
-        <Route path='/homechefhome' element={<HomechefHome/>}/>
-        <Route path='/notification' element={<Notification/>}/>
-        <Route path='/homechefshop' element={<HomeChefShop/>}/>
-
-        <Route path='/afterloginhowtoorder' element={<Afterloginhowtoorder/>}/>
-        <Route path='/usershop' element={<Usershop/>}/>
-        <Route path='/userourinfo' element={<UserOurInfo/>}/>
-        <Route path='/userchefsnearyou' element={<UserChefsNearYou/>}/>
-        <Route path='/userfaqs' element={<AppFAQsUser/>}/>
-        <Route path='/usercart' element={<UserCart/>}/>
-        <Route path='/usercontactus' element={<UserContactUs/>}/>
-        <Route path="/userchef-profile/:id" element={<UserChefProfile />} />
-        <Route path='/user-menu-page' element={<UserMenuPage/>}/>
-        <Route path='/menu-page' element={<MenuPage/>}/>
-      </Routes>
-      <FooterT />
-    </>
-  );
+function App(){
+  return(
+    <div className="App">
+      <Body/>
+    </div>
+  )
 }
-
-const App = () => {
-  return (
-    <Router>
-      <AppContent />
-    </Router>
-    
-  );
-};
 
 export default App;

@@ -161,7 +161,7 @@ export default function UserCart() {
 
   return (
     <>
-      <AfterLoginNavbar />
+      {/* <AfterLoginNavbar /> */}
       <div>
         {cartItems.length > 0 ? (
           cartItems.map(item => (
@@ -272,7 +272,7 @@ export default function UserCart() {
       </div>
           <div className="placeOrderForCartBox">
 
-            <Link to="/PaymentOptions">
+            <Link to="/user/PaymentOptions">
               <button className='placeOrderForCart'>Place Order</button>
             </Link>
 

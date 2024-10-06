@@ -121,7 +121,7 @@ function UserShop() {
 
   return (
     <>
-      <AfterLoginNavbar />
+      {/* <AfterLoginNavbar /> */}
       <div className="shop-container">
         <div className="shop-row">
           <div className="imagee-text">

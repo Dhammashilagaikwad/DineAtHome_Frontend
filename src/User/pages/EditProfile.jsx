@@ -382,7 +382,7 @@ const handleConfirmDelete = async (e) => {
 
   return (
     <>
-      <AfterLoginNavbar />
+      {/* <AfterLoginNavbar /> */}
       <div className="edit-profile">
         <div className="details">
           <div className="left-details">
