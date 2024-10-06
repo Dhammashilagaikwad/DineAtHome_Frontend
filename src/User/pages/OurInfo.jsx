@@ -23,7 +23,7 @@ function UserOurInfo() {
 
   return (
     <>
-    <AfterLoginNavbar/>
+    {/* <AfterLoginNavbar/> */}
       <div className="our-info-container">
         <div className="ourinfo-row">
           <div className="image-text">
