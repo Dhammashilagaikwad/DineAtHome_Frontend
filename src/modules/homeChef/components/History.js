@@ -1,7 +1,12 @@
 import React from "react";
+import Navbar from "./Navbar";
 
 const History = () => {
-  return <div>History</div>;
+  return(
+    <>
+    <Navbar/>
+    </>
+  )
 };
 
 export default History;
