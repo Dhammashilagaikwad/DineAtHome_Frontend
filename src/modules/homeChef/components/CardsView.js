@@ -27,7 +27,7 @@ const CardsView = () => {
   ];
 
   return (
-    <div className="bg-blue-100 rounded-md p-4 w-[80%]">
+    <div className="bg-blue-100 rounded-md p-4 w-[80%] min-h-screen">
       <div className="bg-white px-5 py-3 rounded-xl grid grid-cols-5 gap-5 text-start font-medium mb-3 shadow-md">
         <p>Bill id</p>
         <p className="col-span-2">Order By</p>
