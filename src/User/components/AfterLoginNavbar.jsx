@@ -112,27 +112,27 @@ const navigate = useNavigate();
 
       <div className={`nav-links1 ${isOpen ? "open" : ""}`}>
         <li>
-          <Link to="/afterloginpage" onClick={toggleMenu}>
+          <Link to="/user/afterloginpage" onClick={toggleMenu}>
             HOME
           </Link>
         </li>
         <li>
-          <Link to="/userourinfo" onClick={toggleMenu}>
+          <Link to="/user/userourinfo" onClick={toggleMenu}>
             OUR INFO
           </Link>
         </li>
         <li>
-          <Link to="/usershop" onClick={toggleMenu}>
+          <Link to="/user/usershop" onClick={toggleMenu}>
             SHOP
           </Link>
         </li>
         <li>
-          <Link to="/userfaqs" onClick={toggleMenu}>
+          <Link to="/user/userfaqs" onClick={toggleMenu}>
             FAQs
           </Link>
         </li>
         <li>
-          <Link to="/userchefsnearyou" onClick={toggleMenu}>
+          <Link to="/user/userchefsnearyou" onClick={toggleMenu}>
             Pre-Order
           </Link>
         </li>
@@ -193,7 +193,7 @@ const navigate = useNavigate();
               className={`user-icon ${isUserDropdownOpen ? "show":""}`}>
               <i className="fa-solid fa-user" style={{color:"orange",paddingTop:"0"}}></i>
               <div className="userdropdown-options">
-              <Link id="editprofile" to="/editprofile">
+              <Link id="editprofile" to="/user/editprofile">
                 Profile
               </Link>
               <Link id="logout" to="/" onClick={handleLogout}>
@@ -209,13 +209,13 @@ const navigate = useNavigate();
             </Link>
           </li>
           <li>
-            <Link id="navs-icons" to="/usercart">
+            <Link id="navs-icons" to="/user/usercart">
               <i className="fa-solid fa-cart-shopping"></i>
               <span>Cart Items: {cartItems.length}</span> {/* Example use of cartItems */}
             </Link>
           </li>
           <li>
-            <Link id="navs-icons" to='/afterloginhowtoorder' onClick={toggleMenu}>
+            <Link id="navs-icons" to='/user/afterloginhowtoorder' onClick={toggleMenu}>
             <button className="howorder">How To Order</button>
             </Link>
         </li>
