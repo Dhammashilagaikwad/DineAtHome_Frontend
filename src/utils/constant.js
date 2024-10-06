@@ -20,7 +20,7 @@ export const CHEFS_SIDEBAR = [
     id: 3,
     name: "Shop",
     icon: <CiShop />,
-    link: "/home-shefs/dashboard/cart",
+    link: "/home-shefs/dashboard/shop",
   },
   {
     id: 4,

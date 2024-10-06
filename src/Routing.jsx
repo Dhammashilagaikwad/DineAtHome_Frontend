@@ -4,6 +4,7 @@ import './App.css';
 import Navbar from './components/Navbar';
 import FooterT from './components/FooterT';
 import AfterLoginNavbar from './User/components/AfterLoginNavbar';
+import Profile from './modules/homeChef/components/Profile';
 
 // Lazy load the components
 const Userinterface = lazy(() => import('./pages/UserInterface'));
@@ -21,12 +22,12 @@ const EditProfile = lazy(() => import('./User/pages/EditProfile'));
 const AfterLoginPage = lazy(() => import('./User/pages/AfterLoginPage'));
 const HowtoOrder = lazy(() => import('./pages/HowtoOrder'));
 const AfterLoginHowtoOrder = lazy(() => import('./User/pages/Afterloginhowtoorder'));
-const AppFAQs = lazy(() => import('./HomeChef/Pages/Faqs'));
-const HomechefHome = lazy(() => import('./HomeChef/Pages/Home'));
-const History = lazy(() => import('./HomeChef/Pages/History'));
-const Notification = lazy(() => import('./HomeChef/Pages/Notification'));
-const HomechefOurInfo = lazy(() => import('./HomeChef/Pages/OurInfo'));
-const HomeChefShop = lazy(() => import('./HomeChef/Pages/Shop'));
+// const AppFAQs = lazy(() => import('./HomeChef/Pages/Faqs'));
+// const HomechefHome = lazy(() => import('./HomeChef/Pages/Home'));
+// const History = lazy(() => import('./HomeChef/Pages/History'));
+// const Notification = lazy(() => import('./HomeChef/Pages/Notification'));
+// const HomechefOurInfo = lazy(() => import('./HomeChef/Pages/OurInfo'));
+// const HomeChefShop = lazy(() => import('./HomeChef/Pages/Shop'));
 const HomeChefsInfo = lazy(() => import('./pages/HomeChefsInfo'));
 const Usershop = lazy(() => import('./User/pages/Shop'));
 const UserOurInfo = lazy(() => import('./User/pages/OurInfo'));
@@ -42,6 +43,9 @@ const UserMenuPage = lazy(() => import('./User/pages/MenuPage'));
 const Design = lazy(() => import('./pages/design'));
 const Dashboard = lazy(()=>import('./modules/homeChef/components/Dashboard'))
 const PaymentOptions = lazy(()=>import('./User/components/PaymentOptions'))
+const Menu = lazy(()=>import('./modules/homeChef/components/Menu'));
+const ChefShop=lazy(()=>import('./modules/homeChef/components/Shop'))
+const History =lazy(()=>import('./modules/homeChef/components/History'))
 
 function Layout() {
     const location = useLocation();
@@ -97,7 +101,7 @@ function Routing() {
           <Route path="/shop" element={<Shop />} />
           <Route path="/chef-profile/:id" element={<ChefProfile />} />
           <Route path="/search" element={<SearchPage />} />
-          <Route path="/history" element={<History />} />
+          {/* <Route path="/history" element={<History />} /> */}
           <Route path="/faqs" element={<FAQs />} />
           <Route path="/cart" element={<Cart />} />
 
@@ -107,13 +111,13 @@ function Routing() {
           <Route path="/ourchefsinfo" element={<HomeChefsInfo />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
-
+{/* 
           <Route path="/homechef/homechefourinfo" element={<HomechefOurInfo />} />
           <Route path="/homechef/homecheffaqs" element={<AppFAQs />} />
           <Route path="/homechef/homechefhome" element={<HomechefHome />} />
           <Route path="/homechef/notification" element={<Notification />} />
           <Route path="/homechef/homechefshop" element={<HomeChefShop />} />
-          
+           */}
           <Route path="/user/afterloginhowtoorder" element={<AfterLoginHowtoOrder />} />
           <Route path="/user/usershop" element={<Usershop />} />
           <Route path="/user/userourinfo" element={<UserOurInfo />} />
@@ -128,6 +132,10 @@ function Routing() {
           <Route path="/menu-page" element={<MenuPage />} />
           <Route path="/design" element={<Design />} />
           <Route path='/home-shefs/dashboard' element={<Dashboard/>}/>
+          <Route path='/home-shefs/dashboard/menu' element={<Menu/>}/>
+          <Route path='/home-shefs/dashboard/shop' element={<ChefShop/>}/>
+          <Route path='/home-shefs/dashboard/history' element={<History/>}/>
+          <Route path='/home-shefs/dashboard/profile' element={<Profile/>}/>
         </Routes>
       </Suspense>
 
