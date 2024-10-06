@@ -103,22 +103,9 @@ function AppContent() {
 }
 
 const App = () => {
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    // Request data from the backend
-    axios.get('http://localhost:4000/')
-      .then(response => setData(response.data))
-      .catch(error => console.error('Error fetching data:', error));
-  }, []);
-
   return (
     <Router>
       <AppContent />
-      <div>
-      <h1>React and Node.js Connection</h1>
-      {data ? <p>{data.message}</p> : <p>Loading...</p>}
-    </div>
     </Router>
     
   );

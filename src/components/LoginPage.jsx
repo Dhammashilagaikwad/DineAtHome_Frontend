@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import '../styles/LoginPage.css';
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from '../utils/axiosService';
 import { useState } from "react";
 
 const LoginPage = () => {
@@ -27,7 +27,7 @@ const LoginPage = () => {
         console.log("Password:", password); // Log password for debugging
 
         try {
-            const response = await axios.post("http://localhost:4000/api/login", {
+            const response = await axiosInstance.post("/api/login", {
                 email,
                 password,
             });
@@ -43,7 +43,7 @@ const LoginPage = () => {
                 if (response.data.role === "chef") {
                     console.log("Chef logged in");
                     alert("Chef logged in");
-                    navigate("/homechefhome");
+                    navigate("/home-shefs/dashboard");
                 } else if (response.data.role === "user") {
                     console.log("User logged in");
                     navigate("/afterloginpage");
@@ -93,7 +93,7 @@ function ForgetPasswordForm({ onBackToLogin }) {
 
     const handleEmailVerification = async () => {
         try {
-            const response = await axios.post("http://localhost:4000/email/email-Verification", { email });
+            const response = await axiosInstance.post("/email/email-Verification", { email });
             
             if (response.data.status) {
                 alert("Email already exists. Sending OTP...");
@@ -110,7 +110,7 @@ function ForgetPasswordForm({ onBackToLogin }) {
 
     const handleSendOtp = async () => {
         try {
-            const response = await axios.post("http://localhost:4000/email/forgot-password", {
+            const response = await axiosInstance.post("/email/forgot-password", {
                 email,
             });
 
@@ -133,7 +133,7 @@ function ForgetPasswordForm({ onBackToLogin }) {
             console.log('Email:', email); // Log email
             console.log('OTP:', otp); // Log OTP being verified
 
-            const response = await axios.post("http://localhost:4000/email/otp-verification", {
+            const response = await axiosInstance.post("/email/otp-verification", {
                 email, // same phoneNumber used to send the OTP
                 otp: otp.toString(),
             });
@@ -152,7 +152,7 @@ function ForgetPasswordForm({ onBackToLogin }) {
 
     const handleSubmitNewPassword = async () => {
         try {
-            const response = await axios.post("http://localhost:4000/email/reset-password", {
+            const response = await axiosInstance.post("/email/reset-password", {
                 email, // or email
                 newPassword,
             });

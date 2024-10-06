@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/InputForm.css';
 import TermsCheckbox from '../components/TermsCheckbox';
-import axios from 'axios';
+import axiosInstance from '../utils/axiosService';
 
 const InputForm = () => {
   const [formData, setFormData] = useState({
@@ -66,7 +66,7 @@ const InputForm = () => {
     e.preventDefault();
     if (validate()) {
       try {
-        const response = await axios.post('http://localhost:4000/api/chefs/signup', formData);
+        const response = await axiosInstance.post('/api/chefs/signup', formData);
         console.log("Form Data:", formData);
 
         if (response.data) {

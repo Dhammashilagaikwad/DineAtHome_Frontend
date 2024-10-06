@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "../styles/AfterLoginNavbar.css";
 import "../styles/SearchPage.css";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "../../utils/axiosService";
 
 const AfterLoginNavbar = () => {
 
@@ -85,7 +85,7 @@ const navigate = useNavigate();
   const handleLogout = async () => {
     try {
       // Make a request to the backend to clear the token
-      const response = await axios.post("http://localhost:4000/api/user/logout", {
+      const response = await axiosInstance.post("/api/user/logout", {
         withCredentials: true, // Ensure cookies are included in the request
       });
 
