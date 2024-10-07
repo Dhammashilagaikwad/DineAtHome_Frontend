@@ -2,13 +2,25 @@ import React, { useState } from "react";
 import { SiCodechef } from "react-icons/si";
 import { IoIosNotifications } from "react-icons/io";
 import { FaUserCircle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // Import useNavigate for redirecting after logout
+import axiosInstance from '../../../utils/axiosService'; // Import the centralized axios instance
 
 const Navbar = () => {
-
   const [isOnline, setIsOnline] = useState(false);
   const [isUserProfile, setIsUserProfile] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // State for mobile menu
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate(); // Initialize useNavigate
+
+ 
+  const handleLogout = async () => {
+    try {
+      await axiosInstance.post('/api/chefs/logout'); // Make the logout request with the axiosInstance
+      localStorage.removeItem('authToken'); // Remove the token from local storage
+      navigate('/login'); // Redirect to the login page or any other page
+    } catch (error) {
+      console.error('Logout error:', error); // Handle any errors here
+    }
+  };
 
   return (
     <>
@@ -35,7 +47,7 @@ const Navbar = () => {
             </label>
           </div>
           <Link className="cursor-pointer" to="/home-shefs/dashboard/prenotification">
-          <IoIosNotifications/>
+            <IoIosNotifications/>
           </Link>
           <div className="relative cursor-pointer">
             <FaUserCircle onClick={() => setIsUserProfile(!isUserProfile)} />
@@ -47,7 +59,7 @@ const Navbar = () => {
                       Profile
                     </p>
                   </Link>
-                  <p className="cursor-pointer px-4 hover:shadow-md hover:bg-blue-200">
+                  <p className="cursor-pointer px-4 hover:shadow-md hover:bg-blue-200" onClick={handleLogout}>
                     Logout
                   </p>
                 </div>
@@ -77,7 +89,7 @@ const Navbar = () => {
             <span className="w-12 h-6 flex items-center flex-shrink-0 ml-4 p-1 bg-red-400 rounded-full duration-300 ease-in-out peer-checked:bg-green-600 after:w-4 after:h-4 after:bg-white after:rounded-full after:shadow-md after:duration-300 peer-checked:after:translate-x-6 group-hover:after:translate-x-1"></span>
           </label>
           <Link className="cursor-pointer" to="/home-shefs/dashboard/prenotification">
-          <IoIosNotifications className="text-2xl" />
+            <IoIosNotifications className="text-2xl" />
           </Link>
           <div className="relative cursor-pointer">
             <FaUserCircle onClick={() => setIsUserProfile(!isUserProfile)} className="text-2xl" />
@@ -89,7 +101,7 @@ const Navbar = () => {
                       Profile
                     </p>
                   </Link>
-                  <p className="cursor-pointer px-4 hover:shadow-md hover:bg-blue-200">
+                  <p className="cursor-pointer px-4 hover:shadow-md hover:bg-blue-200" onClick={handleLogout}>
                     Logout
                   </p>
                 </div>
