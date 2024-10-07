@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../styles/Shop.css";
 import axiosInstance from "../utils/axiosService"; // Use your axiosInstance
 import food from "../images/picklepapad.jpeg";
+import { useNotification } from '../components/NotificationContext';
 
 function Shop() {
   useEffect(() => {
@@ -13,7 +14,7 @@ function Shop() {
   const [products, setProducts] = useState([]); 
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [isMobile, setIsMobile] = useState(false);
-
+  const { triggerNotification } = useNotification();
   // Fetch products from backend
   useEffect(() => {
     const fetchProducts = async () => {
@@ -79,7 +80,8 @@ function Shop() {
   const addToCart = (product) => {
     console.log("Add to Cart clicked for:", product.itemname);
     if (!isLoggedIn()) {
-      alert('Please log in to add items to your cart');
+      // alert('Please log in to add items to your cart');
+      triggerNotification('Please log in to add items to your cart','red')
       return;
     }
 
@@ -137,12 +139,12 @@ function Shop() {
             {filteredProducts.length > 0 ? (
               filteredProducts.map((product) => (
                 <div key={product._id} className="card">
-                  <img src={product.image} alt={product.itemname} />
+                  <img src={product.image} alt={product.itemname} className="card-image"/>
                   <h3>{product.itemname}</h3>
                   <p>Chef: {product.chef?.name || 'Unknown'}</p>  {/* Chef's name */}
                   <p>Quantity: {product.quantity} {product.unit || ''}</p> {/* Quantity with Unit */}
                   <p>Price: ₹{product.price}</p>
-                  <button onClick={() => addToCart(product)}>Add to Cart</button>
+                  <button onClick={() => addToCart(product)} className="addtocart-button">Add to Cart</button>
                 </div>
               ))
             ) : (

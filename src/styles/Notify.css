@@ -1,0 +1,26 @@
+/* Notification.css */
+.notification {
+    position: fixed;
+    top:70px;
+    left: 0px;
+    padding: 15px;
+    color: white;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    transition: opacity 0.5s ease-in-out;
+  }
+  
+  @media(max-width:890px){
+    .notification {
+        position: fixed;
+        top: 50px;
+        left: 50px;
+        padding: 5px;
+        color: white;
+        border-radius: 5px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        transition: opacity 0.5s ease-in-out;
+      }
+  }
