@@ -3,7 +3,7 @@ import AfterLoginNavbar from "../components/AfterLoginNavbar";
 import "../styles/EditProfile.css";
 import pizza from "../images/pizza.png";
 import pasta from "../images/pasta.jpg";
-import axios from "axios";
+import axiosInstance from '../../utils/axiosService';
 import { jwtDecode } from "jwt-decode";
 
 
@@ -22,29 +22,50 @@ export default function EditProfile() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isConfirmed, setIsConfirmed] = useState(false);
-  
+  // Add a new state for preOrders
+  const [preorders, setPreorders] = useState([]);
 
- // Fetch user ID from token
- useEffect(() => {
-  const token = localStorage.getItem("token");
-  if (token) {
-    const decodedToken =jwtDecode(token);
-    setUserId(decodedToken.id);
-    fetchUserDetails(decodedToken.id);
-  }
-}, []);
+    // Fetch user ID from token and user details/preorders
+    useEffect(() => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        const decodedToken = jwtDecode(token);
+        setUserId(decodedToken.id);
+        fetchUserDetails(decodedToken.id);
+      }
+    }, []);
+   
 
- // Fetch user details from the backend
- const fetchUserDetails = async (id) => {
-  try {
-    const response = await axios.get(`http://localhost:4000/api/user/getUser/${id}`);
-    setUserDetails(response.data.user);
-    setAddresses(response.data.user.addresses || []);
-  }  catch (error) {
-    console.error("Error fetching user details:", error);
-  }
-};
   
+    const fetchUserDetails = async (id) => {
+      try {
+        const response = await axiosInstance.get(`/api/user/getUser/${id}`);
+        setUserDetails(response.data.user);
+        fetchUserPreorders(); // Fetch pre-orders after getting user details
+      } catch (error) {
+        console.error("Error fetching user details:", error);
+      }
+    };
+  
+    const fetchUserPreorders = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          console.error("No token found. Please log in again.");
+          return;
+        }
+  
+        const response = await axiosInstance.get(`/preOrder/get-preOrder`, {
+          headers: {
+            "Authorization": `Bearer ${token}`, // Send the token in the request headers
+          },
+        });
+        setPreorders(response.data);
+      } catch (error) {
+        console.error("Error fetching pre-orders:", error);
+      }
+    };
+
 
   const handleClick = (newView) => {
     setView(newView);
@@ -69,24 +90,24 @@ export default function EditProfile() {
     // },
   ];
 
-  const preorders = [
-    {
-      orderId: "54321",
-      orderName: "Vegan Burger",
-      quantity: 1,
-      foodImage: pizza,
-      paidAmount: "Rs150.00",
-      deliveryDate: "2024-09-30",
-    },
-    // {
-    //   orderId: "54322",
-    //   orderName: "Salad Bowl",
-    //   quantity: 3,
-    //   foodImage: pasta,
-    //   paidAmount: "Rs350.00",
-    //   deliveryDate: "2024-10-02",
-    // },
-  ];
+  // const preorders = [
+  //   {
+  //     orderId: "54321",
+  //     orderName: "Vegan Burger",
+  //     quantity: 1,
+  //     foodImage: pizza,
+  //     paidAmount: "Rs150.00",
+  //     deliveryDate: "2024-09-30",
+  //   },
+  //   // {
+  //   //   orderId: "54322",
+  //   //   orderName: "Salad Bowl",
+  //   //   quantity: 3,
+  //   //   foodImage: pasta,
+  //   //   paidAmount: "Rs350.00",
+  //   //   deliveryDate: "2024-10-02",
+  //   // },
+  // ];
 
   // const addresses = [
   //   {
@@ -140,23 +161,30 @@ export default function EditProfile() {
     </div>
   );
 
+  console.log(preorders);
+
   const renderPreorders = () => (
     <div className="orders-list">
       <h3>Preorders</h3>
-      {preorders.map((order) => (
-        <div className="order-item" key={order.orderId}>
-          <img src={order.foodImage} alt={order.orderName} />
-          <div>
-            <h5>{order.orderName}</h5>
-            <p>Order ID: {order.orderId}</p>
-            <p>Quantity: {order.quantity}</p>
-            <p>Amount Paid: {order.paidAmount}</p>
-            <p>Delivery Date: {order.deliveryDate}</p>
+      {preorders.length > 0 ? (
+        preorders.map((order) => (
+          <div className="order-item" key={order._id}> {/* Use order._id instead of order.orderId */}
+            <img src={order.foodImage} alt={order.orderName} /> {/* Adjust based on your pre-order structure */}
+            <div>
+              <h5>{order.orderName}</h5>
+              <p>Order ID: {order._id}</p> {/* Use order._id */}
+              <p>Quantity: {order.quantity}</p>
+              <p>Amount Paid: {order.paidAmount}</p>
+              <p>Delivery Date: {order.deliveryDate}</p>
+            </div>
           </div>
-        </div>
-      ))}
+        ))
+      ) : (
+        <p>No preorders available.</p>
+      )}
     </div>
   );
+  
 
   // const renderAddresses = () => (
   //   <div className="address-list">
@@ -260,8 +288,8 @@ const handleConfirmDelete = async (e) => {
   console.log("Password:", password);
 
   try {
-    const response = await axios.post(
-      `http://localhost:4000/api/user/delete-UserAccount`,
+    const response = await axiosInstance.post(
+      `/api/user/delete-UserAccount`,
       { email, password },
       {
         headers: {
@@ -319,14 +347,10 @@ const handleConfirmDelete = async (e) => {
     const updatedDetails = { ...userDetails, [editField]: inputValue };
 
     try {
-      const response = await axios.put(
-        `http://localhost:4000/api/user/editUser/${userId}`, // use dynamic userId
+      const response = await axiosInstance.put(
+        `/api/user/editUser/${userId}`, // use dynamic userId
         updatedDetails,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+        
       );
       
 
