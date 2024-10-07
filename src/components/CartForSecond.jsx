@@ -1,130 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/CartForSecond.css";
 import opendoor from "../images/opendoor.png";
 import closedoor from "../images/closedoor.png";
 import { useNavigate } from "react-router-dom";
-
-const initialChefs = [
-  {
-    _id: "1",
-    image: "https://via.placeholder.com/150",
-    average_rating: 4.5,
-    name: "Chef Alex",
-    cuisine: ["Italian", "Mexican"],
-    specialities: ["Pasta", "Tacos"],
-    is_active: true,
-    location: "New York, NY",
-  },
-  {
-    _id: "2",
-    image: "https://via.placeholder.com/150",
-    average_rating: 4.7,
-    name: "Chef Maria",
-    cuisine: ["Indian", "Thai"],
-    specialities: ["Biryani", "Green Curry"],
-    is_active: false,
-    location: "San Francisco, CA",
-  },
-  {
-    _id: "3",
-    image: "https://via.placeholder.com/150",
-    average_rating: 4.7,
-    name: "Chef Maria",
-    cuisine: ["Indian", "Thai"],
-    specialities: ["Biryani", "Green Curry"],
-    is_active: false,
-    location: "San Francisco, CA",
-  },
-  {
-    _id: "4",
-    image: "https://via.placeholder.com/150",
-    average_rating: 4.7,
-    name: "Chef Maria",
-    cuisine: ["Indian", "Thai"],
-    specialities: ["Biryani", "Green Curry"],
-    is_active: false,
-    location: "San Francisco, CA",
-  },
-  {
-    _id: "5",
-    image: "https://via.placeholder.com/150",
-    average_rating: 4.7,
-    name: "Chef Maria",
-    cuisine: ["Indian", "Thai"],
-    specialities: ["Biryani", "Green Curry"],
-    is_active: false,
-    location: "San Francisco, CA",
-  },
-  {
-    _id: "6",
-    image: "https://via.placeholder.com/150",
-    average_rating: 4.7,
-    name: "Chef Maria",
-    cuisine: ["Indian", "Thai"],
-    specialities: ["Biryani", "Green Curry"],
-    is_active: false,
-    location: "San Francisco, CA",
-  },
-  {
-    _id: "7",
-    image: "https://via.placeholder.com/150",
-    average_rating: 4.7,
-    name: "Chef Maria",
-    cuisine: ["Indian", "Thai"],
-    specialities: ["Biryani", "Green Curry"],
-    is_active: false,
-    location: "San Francisco, CA",
-  },
-  {
-    _id: "8",
-    image: "https://via.placeholder.com/150",
-    average_rating: 4.7,
-    name: "Chef Maria",
-    cuisine: ["Indian", "Thai"],
-    specialities: ["Biryani", "Green Curry"],
-    is_active: false,
-    location: "San Francisco, CA",
-  },
-  {
-    _id: "9",
-    image: "https://via.placeholder.com/150",
-    average_rating: 4.7,
-    name: "Chef Maria",
-    cuisine: ["Indian", "Thai"],
-    specialities: ["Biryani", "Green Curry"],
-    is_active: false,
-    location: "San Francisco, CA",
-  },
-];
-
-const additionalChefs = [
-  {
-    _id: "13",
-    image: "https://via.placeholder.com/150",
-    average_rating: 4.3,
-    name: "Chef Liam",
-    cuisine: ["French", "Spanish"],
-    specialities: ["Crepes", "Paella"],
-    is_active: true,
-    location: "Los Angeles, CA",
-  },
-  {
-    _id: "14",
-    image: "https://via.placeholder.com/150",
-    average_rating: 4.9,
-    name: "Chef Emily",
-    cuisine: ["Japanese", "Korean"],
-    specialities: ["Sushi", "Kimchi"],
-    is_active: false,
-    location: "Chicago, IL",
-  },
-  // Add more chefs for demo purposes
-];
+import axiosInstance from "../utils/axiosService"; // Import axiosInstance
 
 const CartForSecond = () => {
-  const [chefs, setChefs] = useState(initialChefs);
+  const [chefs, setChefs] = useState([]);
   const [showMore, setShowMore] = useState(false);
   const navigate = useNavigate();
+
+  // Fetch chefs from backend
+  useEffect(() => {
+    const fetchChefs = async () => {
+      try {
+        const response = await axiosInstance.get("api/chefs"); // Adjust this endpoint based on your backend route
+        setChefs(response.data); // Assuming backend returns an array of chefs
+      } catch (error) {
+        console.error("Error fetching chefs:", error);
+      }
+    };
+
+    fetchChefs();
+  }, []);
 
   const handleScroll = (event) => {
     const { scrollLeft, scrollWidth, clientWidth } = event.target;
@@ -134,24 +32,9 @@ const CartForSecond = () => {
   };
 
   const handleSeeMore = () => {
-    setChefs([...chefs, ...additionalChefs]);
-    setShowMore(false); 
     navigate('/chefs-near-you');
   };
 
-  // <div className="cart-containerForSecondMain">
-  //     <h1 className='text-3xl font-bold p-4'>DINE AT HOME</h1>
-
-  {
-    /* <div className="cart-containerForSecond" onScroll={handleScroll}>
-                {foodItems.map(item => (
-                    <div className="cart-itemForSecond" key={item.id}>
-                        <img src={item.image} alt={item.name} className="food-imageForSecond" />
-                        <h3 className="food-nameForSecond">{item.name}</h3>
-                    </div>
-                ))}
-            </div> */
-  }
   const handleCardClick = (chefData) => {
     navigate(`/chef-profile/${chefData._id}`, { state: chefData });
   };
@@ -164,8 +47,8 @@ const CartForSecond = () => {
         {chefs.map((chef) => (
           <RestaurantCard
             key={chef._id}
-            image={chef.image}
-            rating={chef.average_rating}
+            image={chef.profilePhoto || "https://via.placeholder.com/150"}
+            rating={chef.average_rating || "No rating"}
             name={chef.name}
             cuisine={chef.cuisine.join(", ")}
             specialities={chef.specialities.join(", ")}
@@ -193,7 +76,7 @@ const RestaurantCard = ({
   specialities,
   isOpen,
   location,
-  onClick
+  onClick,
 }) => {
   return (
     <div className="restaurant-card" onClick={onClick}>
