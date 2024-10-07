@@ -75,7 +75,7 @@ const MenuPage = () => {
               />
               <h3>{dish.foodName}</h3>
               <p>{dish.foodDescription}</p>
-              <p>Price: ${dish.amount}</p>
+              <p>Price: Rs {dish.amount}</p>
               {/* Display chef's name */}
               <p>Chef: {dish.chefId && dish.chefId.name ? dish.chefId.name : "Unknown"}</p>
               <button className="add-to-cart-btn"  onClick={() => handleAddToCart(dish)}>Add to Cart</button>

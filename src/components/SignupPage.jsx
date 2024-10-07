@@ -6,8 +6,10 @@ import toastService from '../utils/toastService';
 import tokenService from '../utils/tokenService';
 import { useState, useEffect, useRef } from "react";
 import axiosInstance from '../utils/axiosService';
+import { useNotification } from './NotificationContext';
 
 const SignupPage = () => {
+  const { triggerNotification } = useNotification();
   
   const handleSignupButton = async (e) => {
     e.preventDefault();
@@ -17,22 +19,21 @@ const SignupPage = () => {
     const password = formData.get('password');
 
     try {
-      // Send form data to the backend
       const response =await axiosInstance.post("/api/user/signup", { username, email, password });
       
 
       if (response.data.status) {
-        // Signup successful, you can navigate the user or show a success message
         alert("Signup successful!, Please Login!");
-        // navigate("/afterloginpage"); // Navigate to the desired page after successful signup
+        triggerNotification('Signup successful!, Please Login!','green')
       } else {
-        // Handle error from backend
-        alert(response.data.message || "Signup failed");
+        // alert(response.data.message || "Signup failed");
+        triggerNotification('Signup failed','red')
       }
     } catch (error) {
       console.error('Signup error: ', error);
       const errorMessage = error.response?.data?.message || 'Something went wrong, please try again';
       alert(`Signup failed: ${errorMessage}`);
+      // triggerNotification('Something went wrong, please try again','red')
     }
   }
 
