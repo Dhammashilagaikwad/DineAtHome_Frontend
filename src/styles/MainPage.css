@@ -1,0 +1,149 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400..900&family=Inria+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
+
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #f5f5f5;
+}
+.main-page-container{
+    width: 100%;
+    height:auto;
+    position: relative;
+    top: 4rem;
+}
+.main-page-row{
+    width: 100%;
+    height: 250px;
+    position: relative;
+}
+.main-page-container .image-text{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white; 
+}
+.main-page-container .image-text img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.main-page-row .overlay{
+  position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Black color with 50% opacity */
+    z-index: 1;
+}
+.main-page-row .text-overlay{
+    position: absolute;
+    z-index: 2; /* Position text above the overlay */
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    font-family: 'Cinzel';
+}
+.main-page-row .spanText{
+    font-size: "1.5rem";
+    color: yellow;
+}
+/* Existing styles for the main page */
+.howit-works-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+  flex-direction: row; /* Set row for desktop */
+}
+
+.card {
+  padding: 30px;
+  margin: 10px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  border: 3px solid;
+}
+
+.selection {
+  border-color: black;
+}
+
+.how-it-works {
+  border-color: #ff4500;
+  width: 43%;
+}
+
+.card-title {
+  color: black;
+  font-weight: 700;
+}
+
+.underline {
+  width: 50px;
+  height: 3px;
+  background-color: #000000;
+  margin: 10px;
+}
+
+.how-it-works ul,
+.selection ul {
+  list-style-type: disc;
+  text-align: left;
+  padding-left: 20px;
+  padding-top: 3%;
+}
+
+.how-it-works li,
+.selection li {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Media query for mobile view */
+@media (max-width: 768px) {
+  .howit-works-container {
+    flex-direction: column; /* Change to column for mobile view */
+  }
+
+  .howit-works-container .card {
+    width: 100%; /* Cards will take full width on mobile */
+  }
+
+  .main-page-container {
+    height: auto;
+  }
+
+  .main-page-row {
+    height: auto;
+  }
+
+  .main-page-container .image-text {
+    flex-direction: column;
+  }
+
+  .main-page-container .image-text img {
+    width: 100%;
+    height: auto;
+  }
+
+  .main-page-row .text-overlay {
+    font-size: 1rem;
+  }
+
+  .container {
+    flex-direction: column;
+  }
+
+  .text_overlay {
+    font-size: 1rem;
+  }
+}

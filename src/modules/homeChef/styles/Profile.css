@@ -1,0 +1,68 @@
+.profile-container {
+    width: 300px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+
+  
+  .upload-photoOfChef {
+    margin-bottom: 20px;
+  }
+  
+  .upload-photoOfChef label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .profile-photoOfChef {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-top: 10px;
+  }
+  
+  .edit-address {
+    margin-top: 20px;
+  }
+  
+  .edit-address button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .edit-address button:hover {
+    background-color: #0056b3;
+  }
+  
+  .address-input {
+    width: 100%;
+    margin-top: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .done-button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #28a745;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .done-button:hover {
+    background-color: #218838;
+  }
+  

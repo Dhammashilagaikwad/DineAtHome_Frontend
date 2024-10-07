@@ -1,0 +1,49 @@
+.bgPicForHomeinitForShop {
+  background-size: cover;
+  width: 100%;
+  position: fixed;
+  background: rgba(255, 255, 255, 0.2);
+  /* backdrop-filter: blur(5px);  */
+  filter: blur(2px);
+}
+
+.addItemBtBoxForShop {
+  display: flex;
+  justify-content: end;
+  /* background-color: rgb(229, 20, 20); */
+  padding: 2rem;
+}
+
+.addItemBtForShop {
+  background-color: rgb(247, 227, 111);
+  /* background-color: transparent; */
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  position: fixed;
+  top: 6rem;
+  z-index: 800;
+}
+
+/* .addItemBt:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(151, 146, 146, 0.5); 
+  } */
+
+@media (max-width: 600px) {
+
+  .bgPicForHomeinitForShop {
+    background-size: contain ;
+    width: 100%;
+    position: fixed;
+    background: rgba(255, 255, 255, 0.2);
+    /* backdrop-filter: blur(5px);  */
+    filter: blur(2px);
+  }
+  .addItemBtForShop {
+    top: 5rem;
+  }
+}

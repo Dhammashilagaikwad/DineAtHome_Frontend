@@ -1,0 +1,64 @@
+.PreOrder-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    margin: 20px auto;
+    padding: 16px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    background-color: #f9f9f9;
+    width: 100%;
+    max-width: 800px;
+  }
+  
+  .PreOrder-type {
+    font-size: 0.85em;
+    color: #555;
+    text-transform: uppercase;
+    font-weight: bold;
+    align-self: flex-start;
+    margin-bottom: 10px;
+    font-style: italic;
+  }
+  
+  .PreOrder-content {
+    width: 100%;
+  }
+  
+  .PreOrder-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    width: 100%;
+  }
+  
+  .PreOrder-title {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .PreOrder-date {
+    font-size: 0.9em;
+    color: #666;
+  }
+  
+  .PreOrder-details {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 5px;
+  }
+  
+  .PreOrder-qty, .PreOrder-price {
+    font-size: 0.9em;
+    color: #555;
+  }
+  
+  @media (max-width: 600px) {
+    .PreOrder-card {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
