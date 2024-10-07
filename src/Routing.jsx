@@ -46,6 +46,7 @@ const PaymentOptions = lazy(()=>import('./User/components/PaymentOptions'))
 const Menu = lazy(()=>import('./modules/homeChef/components/Menu'));
 const ChefShop=lazy(()=>import('./modules/homeChef/components/Shop'))
 const History =lazy(()=>import('./modules/homeChef/components/History'))
+const PreNotification=lazy(()=>import('./modules/homeChef/components/PreNotification'))
 
 function Layout() {
     const location = useLocation();
@@ -136,6 +137,7 @@ function Routing() {
           <Route path='/home-shefs/dashboard/shop' element={<ChefShop/>}/>
           <Route path='/home-shefs/dashboard/history' element={<History/>}/>
           <Route path='/home-shefs/dashboard/profile' element={<Profile/>}/>
+          <Route path='/home-shefs/dashboard/prenotification' element={<PreNotification/>}/>
         </Routes>
       </Suspense>
 
