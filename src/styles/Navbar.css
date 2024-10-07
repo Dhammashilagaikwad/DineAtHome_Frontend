@@ -515,6 +515,27 @@
   #languageIcon{
     font-size: 10px;
   }
+  .dropdown-options a {
+    display: block;
+    padding: 5px;
+    text-decoration: none;
+    color: rgb(254, 213, 51);
+  }
+  
+  .dropdown-options a:hover {
+    background-color: #218837;
+    color: white;
+  }
+  .aboutdropdown .aboutdropdown-options a{
+    display: block;
+    padding: 5px;
+    text-decoration: none;
+    color: rgb(254, 213, 51);
+  }
+  .aboutdropdown .aboutdropdown-options a:hover{
+    text-shadow: 1px 1px 1px white;
+    color: white;
+  }
   
 }
 
