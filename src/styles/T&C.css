@@ -1,0 +1,38 @@
+.forflex{
+  display: flex;
+  justify-content: center;
+  /* flex-direction: column; */
+}
+
+
+.TandCcard {
+  border: 2px solid black;
+  border-radius: 10px;
+  width: 520px;
+  padding: 20px;
+  margin: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.TandCcard-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  /* margin-bottom: 10px; */
+}
+
+.TandCcard-content {
+  max-height: 200px; /* Set the max height for scrollable content */
+  overflow-y: auto; /* Enable vertical scrolling if content overflows */
+}
+
+.TandCcard-content ol {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+.TandCcard-content ol li {
+  margin-bottom: 10px;
+  line-height: 1.5;
+}

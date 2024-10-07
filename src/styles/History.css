@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400..900&family=Inria+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+
+
+.ReqCont{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    flex-direction: column;
+    top: 7rem;
+}
+
+.mainBoxR{
+    padding: 3rem;
+    background-color: bisque;
+    height: 10rem;
+    width: 70%;
+    border: 2px solid black;
+    border-radius: 2rem;
+}
+
+.boxR{
+    position: relative;
+    /* top: 3rem; */
+    background-color: rgb(217, 130, 24);
+    /* height: 1rem; */
+    border: 1px solid black;
+    
+}

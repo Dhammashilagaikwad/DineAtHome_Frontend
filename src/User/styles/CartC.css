@@ -1,0 +1,74 @@
+
+.AppCart {
+  position: relative;
+  top: 0rem;
+  /* width: 70%; */
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6rem 0 0rem 0;
+}
+
+.cart-item {
+  border: 1px solid #ccc;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 900px;
+  background-color: #f2f2f2;
+}
+
+.cart-details {
+  display: flex;
+  align-items: center;
+}
+
+.cart-image {
+  width: 100px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.cart-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.cart-buttons {
+  display: flex;
+  /* background-color: aqua; */
+  align-items: center;
+}
+
+.increase-button,
+.decrease-button {
+  margin: 0 5px;
+  padding: 2px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 20px;
+}
+
+.increase-button:hover,
+.decrease-button:hover {
+  background-color: #0056b3;
+}
+
+.delete-button {
+  margin-left: 10px;
+  padding: 5px 10px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.delete-button:hover {
+  background-color: #c82333;
+}

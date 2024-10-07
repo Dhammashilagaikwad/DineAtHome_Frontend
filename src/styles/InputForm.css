@@ -1,0 +1,101 @@
+/* Container for the form */
+.iform-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 30px;
+  border-radius: 12px;
+  background: rgb(255, 255, 255);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 20px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+}
+
+/* Form title styling */
+.iform-title {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Form group styling for grid layout */
+.iform-group {
+  margin-bottom: 30px; /* Increased margin to provide space for error messages */
+}
+
+/* Flexbox for two input fields side by side */
+.iform-group.inline {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px; /* Add space between inline fields */
+}
+
+/* Input wrapper to position error messages */
+.iform-input-wrapper {
+  position: relative;
+  flex: 1; /* Allow inputs to take available space */
+}
+
+/* Styling for input fields */
+.iform-input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid rgb(221, 221, 221);
+  font-size: 16px;
+  box-sizing: border-box;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 5px inset;
+}
+
+/* Input field focus effect */
+.iform-input:focus {
+  border-color: #66afe9;
+  outline: none;
+  box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.1),
+    0 0 5px rgba(102, 175, 233, 0.5); /* Maintain inner shadow on focus */
+}
+
+/* Submit button styling */
+.iform-submit {
+  width: 100%;
+  padding: 12px;
+  background-color: #28a745;
+  border: none;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+/* Submit button hover effect */
+.iform-submit:hover {
+  background-color: #218838;
+}
+
+/* Error message styling */
+.iform-error {
+  color: #ff4d4d;
+  font-size: 14px;
+  margin-top: 5px; /* Space between input and error message */
+}
+
+/* Styling for mobile devices */
+@media (max-width: 600px) {
+  .iform-container {
+    padding: 20px;
+  }
+
+  .iform-title {
+    font-size: 20px;
+  }
+
+  .iform-group.inline {
+    flex-direction: column; /* Stack fields vertically on small screens */
+  }
+
+  .iform-input-wrapper {
+    margin-bottom: 10px; /* Space between stacked fields */
+  }
+}

@@ -1,0 +1,102 @@
+.side {
+  position: fixed;
+  top: 5rem;
+  padding: 15px;
+  z-index: 800;
+}
+
+.duty-toggle {
+  background-color: #ddd; /* Default light grey */
+  color: black;
+  border: none;
+  padding: 9px 12px;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  border-radius: 30px;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  width: 133px;
+  outline: none;
+}
+
+.duty-toggle.on {
+  background-color: #4caf50; /* Green when ON */
+  color: white;
+}
+
+.duty-toggle.off {
+  background-color: #f44336; /* Red when OFF */
+  color: white;
+}
+
+.status-text {
+  flex-grow: 1;
+  text-align: start;
+}
+
+.toggle-indicator {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  width: 21px;
+  height: 21px;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: left 0.3s ease;
+}
+
+.duty-toggle.on .toggle-indicator {
+  left: 105px; /* Adjusted for proper alignment on the right when ON */
+}
+
+.duty-toggle.off .toggle-indicator {
+  left: 93px; /* Returns to start position when OFF */
+}
+
+
+/* @media (max-width: 600px) {
+
+  .side{
+    background-color: rgb(255, 255, 255);
+    width: 100%;
+    top: 3.2rem;
+    padding: 2rem 1rem 1rem 1rem ;
+    }
+
+} */
+
+
+
+@media (max-width: 1520px) and (min-width: 1272px) {
+  .side {
+    background-color: rgb(255, 255, 255);
+    width: 100%;
+    top: 3.2rem;
+    padding: 2rem 1rem 1rem 1rem;
+  }
+}
+
+
+@media (max-width: 1106px) and (min-width: 846px) {
+  .side {
+    background-color: rgb(255, 255, 255);
+    width: 100%;
+    top: 3.2rem;
+    padding: 2rem 1rem 1rem 1rem;
+  }
+}
+
+@media (max-width: 800px) {
+
+  .side{
+    background-color: rgb(255, 255, 255);
+    width: 100%;
+    top: 3.2rem;
+    padding: 2rem 1rem 1rem 1rem ;
+    }
+
+}

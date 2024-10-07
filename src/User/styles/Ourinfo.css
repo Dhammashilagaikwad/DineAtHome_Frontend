@@ -1,0 +1,168 @@
+.our-info-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ourinfo-row {
+    width: 100%;
+    height: 300px;
+    position: relative;
+}
+
+.ourinfo-row .image-text {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.ourinfo-row .img-food {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.ourinfo-row .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.ourinfo-row .text-overlay {
+    position: absolute;
+    z-index: 2;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    font-family: 'Cinzel';
+}
+
+.container2 {
+    width: 100%;
+    height: 350px;
+    position: relative;
+    margin-bottom: 40px;
+}
+
+.mumbai {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.9;
+}
+
+.dineathome {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+}
+.mission-vision {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.mission-vision-row {
+    display: flex;
+    flex-direction: column;
+    /* flex-wrap: wrap; */
+    width: 60%; 
+}
+.mission, .vision {
+    display: flex;
+    flex-direction: row; /* Ensure that the image and text are in a row */
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 0px; 
+    margin-top: 20px;
+    margin-left: 50px;
+}
+
+.mission img, .vision img {
+    width: 200px;
+    height: 200px;
+    margin-right: 20px; /* Add some space between the image and the text */
+}
+
+.mission p, .vision p {
+    font-family: 'Nunito', sans-serif;
+    color: black;
+    font-size: 20px;
+    max-width: 500px; /* Set a maximum width for the text to control its size */
+}
+.our-info-image{
+    width: 40%;
+    height: auto;
+}
+.our-info-image img{
+    width: 100%;
+    height: 600px;
+}
+@media (max-width: 790px) {
+    .our-info-container {
+        width: 100%;
+        height: auto;
+    }
+
+    .ourinfo-row {
+        height: 250px; /* Adjust height for mobile */
+    }
+
+    .mission-vision {
+        flex-direction: column; /* Stack mission and vision vertically */
+        align-items: center; /* Center align items */
+    }
+
+    .mission-vision-row {
+        width: 100%; /* Full width for mobile */
+    }
+
+    .mission, .vision {
+        width: 100%; /* Full width for mobile */
+        flex-direction: row; /* Stack image and text vertically */
+        align-items: center; /* Center align items */
+        margin-left: 0; /* Reset left margin */
+    }
+
+    .mission img, .vision img {
+        width: 100px; /* Smaller images for mobile */
+        height: 100px; /* Maintain aspect ratio */
+        margin-right: 0; /* Reset right margin */
+        margin-bottom: 10px; /* Add spacing below images */
+    }
+
+    .mission p, .vision p {
+        font-size: 10px; /* Smaller font size for mobile */
+        text-align: center; /* Center text */
+    }
+
+    .our-info-image {
+        width: 100%; 
+    }
+
+    .our-info-image img {
+        height: auto; /* Maintain aspect ratio */
+    }
+
+    .dineathome {
+        font-size: 14px; /* Smaller font size for mobile */
+        padding: 5px; /* Less padding */
+    }
+}

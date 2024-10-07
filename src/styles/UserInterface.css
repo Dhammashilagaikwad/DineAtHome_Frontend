@@ -1,0 +1,726 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400..900&family=Inria+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+
+.user-container {
+    position: relative;
+    width: 100%;
+    top: 5rem;
+    height: auto;
+    overflow: hidden;
+    display: flex;  /* Added flexbox */
+    flex-direction: column;
+    justify-content: center;  /* Center vertically */
+    align-items: center;  /* Center horizontally */
+}
+
+.left-image-section {
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0;
+}
+.left-image-section img:first-child {
+    width: 100%;
+    height: auto;
+    animation: slideUpBackground 1.5s ease-in-out; /* Slide-up animation for food1 */
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+/* Flyingfood image transitioning from bottom to top */
+.left-image-section img:last-child {
+    position: absolute;
+    bottom: 0; /* Start from the bottom */
+    left: 0px;
+    top: 0rem;
+    width: 60%; 
+    height: auto;
+    animation: slideUp 2s ease-in-out; /* Slide-up animation for flyingfood */
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+.tagline-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    position: absolute;
+    top:40%;  /* Adjust as per your design */
+    left: 68%; /* Adjust position */
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+/* Styling for the main tagline */
+.food-tagline {
+    font-size:46px;
+    letter-spacing: 0;
+    word-spacing: 5px;
+    font-weight: bold;
+    color: #03770f;
+    font-family: 'Cinzel';
+    animation: bounceTagline 2s ease-in-out;
+    animation-delay: 1.5s;
+    margin: 0;
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+/* Styling for the secondary tagline */
+.food-tagline1 {
+    font-size: 1.9rem;
+    font-weight: bold;
+    color: #03770f;
+    font-family: 'Nunito';
+    animation: bounceTagline 2s ease-in-out;
+    animation-delay: 1.5s;
+    padding: 0;
+    margin: 20px 0;
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+.buttonorder{
+    position: relative;
+    padding: 15px;
+    margin-bottom: 15px;
+    animation: bounceTagline 2s ease-in-out;
+    animation-delay: 1.5s;
+    width: 150px;
+    opacity: 0;
+    animation-fill-mode: forwards;
+    color: #084816;
+    background-color: white;
+    border: 1px solid grey;
+    box-shadow: 1px 2px 5px gray;
+}
+
+.buttonorder:hover{
+    position: relative;
+    padding: 15px;
+    margin-bottom: 15px;
+    color: white;
+    background-color: #084816;
+    border: 1px solid grey;
+    box-shadow: 1px 2px 5px gray;
+    cursor: pointer;
+}
+/* Add these CSS classes to your existing CSS file */
+
+.animate {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+  }
+  
+  /* Initial state for elements before animation starts */
+  .left-image-section img {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  
+  .tagline-container h1,
+  .tagline-container h3,
+  .tagline-container .buttonorder {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+.explore-web {
+    width: 100%;
+    height: 450px;
+    background-color: #f5f5f5;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+#head-explore {
+    text-align: center;
+    padding-top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 30px;
+}
+.explore-points {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    list-style: none;
+    padding: 0;
+    height: 100%;
+    margin: 0 auto;
+    width: 100%; /* Adjust width to fit the parent container */
+}
+.explore-points li {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 10px;
+    height: 300px;
+    box-sizing: border-box;
+}
+
+/* Initial state for the images */
+.circle-image {
+    width: 180px;
+    height: 170px;
+    border: 7px solid #f9f9f9;
+    box-shadow: 1px 2px 6px grey;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0; /* Initially hidden */
+    transform: translateY(20px); /* Initially moved down */
+}
+
+/* Animate class to handle visibility and position */
+.animate .circle-image {
+    opacity: 1;
+    transform: translateY(0); /* Move to original position */
+    transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+}
+
+.circle-image:hover {
+    background-color: rgba(255, 255, 255, 0.663);
+    opacity: 0.6;
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.explore-text {
+    font-size: 16px;
+    font-family: 'Nunito';
+    text-align: center;
+    min-height: 50px;
+}
+
+/* Keyframes for sliding up effect */
+/* @keyframes slideUpCircle {
+    0% {
+        transform: translateY(100%); 
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0); 
+        opacity: 1;
+    }
+}
+
+
+.explore-points li:nth-child(1) .circle-image {
+    animation: slideUpCircle 1s ease-in-out forwards;
+    animation-delay: 0.2s;
+}
+
+.explore-points li:nth-child(2) .circle-image {
+    animation: slideUpCircle 1s ease-in-out forwards;
+    animation-delay: 0.4s; 
+}
+
+.explore-points li:nth-child(3) .circle-image {
+    animation: slideUpCircle 1s ease-in-out forwards;
+    animation-delay: 0.6s;
+}
+
+.explore-points li:nth-child(4) .circle-image {
+    animation: slideUpCircle 1s ease-in-out forwards;
+    animation-delay: 0.8s; 
+}
+
+.explore-points li:nth-child(5) .circle-image {
+    animation: slideUpCircle 1s ease-in-out forwards;
+    animation-delay: 1s; 
+}
+
+.explore-points li:nth-child(6) .circle-image {
+    animation: slideUpCircle 1s ease-in-out forwards;
+    animation-delay: 1.2s; 
+} */
+
+/*************************How to order***************************/
+.how-to-order {
+    position: relative;
+    width: 100%;
+    top: 0rem;
+    height: 800px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap
+}
+
+.how-to-order img:first-child {
+    width: 100%;
+    height: auto;
+    opacity: 0.3;
+}
+
+.how-to-order img:last-child{
+    width: 100%;
+    height: auto;
+    opacity: 1;
+    left: 50%;
+    top: 0;
+}
+
+.content4 {
+    position: absolute;
+    top: 0;
+    left: -350px;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    flex-wrap: wrap;
+}
+.content4:first-child{
+    text-align: center;
+    left:0
+}
+.content4 h2{
+    width:auto;
+    left: 20%;
+    top: 0;
+}
+.how-to-order #how {
+    text-align: center;
+    padding-bottom: 0px; /* Space below the heading */
+    position: relative; /* Ensure it's in front of the background image */
+    z-index: 1; /* Place it above the background image */
+}
+
+.left-part ul {
+    padding-top: 0%;
+    list-style: none;
+}
+
+#points1 {
+    color: black;
+    background-color: white;
+    margin: 20px;
+    font-family: 'Inria serif';
+    font-size: 16px;
+    padding-left: 0;
+    display: flex;
+    flex-direction: row;
+    text-align: left;
+    padding-top: 10px;
+    justify-content: flex-start;
+    align-items: center;
+    opacity: 0;
+    transform: translateX(-100%);
+    animation: slide-in 1s forwards;
+}
+
+#points1 p {
+    padding-left: 10px;
+    font-family: 'Inria serif';
+}
+
+#smallicons {
+    width: 40px;
+    height: 40px;
+}
+.right-part{
+    position: absolute;
+    opacity: 0;
+    animation: slide-in 1s forwards;
+    width: 40%;
+    z-index: 2;
+    right: 30px;
+}
+@keyframes slide-in {
+    to {
+        opacity: 1;
+        transform: translateX(50px);
+    }
+}
+
+/*****************************************************************/
+.we-are{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+    height: 600px;
+    position: relative;
+}
+.we-are img{
+    height: 60%;
+    width: 300px;
+    padding-bottom: 0px;
+    margin: 50px;
+}
+.we-are p{
+    position: absolute;
+    padding: 30%;
+    font-size: 15px;
+    font-family: 'Nunito';
+}
+.we-are h5{
+    position: absolute;
+    font-size: 15px;
+    padding: 30px 100px;
+    font-family: 'Nunito';
+}
+
+/* Keyframes for food1 sliding up */
+@keyframes slideUpBackground {
+    0% {
+        transform: translateY(100%); /* Start from below */
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0); /* End at original position */
+        opacity: 1;
+    }
+}
+
+/* Keyframes for flyingfood sliding up */
+@keyframes slideUp {
+    0% {
+        transform: translateY(100%); /* Start from below */
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0); /* End at original position */
+        opacity: 1;
+    }
+}
+
+/* Bounce animation for the taglines */
+@keyframes bounceTagline {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    40% {
+        transform: translateY(-30px);
+    }
+    60% {
+        transform: translateY(-15px);
+    }
+}
+/* 
+@media(max-width:1550px){
+    .food-tagline{
+        font-size: 2rem;
+    }
+} */
+
+@media(max-width:1180px){
+    .food-tagline{
+        font-size: 1.6rem;
+    }
+    .food-tagline1{
+        font-size: 1.5rem;
+    }
+    .explore-points{
+        gap: 15px;
+    }
+}
+
+@media(max-width:991px){
+
+    body {
+        margin: 0;
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+    .food-tagline{
+        font-size: 1.7rem;
+        letter-spacing: 0;
+        word-spacing: 0;
+    }
+    .food-tagline1{
+        font-size: 1.5rem;
+    }
+    .buttonorder{
+        padding: 5px;
+        margin-bottom: 10px;
+    }
+    #head-explore {
+        padding-top: 30px;
+        padding-bottom: 20px;
+    }
+
+    .explore-points li {
+        height: 250px; /* Adjust height for smaller screens */
+        max-width: 250px; /* Adjust max width for smaller screens */
+    }
+    .how-to-order {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: auto;
+    }
+
+    .how-to-order img {
+        width: 100%;
+        height:600px;
+        opacity: 0.3;
+    }
+
+    /* Ensure content inside .content4 fits well */
+    .content4 {
+        padding: 20px; /* Add padding for spacing */
+        text-align: center;
+        height: auto; /* Allow dynamic height */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .content4 #how{
+        font-size: 20px;
+        padding-top: 0%;
+    }
+
+    #points1 {
+        color: black;
+        background-color: white;
+        margin: 10px;
+        font-family: 'Inria serif';
+        font-size: 12px;
+        padding: 0;
+        display: flex;
+        flex-direction: row;
+        text-align: left;
+        justify-content: flex-start;
+        align-items: center;
+        opacity: 0;
+        transform: translateX(-100%);
+        animation: slide-in 1s forwards;
+    }
+
+    #points1 p {
+        padding-left: 5px;
+        padding-top: 10px;
+    }
+
+    #smallicons {
+        width: 20px;
+        height: 20px;
+    }
+
+    ul {
+        padding-top: 4%;
+    }
+}
+
+@media (max-width: 790px) {
+    .user-container {
+        position: relative;
+        width: 100%;
+        height: 300px;
+        top: 2rem;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .left-image-section img:first-child {
+        width: 100%;
+        height: auto;
+        animation: slideUpBackground 1.5s ease-in-out;
+        opacity: 0;
+        animation-fill-mode: forwards;
+    }
+
+    .left-image-section img:last-child {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60%;
+        top: 0;
+        height: auto;
+        animation: slideUp 2s ease-in-out;
+        opacity: 0;
+        animation-fill-mode: forwards;
+    }
+
+    .tagline-container {
+        top: 50%;
+    }
+
+    .food-tagline {
+        font-size: 1rem;
+        margin: 0;
+    }
+
+    .food-tagline1 {
+        font-size: 0.7rem;
+        padding: 0;
+        margin-top: 10px;
+    }
+
+    .buttonorder {
+        padding: 5px;
+        margin-bottom: 5px;
+        font-size: 9px;
+        width: 80px;
+    }
+    .buttonorder:hover{
+        padding: 5px;
+        margin-bottom: 5px;
+        font-size: 9px;
+        width: 80px;
+    }
+
+    #head-explore {
+        padding-top: 30px;
+        padding-bottom: 0;
+        margin-bottom: 0;
+        font-size: 0.7rem;
+    }
+
+    .explore-points {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        padding: 0;
+        margin: 0;
+    }
+
+    .explore-points li {
+        margin: 10px;
+        padding: 0;
+        max-height: 170px;
+        max-width: 100px;
+    }
+
+    .circle-image {
+        width: 80px;
+        height: 70px;
+        border: 1px solid white;
+    }
+
+    .explore-web {
+        flex-wrap: wrap;
+        height: 400px;
+    }
+
+    .explore-text {
+        font-size: 10px;
+    }
+
+    /* .how-to-order section adjustments for mobile view */
+    .how-to-order {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 900px;
+        top:6rem;
+    }
+
+    .how-to-order img:first-child {
+        width: 100%;
+        height:700px;
+        opacity: 0.3;
+    }
+
+    .how-to-order img:last-child{
+        opacity: 1;
+        height: 300px;
+        width: 300px;
+        position: absolute;
+        left: 10%;
+        top:0px;
+        margin: 0;
+    }
+
+    /* Ensure content inside .content4 fits well */
+    .content4 {
+        padding: 0px; /* Add padding for spacing */
+        text-align: center;
+        height: auto; 
+        left:-60px;/* Allow dynamic height */
+        display: flex;
+        /* flex-direction: column; */
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    .content4 #how{
+        font-size: 0.7rem;
+        padding-top: 0%;
+        padding-bottom: 0;
+    }
+    .right-part{
+        width: 100%;
+        height: auto;
+    }
+    .right-part img{
+        width: 100%;
+        height: auto;
+        left: 50px;
+        top: 0px;
+    }
+
+    #points1 {
+        font-size: 10px;
+        padding-left: 0px;
+        flex-direction: row;
+        text-align: left;
+        justify-content: flex-start;
+        align-items: center;
+        opacity: 0;
+        top: 0;
+        margin-top: 0;
+        transform: translateX(-100%);
+        animation: slide-in 1s forwards;
+    }
+
+    #points1 p {
+        padding-left: 5px;
+        padding-top: 10px;
+    }
+
+    #smallicons {
+        width: 20px;
+        height: 20px;
+    }
+    ul{
+        padding-top: 0;
+    }
+    .we-are{
+        height:auto;
+    }
+    .we-are img{
+        height: 60%;
+        width: 250px;
+        padding-bottom: 0px;
+        margin: 50px;
+    }
+    .we-are p{
+        font-size: 10px;
+        top: 18%;
+    }
+    .we-are h5{
+        font-size: 10px;
+        top: 0%;
+        padding: 10px;
+        /* margin: 10px; */
+    }
+}

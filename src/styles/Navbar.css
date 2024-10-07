@@ -1,0 +1,525 @@
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap");
+
+/* .navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f9f9f9; 
+  padding: 10px 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+} */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: transparent; /* Initially transparent */
+  padding: 10px 20px;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+  position: fixed; /* Fix the position at the top */
+  top: 0; /* Align to the top */
+  left: 0; /* Align to the left */
+  right: 0; /* Align to the right */
+  transition: background-color 0.3s ease; /* Smooth transition */
+  z-index: 1000; /* Ensure it stays on top of other content */
+}
+
+.navbar.scrolled {
+  background-color: #ffffff; /* Background color on scroll */
+}
+
+/* Other existing styles remain unchanged */
+
+.logo {
+  font-family: "Dancing Script", cursive;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-size: 2rem;
+  color: green;
+  font-weight: 900;
+  background-color: white;
+  border-radius: 5%;
+  padding: 5px;
+}
+
+/* Navigation Links */
+.nav-links {
+  display: flex;
+  list-style: none;
+  transition: all 0.3s ease;
+}
+
+.nav-links li {
+  margin: 0 15px;
+}
+
+.nav-links li {
+  text-decoration: none;
+  color: green;
+  transition: color 0.3s ease;
+  font-size: 1.2rem;
+  /* background-color: rgb(0, 255, 153); */
+  padding: 0px 1rem 0px 0rem;
+  border-radius: 20px;
+  font-weight: 400;
+}
+
+.nav-links a:hover {
+  color: green;
+  text-shadow: 1px 1px 1px grey;
+}
+/* 
+.nav-links a.active {
+  color: green;
+  text-decoration: none;
+} */
+
+/* Profile */
+.profile {
+  display: flex;
+  align-items: center;
+  /* display: flex; */
+  justify-content: space-around;
+  padding-left: 0px;
+  list-style: none;
+  font-size: 10px;
+}
+.profile li{
+  padding: 0 0px;
+  margin: 0 0px; 
+}
+
+/* .profile-img {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+} */ 
+.howorder {
+  font-size: 17px;
+  border-radius: 10px;
+  padding: 5px;
+  margin: 0;
+  background-color: #f8f8f8;
+  color: #218837;
+  border: 1px solid white;
+  box-shadow: 1px 1px 5px grey;
+}
+.howorder:hover {
+  background-color: #218837;
+  color: white;
+  border: 1px solid transparent;
+}
+
+.dropdown {
+  display: inline-block;
+  position: relative;
+}
+
+.dropdown-options {
+  display: none;
+  position: absolute;
+  background-color: #218837;
+  /* color: rgb(254, 213, 51); */
+  list-style-type: none;
+  padding: 7px;
+  margin: 3px;
+  font-family: "Nunito";
+  font-size: 13px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.3);
+  width: 145px;
+  z-index: 1000;
+  /* Ensure dropdown is above other content */
+}
+
+.dropdown-options a {
+  display: block;
+  padding: 5px;
+  text-decoration: none;
+  color: rgb(254, 213, 51);
+}
+
+.dropdown-options a:hover {
+  background-color: #218837;
+  color: white;
+}
+
+.dropdown.show .dropdown-options {
+  display: block;
+}
+
+#navs #joinus {
+  /* color: black; */
+  padding: 5px;
+  text-decoration: none;
+}
+/* Desktop Styles */
+.icons {
+  display: flex;
+  justify-content: space-around;
+  padding-left: 0px;
+  list-style: none;
+  font-size: 10px;
+}
+
+/* If needed, adjust the spacing further with margins */
+.icons li {
+  padding: 0 0px;
+  margin: 0 0px; /* Adjust as needed */
+}
+
+/** About us dropdown **/
+.aboutdropdown{
+  position: relative;
+  display: inline-block;
+}
+.aboutdropdown .aboutdropdown-options{
+  display: none;
+  position: absolute;
+  background-color: #218837;
+  /* color: black; */
+  list-style-type: none;
+  padding: 7px;
+  margin: 3px;
+  font-family: "Nunito";
+  font-size: 13px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.3);
+  width: 140px;
+  z-index: 1000;
+}
+.aboutdropdown .aboutdropdown-options a{
+  display: block;
+  padding: 5px;
+  text-decoration: none;
+  color: rgb(254, 213, 51);
+}
+.aboutdropdown .aboutdropdown-options a:hover{
+  text-shadow: 1px 1px 1px white;
+  color: white;
+}
+.aboutdropdown.show .aboutdropdown-options{
+  display: block;
+}
+
+/* Language Dropdown */
+.language-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.language-dropdown .dropdown-options {
+  display: none;
+  position: absolute;
+  background-color: #218837;
+  color: black;
+  list-style-type: none;
+  padding: 7px;
+  margin: 3px;
+  font-family: "Nunito";
+  font-size: 13px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.3);
+  width: 90px;
+  z-index: 1000;
+}
+
+.language-dropdown .dropdown-options a {
+  display: block;
+  padding: 5px;
+  text-decoration: none;
+  color: black;
+}
+
+.language-dropdown .dropdown-options a:hover {
+  text-shadow: 1px 1px 1px white;
+  color: white;
+}
+
+.language-dropdown.show .dropdown-options {
+  display: block;
+}
+
+#navs-icons {
+  color: #218838;
+  padding-top: 0px;
+  padding: 0;
+  font-size: 17px;
+}
+
+#languageIcon {
+  color: #218838;
+  cursor: pointer;
+  /* padding-top:5px; */
+  /* padding-right: 10px; */
+  /* padding-left: 10px; */
+  font-size: 17px;
+}
+
+/* Hamburger Menu Styling */
+.menu-toggle {
+  display: none;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+#navs-icons {
+  color: #218838;
+  padding-top: 0px;
+  padding: 0;
+  font-size: 17px;
+}
+
+#languageIcon {
+  color: #218838;
+  cursor: pointer;
+  /* padding-top:5px; */
+  /* padding-right: 10px; */
+  /* padding-left: 10px; */
+  font-size: 17px;
+}
+
+
+.slide-panel {
+  position: fixed; /* Stay fixed in the viewport */
+  top: 0;
+  right: 0;
+  width: 350px;
+  height: 100vh;
+  background-color: #f4f4f4;
+  border-left: 2px solid #ddd;
+  box-shadow: 4px 4px 4px black;
+  transform: translateX(100%); /* Start hidden */
+  transition: transform 0.3s ease;
+  padding: 20px;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  z-index: 1001;
+}
+
+.slide-panel.visible {
+  transform: translateX(0); /* Slide in */
+}
+
+.slide-panel-button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: none;
+  background-color: #d2af56;
+  color: black;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.slide-panel-button:hover {
+  background-color: black;
+  color: #d2af56;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-container input {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.form-container button {
+  padding: 10px;
+  margin: 5px;
+  border: none;
+  background-color: #28a745;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.form-container button:hover {
+  background-color: #218838;
+}
+.city-popup {
+  position: absolute;
+  top: 60px; /* Adjust according to your navbar height */
+  left: 20px;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+  width: 250px;
+}
+
+.city-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+}
+
+/* Scrollable City List */
+.city-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  max-height: 200px; /* Set a fixed height for the list */
+  overflow-y: auto; /* Enable vertical scroll */
+  border: 1px solid #ddd;
+}
+
+.city-list li {
+  padding: 8px 0;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+
+.city-list li:hover {
+  background-color: #f0f0f0;
+}
+
+/* Add scrollbar styles if desired */
+.city-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.city-list::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+
+.city-list::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+.mumbaiNearminilocation{
+  font-size: 1rem;
+  padding:0 5px;
+}
+
+#navs #joinus {
+  /* color: black; */
+  padding: 5px;
+}
+/* Desktop Styles */
+.icons {
+  display: flex;
+  justify-content: space-around;
+  padding-left: 50px;
+  list-style: none;
+  font-size: 10px;
+}
+/* 
+.login-button:hover,
+.signup-button:hover {
+  background-color: #0072ec;
+  color: white;
+}
+
+.signup-button {
+  background-color: transparent; 
+}
+
+.signup-button:hover {
+  background-color: #25b945;
+} */
+
+
+/* Mobile Styles */
+
+@media (max-width: 900px) {
+  .nav-links a {
+    padding: 5px 0rem 5px 0rem;
+  }
+
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: #f9f9f9;
+    width: 100%;
+    height: calc(100vh - 0px);
+    color: green;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    display: none;
+    z-index: 1;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+  .logo{
+    font-size: 12px;
+    background-color: transparent;
+  }
+  .nav-links li {
+    margin: 20px 0;
+    color: green;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f9f9f9;
+    padding: 10px 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position:fixed;
+  }
+
+  .nav-links a {
+    color: green;
+  }
+  .nav-links a:hover{
+    color: black;
+  }
+  .nav-links a.active {
+    color: green
+  }
+  .profile {
+    display: flex;
+    align-items: center;
+    /* display: flex; */
+    justify-content: space-around;
+    padding-left: 0px;
+    list-style: none;
+    font-size: 5px;
+  }
+  .profile li{
+    padding: 0 0px;
+    margin: 0 0px; 
+    font-size: 5px;
+  }
+  #navs-icons{
+    font-size: 10px;
+  }
+  #languageIcon{
+    font-size: 10px;
+  }
+  
+}
+
+/* Hamburger Icon & Close Icon */
+.menu-toggle .fa-bars,
+.menu-toggle .fa-times {
+  color: #333;
+}
