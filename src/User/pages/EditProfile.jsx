@@ -169,13 +169,14 @@ export default function EditProfile() {
       {preorders.length > 0 ? (
         preorders.map((order) => (
           <div className="order-item" key={order._id}> {/* Use order._id instead of order.orderId */}
-            <img src={order.foodImage} alt={order.orderName} /> {/* Adjust based on your pre-order structure */}
+            <img src={order.foodImage} alt={order.dishname} /> {/* Adjust based on your pre-order structure */}
             <div>
-              <h5>{order.orderName}</h5>
+            <h5>{order.dishname}</h5> {/* Display dishname */}
               <p>Order ID: {order._id}</p> {/* Use order._id */}
               <p>Quantity: {order.quantity}</p>
-              <p>Amount Paid: {order.paidAmount}</p>
-              <p>Delivery Date: {order.deliveryDate}</p>
+              {/* <p>Chef Name: {order.chefname}</p> Display chefname */}
+              <p>Status: {order.status}</p> {/* Display order status */}
+              <p>Delivery Date: {new Date(order.deliveryDate).toISOString().split('T')[0]}</p>
             </div>
           </div>
         ))
