@@ -55,7 +55,7 @@ function Layout() {
         '/user/afterloginhowtoorder',
         '/user/usershop',
         '/user/userourinfo',
-        '/user/userchef-profile/:id',
+        '/user/userchef-profile/',
         '/user/userchefsnearyou',
         '/user/usercart',
         '/user/usercontactus',
