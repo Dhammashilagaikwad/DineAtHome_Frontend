@@ -61,6 +61,8 @@
 .sort-button {
     margin-bottom: 10px;
     padding: 5px;
+    background-color: white;
+    border: 1px solid black;
 }
 
 .search-input {
@@ -89,6 +91,12 @@
     width: 150px;
     height: 150px;
     object-fit: cover;
+}
+.addtocart-button{
+    margin-bottom: 10px;
+    padding: 5px;
+    background-color: white;
+    border: 1px solid black;
 }
 
 /* Mobile specific styles */

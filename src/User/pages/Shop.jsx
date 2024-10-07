@@ -137,12 +137,18 @@ function Shop() {
             {filteredProducts.length > 0 ? (
               filteredProducts.map((product) => (
                 <div key={product._id} className="card">
-                  <img src={product.image} alt={product.itemname} />
+                  <img src={product.image} alt={product.itemname} className="card-image"/>
+                  {/* <img
+                    src={product.image}
+                    alt={product.itemname}
+                    className="card-image"
+                  /> */}
                   <h3>{product.itemname}</h3>
                   <p>Chef: {product.chef?.name || 'Unknown'}</p>  {/* Chef's name */}
                   <p>Quantity: {product.quantity} {product.unit || ''}</p> {/* Quantity with Unit */}
                   <p>Price: ₹{product.price}</p>
-                  <button onClick={() => addToCart(product)}>Add to Cart</button>
+
+                  <button onClick={() => addToCart(product)} className="addtocart-button">Add to Cart</button>
                 </div>
               ))
             ) : (

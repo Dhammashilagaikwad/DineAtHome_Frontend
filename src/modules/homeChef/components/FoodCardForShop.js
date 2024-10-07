@@ -1,6 +1,8 @@
 
 import React, { useState } from 'react';
 import '../styles/FoodCardForShop.css'; 
+import axiosInstance from '../../../utils/axiosService';
+import {jwtDecode } from 'jwt-decode';
 
 function FoodCardForShop({ id }) {
   const [foodName, setFoodName] = useState('');
@@ -38,6 +40,52 @@ function FoodCardForShop({ id }) {
   if (isDeleted) {
     return null; // If deleted, return nothing
   }
+  const handleSubmit = async () => {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      alert("No token found. Please log in again.");
+      return;
+    }
+
+    const decodedToken = jwtDecode(token);
+    const chefId = decodedToken.id;
+
+    if (!chefId) {
+      alert('Chef ID not found in the token');
+      return;
+    }
+
+    // Validate required fields
+    if (!foodName || !foodDescription || quantity < 0 || price < 0) {
+      alert('Please fill in all required fields with valid values.');
+      return;
+    }
+
+    const foodData = {
+      itemname: foodName,
+      description: foodDescription,
+      price: parseFloat(price), // Ensure price is a number
+      image,
+      quantity: parseInt(quantity, 10), // Ensure quantity is an integer
+      unit,
+    };
+
+    console.log('Sending foodData:', foodData); // Debugging output
+
+    try {
+      const response = await axiosInstance.post(`/api/shop/additem/${chefId}`, foodData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      alert('Food item added successfully!');
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error adding food item:', error.response ? error.response.data : error.message);
+      alert('Failed to add food item. ' + (error.response ? error.response.data : ''));
+    }
+  };
 
   return (
     <div className="paddingForFoodCardForShop">
@@ -113,6 +161,9 @@ function FoodCardForShop({ id }) {
           </button>
           <button className='cardDeleteForShop cardEditDoneForShop' onClick={handleDeleteClick}>
             Delete
+          </button>
+          <button className='cardAddForShop' onClick={handleSubmit} disabled={!isEditable}>
+            Add Food Item
           </button>
         </div>
       </div>
