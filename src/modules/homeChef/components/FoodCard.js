@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { jwtDecode } from 'jwt-decode';
-import '../styles/FoodCard.css'; 
+import React, { useState } from 'react';
+import axiosInstance from '../../../utils/axiosService';
+import { jwtDecode } from 'jwt-decode'; // Corrected jwtDecode import
+import '../styles/FoodCard.css';
 
-function FoodCard({ id, initialFoodData }) { // Accept initialFoodData for editing
+function FoodCard({ id, initialFoodData }) {
   const [foodName, setFoodName] = useState(initialFoodData?.foodName || '');
   const [foodDescription, setFoodDescription] = useState(initialFoodData?.foodDescription || '');
   const [amount, setAmount] = useState(initialFoodData?.amount || '0');
@@ -15,26 +15,27 @@ function FoodCard({ id, initialFoodData }) { // Accept initialFoodData for editi
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
-      // const reader = new FileReader();
-      // reader.onloadend = () => {
-      //   setImage(reader.result);
-      // };
-      // reader.readAsDataURL(file);
-      setImage(file);  // Save the file itself
+      setImage(file);
+      alert(`Image selected: ${file.name}`);
+      console.log(`Image selected: ${file.name}`);
     }
   };
 
-  // Handle editing
+  // Toggle edit mode
   const handleEditClick = () => {
-    setIsEditable(!isEditable);
+    setIsEditable((prevState) => {
+      console.log(`Edit mode: ${!prevState}`);
+      return !prevState; // Toggle the edit mode
+    });
   };
 
-  // Handle delete card
+  // Handle deletion of food item
   const handleDeleteClick = async () => {
     if (window.confirm('Are you sure you want to delete this item?')) {
       try {
         const token = localStorage.getItem('token');
-        await axios.delete(`http://localhost:4000/deleteItem/${id}`, { // Ensure correct endpoint
+        console.log('Deleting food item with ID:', id);
+        await axiosInstance.delete(`/api/shop/deleteItem/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -48,7 +49,7 @@ function FoodCard({ id, initialFoodData }) { // Accept initialFoodData for editi
     }
   };
 
-  // Handle submit
+  // Handle submit of new or updated food item
   const handleSubmit = async () => {
     const token = localStorage.getItem('token');
 
@@ -70,41 +71,56 @@ function FoodCard({ id, initialFoodData }) { // Accept initialFoodData for editi
       return;
     }
 
-      // Create a FormData object for the image and other fields
-      const formData = new FormData();
-      formData.append('foodName', foodName);
-      formData.append('foodDescription', foodDescription);
-      formData.append('amount', parseFloat(amount));
-      if (image) {
-        formData.append('foodPhoto', image);  // Append the image file
-      }
+    // Create a FormData object to send image and other fields
+    const formData = new FormData();
+    formData.append('foodName', foodName);
+    formData.append('foodDescription', foodDescription);
+    formData.append('amount', parseFloat(amount));
+    if (image) {
+      formData.append('foodPhoto', image);
+    }
+
+    console.log('Submitting food item:', {
+      foodName,
+      foodDescription,
+      amount,
+      image: image ? image.name : 'No image selected'
+    });
 
     try {
       let response;
       if (initialFoodData) {
-        // Update existing item
-        response = await axios.put(`http://localhost:4000/edit-item/${id}`, formData, {
+        // Update an existing food item
+        console.log('Updating food item with ID:', id);
+        response = await axiosInstance.put(`/additem/edit-item/${id}`, formData, {
           headers: {
             Authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data', // Ensure correct header for FormData
           },
         });
         alert('Food item updated successfully!');
       } else {
-        // Add new item
-        response = await axios.post(`http://localhost:4000/additem/${chefId}`, formData, {
+        // Add a new food item
+        console.log('Adding new food item for chef ID:', chefId);
+        response = await axiosInstance.post(`/additem/${chefId}`, formData, {
           headers: {
             Authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data', // Ensure correct header for FormData
           },
         });
         alert('Food item added successfully!');
       }
-      console.log(response.data);
+      console.log('Response:', response.data);
     } catch (error) {
       console.error('Error adding/updating food item:', error.response ? error.response.data : error.message);
       alert('Failed to add/update food item.');
     }
+
+    // After submission, disable edit mode
+    setIsEditable(false);
   };
 
+  // If the item is deleted, don't render the component
   if (isDeleted) {
     return null;
   }
@@ -156,15 +172,17 @@ function FoodCard({ id, initialFoodData }) { // Accept initialFoodData for editi
         </div>
 
         <div className="actionsForFoodCard">
-          <button className='cardEditDoneForFoodCard' onClick={handleEditClick}>
-            {isEditable ? 'Done' : 'Edit'}
+          <button type="button" className="cardEditDoneForFoodCard" onClick={handleEditClick}>
+            {isEditable ? 'Cancel' : 'Edit'}
           </button>
-          <button className='cardDeleteForFoodCard cardEditDoneForFoodCard' onClick={handleDeleteClick}>
+          <button type="button" className="cardDeleteForFoodCard cardEditDoneForFoodCard" onClick={handleDeleteClick}>
             Delete
           </button>
-          <button className='cardAdd' onClick={handleSubmit} disabled={!isEditable}>
-            {initialFoodData ? 'Update Food Item' : 'Add Food Item'}
-          </button>
+          {isEditable && (
+            <button type="button" className="cardSaveForFoodCard" onClick={handleSubmit}>
+              {initialFoodData ? 'Update Food Item' : 'Add Food Item'}
+            </button>
+          )}
         </div>
       </div>
     </div>

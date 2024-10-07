@@ -5,6 +5,7 @@ import axiosInstance from "../utils/axiosService";
 const MenuPage = () => {
   const [menu, setMenu] = useState([]);
   const [sortOption, setSortOption] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     // Scroll to the top when the page is loaded
@@ -51,6 +52,16 @@ const MenuPage = () => {
     setSortOption(option);
   };
 
+
+  const handleAddToCart = (dish) => {
+    if (!isLoggedIn) {
+      alert("Please log in to add items to your cart.");
+      return;
+    }
+    // Add the dish to cart logic here
+    console.log(`Added ${dish.name} to cart.`);
+  };
+
   return (
     <div className="menu-page-container">
       <div className="menu-list-container">
@@ -67,7 +78,7 @@ const MenuPage = () => {
               <p>Price: ${dish.amount}</p>
               {/* Display chef's name */}
               <p>Chef: {dish.chefId && dish.chefId.name ? dish.chefId.name : "Unknown"}</p>
-              <button className="add-to-cart-btn">Add to Cart</button>
+              <button className="add-to-cart-btn"  onClick={() => handleAddToCart(dish)}>Add to Cart</button>
             </div>
           ))
         ) : (
