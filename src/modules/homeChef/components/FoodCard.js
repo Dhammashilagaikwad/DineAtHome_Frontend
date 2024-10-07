@@ -92,7 +92,7 @@ function FoodCard({ id, initialFoodData }) {
       if (initialFoodData) {
         // Update an existing food item
         console.log('Updating food item with ID:', id);
-        response = await axiosInstance.put(`/api/shop/edit-item/${id}`, formData, {
+        response = await axiosInstance.put(`/additem/edit-item/${id}`, formData, {
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'multipart/form-data', // Ensure correct header for FormData
@@ -102,7 +102,7 @@ function FoodCard({ id, initialFoodData }) {
       } else {
         // Add a new food item
         console.log('Adding new food item for chef ID:', chefId);
-        response = await axiosInstance.post(`/api/shop/additem/${chefId}`, formData, {
+        response = await axiosInstance.post(`/additem/${chefId}`, formData, {
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'multipart/form-data', // Ensure correct header for FormData
