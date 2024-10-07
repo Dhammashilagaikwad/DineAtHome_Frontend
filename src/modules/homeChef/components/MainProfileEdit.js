@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../Styles/MainProfileEdit.css"; // Import the CSS file
+import "../styles/MainProfileEdit.css"; // Import the CSS file
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 

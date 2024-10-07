@@ -1,27 +1,24 @@
 import React, { useState, useEffect } from "react";
 import "../styles/Shop.css";
-import axios from 'axios';
+import axiosInstance from "../../utils/axiosService"; // Use your axiosInstance
 import food from "../images/picklepapad.jpeg";
-import AfterLoginNavbar from "../components/AfterLoginNavbar";
-import { useNavigate } from 'react-router-dom';
 
-function UserShop() {
+function Shop() {
   useEffect(() => {
     window.scrollTo(0, 0); // Scroll to the top when the page is loaded
-}, []);
+  }, []);
+  
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState("asc");
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState([]); 
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [isMobile, setIsMobile] = useState(false);
-  const [cartMessage, setCartMessage] = useState("");
-  const navigate = useNavigate(); // Define navigate
 
   // Fetch products from backend
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/api/shop/items');
+        const response = await axiosInstance.get('/api/shop/items'); // Use axiosInstance here
         setProducts(response.data); // Store all products
         setFilteredProducts(response.data); // Set filteredProducts to the fetched data
       } catch (error) {
@@ -60,68 +57,38 @@ function UserShop() {
     setFilteredProducts(sortedProducts);
   };
 
-  // Add function to handle adding to cart
-  const addToCart = async (product) => {
-    const cartItem = {
-      itemId: product._id,
-      quantity: 1,
-      // Include other product details as needed
-      itemname: product.itemname,
-      price: product.price,
-      image: product.image,
-      chef: product.chef?.name || 'Unknown'
-    };
-
-    if (!product.price) {
-      console.error('Product is missing price:', product);
-      alert('Unable to add this item to cart as price is missing.');
-      return;
-  }
-
-    console.log(cartItem);
-    try {
-
-      // Assuming you store the user token in local storage
-      const token = localStorage.getItem('token');
-      console.log('Token:', token); 
-      if (!token) {
-        alert('You need to log in first.');
-        return;
-      }
-
-      const response = await axios.post('http://localhost:4000/api/cart/add', cartItem, {
-        headers: {
-          'Authorization': `Bearer ${token}` // Add token to authorization header
-        },
-        withCredentials: true
-        
-      });
-
-      // Update local storage cart
-      const existingCart = JSON.parse(localStorage.getItem('cart')) || [];
-      const itemIndex = existingCart.findIndex(item => item.itemId === cartItem.itemId);
-      if (itemIndex > -1) {
-        existingCart[itemIndex].quantity += 1; // Increase quantity if it already exists
-      } else {
-        existingCart.push(cartItem); // Add new item to cart
-      }
-
-      localStorage.setItem('cart', JSON.stringify(existingCart));
-      setCartMessage(response.data.message);
-      alert('Item added to cart successfully!');
-      navigate('/usercart'); 
-    } catch (error) {
-      console.error("There was an error adding the item to the cart!", error.response ? error.response.data : error);
-      alert('Failed to add item to cart. ' + (error.response?.data.message || ''));
+  // Function to check if user is logged in
+  const isLoggedIn = () => {
+    const token = localStorage.getItem("token");
+    console.log("Token:", token); // Debugging line to check if token is present
+    if (!token) {
+      return false;
     }
 
+    // Optionally, you can decode the token and check its expiration
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    const currentTime = Date.now() / 1000; // Get current time in seconds
 
+    // Check if token is expired
+    return payload.exp > currentTime;
   };
 
+  console.log("islogin", isLoggedIn());
+
+  // Add function to handle adding to cart
+  const addToCart = (product) => {
+    console.log("Add to Cart clicked for:", product.itemname);
+    if (!isLoggedIn()) {
+      alert('Please log in to add items to your cart');
+      return;
+    }
+
+    // Add the product to the cart logic here (e.g., API call)
+    console.log(`Product added to cart: ${product.itemname}`);
+  };
 
   return (
     <>
-      {/* <AfterLoginNavbar /> */}
       <div className="shop-container">
         <div className="shop-row">
           <div className="imagee-text">
@@ -171,17 +138,10 @@ function UserShop() {
               filteredProducts.map((product) => (
                 <div key={product._id} className="card">
                   <img src={product.image} alt={product.itemname} />
-                  {/* <img
-                    src={product.image}
-                    alt={product.itemname}
-                    className="card-image"
-                  /> */}
                   <h3>{product.itemname}</h3>
                   <p>Chef: {product.chef?.name || 'Unknown'}</p>  {/* Chef's name */}
                   <p>Quantity: {product.quantity} {product.unit || ''}</p> {/* Quantity with Unit */}
-
                   <p>Price: ₹{product.price}</p>
-
                   <button onClick={() => addToCart(product)}>Add to Cart</button>
                 </div>
               ))
@@ -195,5 +155,4 @@ function UserShop() {
   );
 }
 
-export default UserShop;
-
+export default Shop;

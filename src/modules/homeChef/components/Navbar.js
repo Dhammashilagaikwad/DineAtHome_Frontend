@@ -2,12 +2,25 @@ import React, { useState } from "react";
 import { SiCodechef } from "react-icons/si";
 import { IoIosNotifications } from "react-icons/io";
 import { FaUserCircle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // Import useNavigate for redirecting after logout
+import axiosInstance from '../../../utils/axiosService'; // Import the centralized axios instance
 
 const Navbar = () => {
   const [isOnline, setIsOnline] = useState(false);
   const [isUserProfile, setIsUserProfile] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // State for mobile menu
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate(); // Initialize useNavigate
+
+ 
+  const handleLogout = async () => {
+    try {
+      await axiosInstance.post('/api/chefs/logout'); // Make the logout request with the axiosInstance
+      localStorage.removeItem('authToken'); // Remove the token from local storage
+      navigate('/login'); // Redirect to the login page or any other page
+    } catch (error) {
+      console.error('Logout error:', error); // Handle any errors here
+    }
+  };
 
   return (
     <>
@@ -33,7 +46,9 @@ const Navbar = () => {
               <span className="w-12 h-6 flex items-center flex-shrink-0 ml-4 p-1 bg-red-400 rounded-full duration-300 ease-in-out peer-checked:bg-green-600 after:w-4 after:h-4 after:bg-white after:rounded-full after:shadow-md after:duration-300 peer-checked:after:translate-x-6 group-hover:after:translate-x-1"></span>
             </label>
           </div>
-          <IoIosNotifications />
+          <Link className="cursor-pointer" to="/home-shefs/dashboard/prenotification">
+            <IoIosNotifications/>
+          </Link>
           <div className="relative cursor-pointer">
             <FaUserCircle onClick={() => setIsUserProfile(!isUserProfile)} />
             {isUserProfile ? (
@@ -44,7 +59,7 @@ const Navbar = () => {
                       Profile
                     </p>
                   </Link>
-                  <p className="cursor-pointer px-4 hover:shadow-md hover:bg-blue-200">
+                  <p className="cursor-pointer px-4 hover:shadow-md hover:bg-blue-200" onClick={handleLogout}>
                     Logout
                   </p>
                 </div>
@@ -53,16 +68,14 @@ const Navbar = () => {
           </div>
         </div>
         
-        {/* Mobile Menu Button */}
         <button 
           className="md:hidden text-2xl" 
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
-          {isMobileMenuOpen ? '✖' : '☰'} {/* Toggle between menu icon and close icon */}
+          {isMobileMenuOpen ? '✖' : '☰'} 
         </button>
       </div>
 
-      {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div className="flex flex-col items-center bg-blue-100 p-4 md:hidden rounded-md">
           <label className="relative flex justify-between items-center group p-2 w-full">
@@ -75,7 +88,9 @@ const Navbar = () => {
             />
             <span className="w-12 h-6 flex items-center flex-shrink-0 ml-4 p-1 bg-red-400 rounded-full duration-300 ease-in-out peer-checked:bg-green-600 after:w-4 after:h-4 after:bg-white after:rounded-full after:shadow-md after:duration-300 peer-checked:after:translate-x-6 group-hover:after:translate-x-1"></span>
           </label>
-          <IoIosNotifications className="text-2xl" />
+          <Link className="cursor-pointer" to="/home-shefs/dashboard/prenotification">
+            <IoIosNotifications className="text-2xl" />
+          </Link>
           <div className="relative cursor-pointer">
             <FaUserCircle onClick={() => setIsUserProfile(!isUserProfile)} className="text-2xl" />
             {isUserProfile && (
@@ -86,7 +101,7 @@ const Navbar = () => {
                       Profile
                     </p>
                   </Link>
-                  <p className="cursor-pointer px-4 hover:shadow-md hover:bg-blue-200">
+                  <p className="cursor-pointer px-4 hover:shadow-md hover:bg-blue-200" onClick={handleLogout}>
                     Logout
                   </p>
                 </div>
