@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../styles/contactUs.css"; 
-// import cors from 'cors';
+import axiosInstance from '../utils/axiosService';
+import toastService from "../utils/toastService";
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -24,31 +25,29 @@ const ContactForm = () => {
     console.log('Form Data:', formData); // Log the form data
 
     try {
-        const response = await fetch('http://localhost:4000/api/contact/data/contact-us', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-        });
+        const response = await axiosInstance.post('/contacts/contact-us', formData);
+           
 
-        const result = await response.json();
-        console.log('API Response:', result); // Log the response from the API
-        if (result.status) {
-            alert(result.message);
-            setFormData({
-                name: '',
-                email: '',
-                mobileNumber: '',
-                subject: '',
-                message: ''
-            });
+
+         // Axios automatically parses the response as JSON
+      console.log('API Response:', response.data); // Log the response from the API
+      
+      if (response.data.status) {
+        toastService.success(response.data.message);
+          // Reset form fields
+          setFormData({
+              name: '',
+              email: '',
+              mobileNumber: '',
+              subject: '',
+              message: ''
+          });
         } else {
-            alert("Submission failed. Please try again.");
+          toastService.warn("Submission failed. Please try again.");
         }
     } catch (error) {
         console.error("Error during form submission:", error); // Log the error
-        alert("An error occurred. Please try again later.");
+        toastService.error("An error occurred. Please try again later.");
     }
 };
 

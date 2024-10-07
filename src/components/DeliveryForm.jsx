@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import '../styles/DeliveryExecutive.css'; // Ensure this file has styles for the form if needed
-import axios from 'axios'; 
+import axiosInstance from '../utils/axiosService';
+import toastService from "../utils/toastService";
 
 const DeliverForm = () => {
   const [formData, setFormData] = useState({
@@ -26,7 +27,7 @@ const DeliverForm = () => {
 
     try {
       // Send a POST request to your backend
-      const response = await axios.post('http://localhost:4000/deliveryPerson/delivery', formData);
+      const response = await axiosInstance.post('/deliveryPerson/delivery', formData);
       
       if (response.data.status) {
         setMessage("Form submitted successfully!");

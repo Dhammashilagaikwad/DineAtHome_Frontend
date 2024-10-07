@@ -34,18 +34,18 @@ function UserChefProfile() {
   const [preOrders, setPreOrders] = useState([]);
   const navigate = useNavigate(); // Define navigate
 
-  useEffect(() => {
-    const fetchPreOrders = async () => {
-      try {
-        const response = await axiosInstance.get(`/preOrderRoutes/get-preOrder`);
-        setPreOrders(response.data);
-      } catch (error) {
-        console.error("Error fetching pre-orders:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchPreOrders = async () => {
+  //     try {
+  //       const response = await axiosInstance.get(`/preOrderRoutes/get-preOrder`);
+  //       setPreOrders(response.data);
+  //     } catch (error) {
+  //       console.error("Error fetching pre-orders:", error);
+  //     }
+  //   };
   
-    fetchPreOrders();
-  }, []);
+  //   fetchPreOrders();
+  // }, []);
 
   useEffect(() => {
     const fetchChefData = async () => {
@@ -94,50 +94,43 @@ function UserChefProfile() {
   // };
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    
+    // Client-side validation
+    if (!customizedOrder.name || !customizedOrder.description || !customizedOrder.quantity || !selectedDate) {
+      alert("All fields are required.");
+      return;
+    }
   
+    // Proceed with sending the request if validation passes
     try {
-      await axiosInstance.post(`/preOrder/add-preOrder`, {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        alert("Token not found. Please log in again.");
+        return;
+      }
+  
+      await axiosInstance.post('/preOrder/add-preOrder', {
         ...customizedOrder,
-        // priceRange: {
-        //   minPrice: parseFloat(customizedOrder.priceRange.minPrice),
-        //   maxPrice: parseFloat(customizedOrder.priceRange.maxPrice),
-        // },
-        deliveryDate: selectedDate, // Ensure deliveryDate is set to selected date
+        deliveryDate: selectedDate,
+        chefId: chefData._id // Include chefId from chefData
+      },
+      {
+        headers: { Authorization: `Bearer ${token}` }
       });
+  
       alert("Customized order request sent successfully!");
       setShowCustomizedForm(false);
-      setCustomizedOrder({
-        name: "",
-        description: "",
-        quantity: "",
-        // priceRange: { minPrice: "", maxPrice: "" },
-        deliveryDate: new Date(),
-      });
+      setCustomizedOrder({ name: "", description: "", quantity: "", deliveryDate: new Date() });
     } catch (error) {
       console.error("Error sending customized order:", error);
-      alert("Failed to send customized order.");
+      alert("Failed to send customized order: " + error.response?.data?.message || error.message);
     }
   };
+  
+  
 
-  const updatePreOrder = async (id, updatedData) => {
-    try {
-      const response = await axiosInstance.put(`/preOrderRoutes/edit-preOrder/${id}`, updatedData);
-      alert("Pre-order updated successfully!");
-      // Update local state as needed
-    } catch (error) {
-      console.error("Error updating pre-order:", error);
-    }
-  };
 
-  const deletePreOrder = async (id) => {
-    try {
-      await axiosInstance.delete(`/preOrderRoutes/delete-preOrder/${id}`);
-      alert("Pre-order deleted successfully!");
-      // Update local state as needed
-    } catch (error) {
-      console.error("Error deleting pre-order:", error);
-    }
-  };
+  
   
   
 
