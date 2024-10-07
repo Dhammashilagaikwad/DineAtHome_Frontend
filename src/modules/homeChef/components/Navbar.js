@@ -5,6 +5,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
+
   const [isOnline, setIsOnline] = useState(false);
   const [isUserProfile, setIsUserProfile] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // State for mobile menu
@@ -33,7 +34,9 @@ const Navbar = () => {
               <span className="w-12 h-6 flex items-center flex-shrink-0 ml-4 p-1 bg-red-400 rounded-full duration-300 ease-in-out peer-checked:bg-green-600 after:w-4 after:h-4 after:bg-white after:rounded-full after:shadow-md after:duration-300 peer-checked:after:translate-x-6 group-hover:after:translate-x-1"></span>
             </label>
           </div>
-          <IoIosNotifications />
+          <Link className="cursor-pointer" to="/home-shefs/dashboard/prenotification">
+          <IoIosNotifications/>
+          </Link>
           <div className="relative cursor-pointer">
             <FaUserCircle onClick={() => setIsUserProfile(!isUserProfile)} />
             {isUserProfile ? (
@@ -53,16 +56,14 @@ const Navbar = () => {
           </div>
         </div>
         
-        {/* Mobile Menu Button */}
         <button 
           className="md:hidden text-2xl" 
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
-          {isMobileMenuOpen ? '✖' : '☰'} {/* Toggle between menu icon and close icon */}
+          {isMobileMenuOpen ? '✖' : '☰'} 
         </button>
       </div>
 
-      {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div className="flex flex-col items-center bg-blue-100 p-4 md:hidden rounded-md">
           <label className="relative flex justify-between items-center group p-2 w-full">
@@ -75,7 +76,9 @@ const Navbar = () => {
             />
             <span className="w-12 h-6 flex items-center flex-shrink-0 ml-4 p-1 bg-red-400 rounded-full duration-300 ease-in-out peer-checked:bg-green-600 after:w-4 after:h-4 after:bg-white after:rounded-full after:shadow-md after:duration-300 peer-checked:after:translate-x-6 group-hover:after:translate-x-1"></span>
           </label>
+          <Link className="cursor-pointer" to="/home-shefs/dashboard/prenotification">
           <IoIosNotifications className="text-2xl" />
+          </Link>
           <div className="relative cursor-pointer">
             <FaUserCircle onClick={() => setIsUserProfile(!isUserProfile)} className="text-2xl" />
             {isUserProfile && (
