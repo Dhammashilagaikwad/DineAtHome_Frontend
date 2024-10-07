@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "../styles/Shop.css";
-import axios from 'axios';
+import axiosInstance from "../utils/axiosService"; // Use your axiosInstance
 import food from "../images/picklepapad.jpeg";
 
 function Shop() {
   useEffect(() => {
     window.scrollTo(0, 0); // Scroll to the top when the page is loaded
   }, []);
+  
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState("asc");
   const [products, setProducts] = useState([]); 
@@ -17,7 +18,7 @@ function Shop() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/api/shop/items');
+        const response = await axiosInstance.get('/api/shop/items'); // Use axiosInstance here
         setProducts(response.data); // Store all products
         setFilteredProducts(response.data); // Set filteredProducts to the fetched data
       } catch (error) {
@@ -56,25 +57,23 @@ function Shop() {
     setFilteredProducts(sortedProducts);
   };
 
-// Example of how you can check login status (you may have a different way to track login)
- // Function to check if user is logged in
- const isLoggedIn = () => {
-  const token = localStorage.getItem("token");
-  console.log("Token:", token); // Debugging line to check if token is present
-  if (!token) {
-    return false;
-  }
+  // Function to check if user is logged in
+  const isLoggedIn = () => {
+    const token = localStorage.getItem("token");
+    console.log("Token:", token); // Debugging line to check if token is present
+    if (!token) {
+      return false;
+    }
 
-  // Optionally, you can decode the token and check its expiration
-  const payload = JSON.parse(atob(token.split('.')[1]));
-  const currentTime = Date.now() / 1000; // Get current time in seconds
+    // Optionally, you can decode the token and check its expiration
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    const currentTime = Date.now() / 1000; // Get current time in seconds
 
-  // Check if token is expired
-  return payload.exp > currentTime;
- 
-};
+    // Check if token is expired
+    return payload.exp > currentTime;
+  };
 
-console.log("islogin", isLoggedIn());
+  console.log("islogin", isLoggedIn());
 
   // Add function to handle adding to cart
   const addToCart = (product) => {
@@ -84,10 +83,9 @@ console.log("islogin", isLoggedIn());
       return;
     }
 
-      // Add the product to the cart logic here (e.g., API call)
-      console.log(`Product added to cart: ${product.itemname}`);
+    // Add the product to the cart logic here (e.g., API call)
+    console.log(`Product added to cart: ${product.itemname}`);
   };
-
 
   return (
     <>
@@ -135,23 +133,15 @@ console.log("islogin", isLoggedIn());
             )}
           </div>
 
-         
           <div className="product-list">
             {filteredProducts.length > 0 ? (
               filteredProducts.map((product) => (
                 <div key={product._id} className="card">
                   <img src={product.image} alt={product.itemname} />
-                  {/* <img
-                    src={product.image}
-                    alt={product.itemname}
-                    className="card-image"
-                  /> */}
-                    <h3>{product.itemname}</h3>
-                    <p>Chef: {product.chef?.name || 'Unknown'}</p>  {/* Chef's name */}
-                    <p>Quantity: {product.quantity} {product.unit || ''}</p> {/* Quantity with Unit */}
-                  
+                  <h3>{product.itemname}</h3>
+                  <p>Chef: {product.chef?.name || 'Unknown'}</p>  {/* Chef's name */}
+                  <p>Quantity: {product.quantity} {product.unit || ''}</p> {/* Quantity with Unit */}
                   <p>Price: ₹{product.price}</p>
-                 
                   <button onClick={() => addToCart(product)}>Add to Cart</button>
                 </div>
               ))
@@ -166,5 +156,3 @@ console.log("islogin", isLoggedIn());
 }
 
 export default Shop;
-
-
