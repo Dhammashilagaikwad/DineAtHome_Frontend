@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../styles/Shop.css";
 import axiosInstance from "../../utils/axiosService"; // Use your axiosInstance
 import food from "../images/picklepapad.jpeg";
+import { useNavigate } from 'react-router-dom'; 
 
 function Shop() {
   useEffect(() => {
@@ -13,6 +14,7 @@ function Shop() {
   const [products, setProducts] = useState([]); 
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [isMobile, setIsMobile] = useState(false);
+  const navigate = useNavigate();
 
   // Fetch products from backend
   useEffect(() => {
@@ -76,15 +78,35 @@ function Shop() {
   console.log("islogin", isLoggedIn());
 
   // Add function to handle adding to cart
-  const addToCart = (product) => {
+  const addToCart = async (product) => {
     console.log("Add to Cart clicked for:", product.itemname);
     if (!isLoggedIn()) {
       alert('Please log in to add items to your cart');
       return;
     }
-
-    // Add the product to the cart logic here (e.g., API call)
-    console.log(`Product added to cart: ${product.itemname}`);
+   
+    try {
+      const token = localStorage.getItem("token"); // Get the token from local storage
+      const response = await axiosInstance.post(
+        '/api/cart/add', // Endpoint for adding item to cart
+        {
+          itemId: product._id, // Use product ID for the cart
+          quantity: 1, // Set default quantity to 1 or adjust as needed
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include token in headers
+          },
+        }
+      );
+      
+      console.log(response.data.message); // Log the success message from the server
+      alert('Item added to cart successfully!'); // Notify user
+      navigate('/user/usercart');
+    } catch (error) {
+      console.error("Error adding item to cart:", error);
+      alert('There was an error adding the item to the cart.'); // Notify user of the error
+    }
   };
 
   return (
@@ -137,12 +159,18 @@ function Shop() {
             {filteredProducts.length > 0 ? (
               filteredProducts.map((product) => (
                 <div key={product._id} className="card">
-                  <img src={product.image} alt={product.itemname} />
+                  <img src={product.image} alt={product.itemname} className="card-image"/>
+                  {/* <img
+                    src={product.image}
+                    alt={product.itemname}
+                    className="card-image"
+                  /> */}
                   <h3>{product.itemname}</h3>
                   <p>Chef: {product.chef?.name || 'Unknown'}</p>  {/* Chef's name */}
                   <p>Quantity: {product.quantity} {product.unit || ''}</p> {/* Quantity with Unit */}
                   <p>Price: ₹{product.price}</p>
-                  <button onClick={() => addToCart(product)}>Add to Cart</button>
+
+                  <button onClick={() => addToCart(product)} className="addtocart-button">Add to Cart</button>
                 </div>
               ))
             ) : (

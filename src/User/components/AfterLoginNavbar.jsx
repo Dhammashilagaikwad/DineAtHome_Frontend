@@ -113,17 +113,17 @@ const navigate = useNavigate();
       <div className={`nav-links1 ${isOpen ? "open" : ""}`}>
         <li>
           <Link to="/user/afterloginpage" onClick={toggleMenu}>
-            HOME
+            Home
           </Link>
         </li>
         <li>
           <Link to="/user/userourinfo" onClick={toggleMenu}>
-            OUR INFO
+            Our Info
           </Link>
         </li>
         <li>
           <Link to="/user/usershop" onClick={toggleMenu}>
-            SHOP
+            Shop
           </Link>
         </li>
         <li>
