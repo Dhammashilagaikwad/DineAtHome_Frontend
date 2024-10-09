@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import HistoryC from "./HistoryC";
 import axiosInstance from "../../../utils/axiosService";
-import { jwtDecode } from "jwt-decode";
+import {jwtDecode} from "jwt-decode";
 
 const History = () => {
   const [orderHistory, setOrderHistory] = useState([]);
@@ -58,10 +58,10 @@ const History = () => {
         {orderHistory.map((order) => (
           <HistoryC
             key={order._id}
-            customerName={order.customerId ? order.customerId.name : "Unknown Customer"} // Assuming you have customer name in your order
-            customerInfo={order.preOrderId ? order.preOrderId.name || order.preOrderId._id : "Unknown Order"} // Access the appropriate property of preOrderId
+            customerName={order.customerId ? order.customerId.name : "Unknown Customer"}
+            customerInfo={order.preOrderId ? order.preOrderId.name || order.preOrderId._id : "Unknown Order"}
             itemPrice={order.price}
-            quantity={order.quantity || 1}
+            quantity={order.preOrderId ? order.preOrderId.quantity : "N/A"} // Update this to use the quantity from the preOrderId
             orderDate={new Date(order.date).toLocaleDateString()}
           />
         ))}
