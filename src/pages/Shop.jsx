@@ -143,7 +143,7 @@ function Shop() {
                   <h3>{product.itemname}</h3>
                   <p>Chef: {product.chef?.name || 'Unknown'}</p>  {/* Chef's name */}
                   <p>Quantity: {product.quantity} {product.unit || ''}</p> {/* Quantity with Unit */}
-                  <p>Price: ₹{product.price}</p>
+                  <p>Price: ₹ {product.price}</p>
                   <button onClick={() => addToCart(product)} className="addtocart-button">Add to Cart</button>
                 </div>
               ))

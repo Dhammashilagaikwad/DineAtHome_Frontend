@@ -171,10 +171,11 @@ export default function EditProfile() {
           <div className="order-item" key={order._id}> {/* Use order._id instead of order.orderId */}
             <img src={order.foodImage} alt={order.dishname} /> {/* Adjust based on your pre-order structure */}
             <div>
-            <h5>{order.dishname}</h5> {/* Display dishname */}
+            
               <p>Order ID: {order._id}</p> {/* Use order._id */}
+              <h5>Dish Name:{order.name}</h5> {/* Display dishname */}
               <p>Quantity: {order.quantity}</p>
-              {/* <p>Chef Name: {order.chefname}</p> Display chefname */}
+              <p>Chef Name: {order.chefId ? order.chefId.name : "Unknown"}</p> 
               <p>Status: {order.status}</p> {/* Display order status */}
               <p>Delivery Date: {new Date(order.deliveryDate).toISOString().split('T')[0]}</p>
             </div>
