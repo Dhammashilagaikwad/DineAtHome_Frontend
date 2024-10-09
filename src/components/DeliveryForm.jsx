@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import '../styles/DeliveryExecutive.css'; // Ensure this file has styles for the form if needed
 import axiosInstance from '../utils/axiosService';
 import toastService from "../utils/toastService";
+import { useNotification } from "./NotificationContext";
 
 const DeliverForm = () => {
+  const { triggerNotification } = useNotification();
+
   const [formData, setFormData] = useState({
     name: "",
     mobileNumber: "",
@@ -31,16 +34,26 @@ const DeliverForm = () => {
       
       if (response.data.status) {
         setMessage("Form submitted successfully!");
+        setFormData({
+          name: "",
+          mobileNumber: "",
+          email: "",
+          city: "",
+          address: "",
+        })
         // Show the alert pop-up
-        window.alert("Form submitted successfully!");
+        // window.alert("Form submitted successfully!");
+        triggerNotification("Form submitted successfully!",'green')
       } else {
         setMessage("Error: " + response.data.message);
-        window.alert("Error submitting the form.");
+        // window.alert("Error submitting the form.");
+        triggerNotification("Error submitting the form.",'red')
       }
     } catch (error) {
       console.error("Error submitting form:", error);
       setMessage("Something went wrong, please try again.");
-      window.alert("Something went wrong, please try again.");
+      // window.alert("Something went wrong, please try again.");
+      triggerNotification("Something went wrong, please try again.",'red')
     }
   };
 
