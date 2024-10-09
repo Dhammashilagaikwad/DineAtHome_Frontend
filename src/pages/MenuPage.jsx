@@ -15,6 +15,7 @@ const MenuPage = () => {
     const fetchItems = async () => {
       try {
         const response = await axiosInstance.get("/addItem/getAllItem"); // Fetch items from the backend
+        console.log("Fetched menu items:", response.data); // Log the fetched data
         setMenu(response.data); // Set the fetched items to the state
       } catch (error) {
         console.error("Error fetching menu items:", error);
@@ -67,12 +68,22 @@ const MenuPage = () => {
       <div className="menu-list-container">
         {menu.length > 0 ? (
           menu.map((dish) => (
+            
             <div key={dish._id} className="menu-card">
-              <img
-                src={dish.foodPhoto}
-                alt={dish.foodName}
-                className="dish-image"
-              />
+              {dish.foodPhoto ? (
+        <img
+          src={`http://localhost:4000${dish.foodPhoto}`}
+          alt={dish.foodName}
+          className="dish-image"
+        />
+      ) : (
+        <img
+          src="/default-image.jpg" // Provide a fallback image
+          alt="Default Image"
+          className="dish-image"
+        />
+      )}
+              {console.log("Food Photo Path:", dish.foodPhoto)}
               <h3>{dish.foodName}</h3>
               <p>{dish.foodDescription}</p>
               <p>Price: Rs {dish.amount}</p>
@@ -80,11 +91,14 @@ const MenuPage = () => {
               <p>Chef: {dish.chefId && dish.chefId.name ? dish.chefId.name : "Unknown"}</p>
               <button className="add-to-cart-btn"  onClick={() => handleAddToCart(dish)}>Add to Cart</button>
             </div>
+            
           ))
         ) : (
           <p>No menu items found.</p>
         )}
+        
       </div>
+      
 
       <div className="sort-options">
         <h3>Sort By</h3>
