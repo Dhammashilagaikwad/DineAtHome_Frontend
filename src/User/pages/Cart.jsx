@@ -261,7 +261,7 @@ const totalAmount = dishCharges + shopCharges + deliveryCharges + tip + taxCharg
       </div>
  
 
-      <Link to="/checkout">
+      <Link to="/user/PaymentOptions">
         <button className='checkoutBtn'>Proceed to Checkout</button>
       </Link>
     </>

@@ -4,6 +4,7 @@ import "../styles/AfterLoginNavbar.css";
 import "../styles/SearchPage.css";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../utils/axiosService";
+import { useNotification } from "../../components/NotificationContext";
 
 const AfterLoginNavbar = () => {
 
@@ -16,6 +17,7 @@ const AfterLoginNavbar = () => {
   const [query, setQuery] = useState("");
   const [items, setItems] = useState([]);
   const [cartItems, setCartItems] = useState([]);
+  const { triggerNotification } = useNotification();
 
   const [isUserDropdownOpen,setUserDropdownOpen]=useState(false);
 //   const [isPanelVisible, setIsPanelVisible] = useState(false);
@@ -93,13 +95,15 @@ const navigate = useNavigate();
         
         localStorage.removeItem("token"); // Remove token
         localStorage.removeItem("username"); // Remove username (adjust the key if needed)
-        alert("Logged out successfully");
+        // alert("Logged out successfully");
+        triggerNotification('Logged out successfully','green')
         // Redirect to the homepage or login page after successful logout
         navigate("/");
       }
     } catch (error) {
       console.error("Logout failed:", error);
-      alert("Logout failed. Please try again.");
+      // alert("Logout failed. Please try again.");
+      triggerNotification('Logout failed. Please try again.','red')
     }
   };
 
