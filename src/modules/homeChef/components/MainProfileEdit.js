@@ -84,7 +84,7 @@ const ProfileForm = () => {
       const updatedSpecialities = [...specialities, newSpeciality];
   
       try {
-        await axios.put(`http://localhost:4000/api/chefs/${chefId}/specialities`, { specialities: updatedSpecialities });
+        await axios.put(`http://localhost:4000/api/chefs/${chefId}`, { specialities: updatedSpecialities });
         setSpecialities(updatedSpecialities);
         setNewSpeciality("");
       } catch (error) {
