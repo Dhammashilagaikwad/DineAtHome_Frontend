@@ -4,6 +4,7 @@ import ThirdPg from '../components/ThirdPg';
 import FourthPg from "../components/FourthPg";
 import '../styles/FeatureSection.css';
 import { useNavigate } from "react-router-dom";
+// import SearchPage from '../pages/SearchPage'
 
 export default function Design() {
   const sentences = ["WELCOME TO DINEATHOME!", "FRESHLY CRAFTED, ONLY WHEN YOU ASK."];
