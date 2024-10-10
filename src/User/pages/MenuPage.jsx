@@ -135,12 +135,12 @@ const MenuPage = () => {
         <button onClick={() => handleSort("price-high-to-low")}>
           Price High to Low
         </button>
-        <h3>Categories</h3>
+        {/* <h3>Categories</h3>
         <button onClick={() => handleSort("all")}>All</button> 
         <button onClick={() => handleSort("main-course")}>Main Course</button>
         <button onClick={() => handleSort("dessert")}>Dessert</button>
         <button onClick={() => handleSort("salad")}>Salad</button>
-        <button onClick={() => handleSort("bread")}>Bread</button>
+        <button onClick={() => handleSort("bread")}>Bread</button> */}
       </div>
     </div>
   );

@@ -28,9 +28,9 @@ const Navbar = () => {
         <div className="flex items-center">
           <div className="flex gap-2 text-2xl md:text-3xl">
             <SiCodechef />
-            <h1 className="font-semibold text-lg md:text-2xl text-blue-800">
+            <Link to='/home-shefs/dashboard'><h1 className="font-semibold text-lg md:text-2xl text-blue-800">
               Chef's Dashboard
-            </h1>
+            </h1></Link>
           </div>
         </div>
         <div className="md:flex hidden gap-4 items-center text-blue-800 text-xl">

@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "../styles/ChefProfile.css";
 import "react-datepicker/dist/react-datepicker.css";
-import axios from "axios";
+import axiosInstance from "../utils/axiosService";
 import { useNotification } from "../components/NotificationContext";
 
 //ChefProfile
@@ -64,11 +64,11 @@ checkLoginStatus();
 
     const fetchChefData = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/api/chefs/${id}`);
+        const response = await axiosInstance.get(`/api/chefs/${id}`);
         setChefData(response.data);
 
         // Use the chef ID dynamically in the URL
-        const menuResponse = await axios.get(`http://localhost:4000/addItem/getitembychefid/${id}`);
+        const menuResponse = await axiosInstance.get(`/addItem/getitembychefid/${id}`);
         setMenuItems(menuResponse.data);
       } catch (error) {
         console.error("Error fetching chef data:", error);
@@ -116,7 +116,7 @@ checkLoginStatus();
     e.preventDefault();
 
     try {
-      await axios.post(`http://localhost:4000/preOrderRoutes/preOrder`, {
+      await axiosInstance.post(`/preOrderRoutes/preOrder`, {
         ...customizedOrder,
         priceRange: {
           minPrice: parseFloat(customizedOrder.priceRange.minPrice),
@@ -143,7 +143,7 @@ checkLoginStatus();
 
   const updatePreOrder = async (id, updatedData) => {
     try {
-      const response = await axios.put(`http://localhost:4000/preOrderRoutes/edit-preOrder/${id}`, updatedData);
+      const response = await axiosInstance.put(`/preOrderRoutes/edit-preOrder/${id}`, updatedData);
       // alert("Pre-order updated successfully!");
       triggerNotification('Pre-order updated successfully!','green')
       // Update local state as needed
@@ -154,7 +154,7 @@ checkLoginStatus();
 
   const deletePreOrder = async (id) => {
     try {
-      await axios.delete(`http://localhost:4000/preOrderRoutes/delete-preOrder/${id}`);
+      await axiosInstance.delete(`/preOrderRoutes/delete-preOrder/${id}`);
       // alert("Pre-order deleted successfully!");
       triggerNotification('Pre-order deleted successfully!','green')
       // Update local state as needed
@@ -242,7 +242,7 @@ checkLoginStatus();
               <div>
                 <h3>{item.foodName}</h3>
                 <p>{item.foodDescription}</p>
-                <p>Price: ${item.amount}</p>
+                <p>Price: Rs {item.amount}</p>
                 {/* Display the chef's name instead of chefId */}
                 {chefData && <p>Chef: {chefData.name}</p>}
                 <button onClick={() => handleAddToCart(item)}>Add to Cart</button>
