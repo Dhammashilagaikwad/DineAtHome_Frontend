@@ -3,11 +3,16 @@ import "../styles/MenuPage.css"; // Add custom styles here
 import axiosInstance from "../../utils/axiosService"; // Ensure this path is correct
 import {jwtDecode} from 'jwt-decode'; // Correct import
 import { useNavigate } from 'react-router-dom'; 
+import { useNotification } from "../../components/NotificationContext";
+
 const MenuPage = () => {
   const [menu, setMenu] = useState([]); // Initialize with an empty array
   const [sortOption, setSortOption] = useState("");
+  const [sortedMenu, setSortedMenu] = useState([]);
   const [message, setMessage] = useState(""); // State for showing success/error message
   const navigate = useNavigate();
+  const { triggerNotification } = useNotification();
+
 
   useEffect(() => {
     // Scroll to the top when the page is loaded
@@ -18,6 +23,7 @@ const MenuPage = () => {
       try {
         const response = await axiosInstance.get("/addItem/getAllItem"); // Fetch items from the backend
         setMenu(response.data); // Set the fetched items to the state
+        setSortedMenu(response.data);
       } catch (error) {
         console.error("Error fetching menu items:", error);
       }
@@ -49,7 +55,8 @@ const MenuPage = () => {
   
       if (response.status === 200) {
         setMessage("Item added to cart successfully!");
-        alert("Item added to the cart successfully!");
+        // alert("Item added to the cart successfully!");
+        triggerNotification('Item added to the cart successfully!','green')
         navigate('/user/usercart');
       }
     } catch (error) {
@@ -60,36 +67,37 @@ const MenuPage = () => {
       } else {
         console.error("Error adding item to cart:", error);
         setMessage("Failed to add item to cart.");
+        triggerNotification('Failed to add item to cart.','red')
       }
     }
   };
   
 
   const handleSort = (option) => {
-    let sortedMenu;
+    let newSortedMenu;;
     switch (option) {
       case "price-low-to-high":
-        sortedMenu = [...menu].sort((a, b) => a.amount - b.amount);
+        newSortedMenu = [...menu].sort((a, b) => a.amount - b.amount);
         break;
       case "price-high-to-low":
-        sortedMenu = [...menu].sort((a, b) => b.amount - a.amount);
+        newSortedMenu = [...menu].sort((a, b) => b.amount - a.amount);
         break;
       case "main-course":
-        sortedMenu = menu.filter((item) => item.category === "Main Course");
+        newSortedMenu = menu.filter((item) => item.category === "Main Course");
         break;
       case "dessert":
-        sortedMenu = menu.filter((item) => item.category === "Dessert");
+        newSortedMenu = menu.filter((item) => item.category === "Dessert");
         break;
       case "salad":
-        sortedMenu = menu.filter((item) => item.category === "Salad");
+        newSortedMenu = menu.filter((item) => item.category === "Salad");
         break;
       case "bread":
-        sortedMenu = menu.filter((item) => item.category === "Bread");
+        newSortedMenu = menu.filter((item) => item.category === "Bread");
         break;
-      default:
-        sortedMenu = menu;
+      default: // For the "All" option or any unrecognized sort option
+        newSortedMenu = menu;
     }
-    setMenu(sortedMenu);
+    setSortedMenu(newSortedMenu);
     setSortOption(option);
   };
 
@@ -97,8 +105,8 @@ const MenuPage = () => {
     <div className="menu-page-container">
        {message && <p className="cart-message">{message}</p>} {/* Display success/error message */}
       <div className="menu-list-container">
-        {menu.length > 0 ? (
-          menu.map((dish) => (
+        {sortedMenu.length > 0 ? (
+          sortedMenu.map((dish) => (
             <div key={dish._id} className="menu-card">
               <img
   src={`http://localhost:4000${dish.foodPhoto}`} // Append your backend URL
@@ -108,7 +116,7 @@ const MenuPage = () => {
 
               <h3>{dish.foodName}</h3>
               <p>{dish.foodDescription}</p>
-              <p>Price: ${dish.amount}</p>
+              <p>Price: Rs{dish.amount}</p>
               {/* Display chef's name */}
               <p>Chef: {dish.chefId && dish.chefId.name ? dish.chefId.name : "Unknown"}</p>
               <button className="add-to-cart-btn"  onClick={() => handleAddToCart(dish._id)}>Add to Cart</button>
@@ -127,11 +135,12 @@ const MenuPage = () => {
         <button onClick={() => handleSort("price-high-to-low")}>
           Price High to Low
         </button>
-        <h3>Categories</h3>
+        {/* <h3>Categories</h3>
+        <button onClick={() => handleSort("all")}>All</button> 
         <button onClick={() => handleSort("main-course")}>Main Course</button>
         <button onClick={() => handleSort("dessert")}>Dessert</button>
         <button onClick={() => handleSort("salad")}>Salad</button>
-        <button onClick={() => handleSort("bread")}>Bread</button>
+        <button onClick={() => handleSort("bread")}>Bread</button> */}
       </div>
     </div>
   );

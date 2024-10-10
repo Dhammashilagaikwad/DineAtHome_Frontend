@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import "../styles/Navbar.css";
 import '../styles/SearchPage.css'
+import { useNotification } from './NotificationContext';
 
 const Navbar = () => {
   const navigate=useNavigate();
@@ -19,6 +20,8 @@ const Navbar = () => {
   const [items, setItems] = useState([]);
   const [isPanelVisible, setIsPanelVisible] = useState(false);
   // const [isLoginForm, setIsLoginForm] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { triggerNotification } = useNotification();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -124,6 +127,14 @@ const [selectedCity, setSelectedCity] = useState("Mumbai");
     setShowCityList(!showCityList); // Toggle the city list display
   };
 
+  const Cart=()=>{
+    if (!isLoggedIn) {
+      // alert("Please log in to add items to your cart.");
+      triggerNotification('Please log in to open your cart.','red')
+      return;
+    }
+  }
+
   return (
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
       <div className="logo">
@@ -202,7 +213,7 @@ const [selectedCity, setSelectedCity] = useState("Mumbai");
             </NavLink>
           </li>
           <li>
-            <NavLink id="navs-icons" to="/cart" onClick={toggleMenu}>
+            <NavLink id="navs-icons" onClick={Cart}>
               <i className="fa-solid fa-cart-shopping"></i>
             </NavLink>
           </li>

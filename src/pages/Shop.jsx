@@ -15,6 +15,8 @@ function Shop() {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [isMobile, setIsMobile] = useState(false);
   const { triggerNotification } = useNotification();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
   // Fetch products from backend
   useEffect(() => {
     const fetchProducts = async () => {
@@ -59,27 +61,27 @@ function Shop() {
   };
 
   // Function to check if user is logged in
-  const isLoggedIn = () => {
-    const token = localStorage.getItem("token");
-    console.log("Token:", token); // Debugging line to check if token is present
-    if (!token) {
-      return false;
-    }
+  // const isLoggedIn = () => {
+  //   const token = localStorage.getItem("token");
+  //   console.log("Token:", token); // Debugging line to check if token is present
+  //   if (!token) {
+  //     return false;
+  //   }
 
-    // Optionally, you can decode the token and check its expiration
-    const payload = JSON.parse(atob(token.split('.')[1]));
-    const currentTime = Date.now() / 1000; // Get current time in seconds
+  //   // Optionally, you can decode the token and check its expiration
+  //   const payload = JSON.parse(atob(token.split('.')[1]));
+  //   const currentTime = Date.now() / 1000; // Get current time in seconds
 
-    // Check if token is expired
-    return payload.exp > currentTime;
-  };
+  //   // Check if token is expired
+  //   return payload.exp > currentTime;
+  // };
 
-  console.log("islogin", isLoggedIn());
+  // console.log("islogin", isLoggedIn());
 
   // Add function to handle adding to cart
   const addToCart = (product) => {
     console.log("Add to Cart clicked for:", product.itemname);
-    if (!isLoggedIn()) {
+    if (!isLoggedIn) {
       // alert('Please log in to add items to your cart');
       triggerNotification('Please log in to add items to your cart','red')
       return;

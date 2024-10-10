@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import food7 from "../images/food7.jpg";
+// import food7 from "../images/food7.jpg";
 import opendoor from "../images/opendoor.png";
 import closedoor from "../images/closedoor.png";
 import { useNavigate } from "react-router-dom";
@@ -61,7 +61,7 @@ function ChefsNearYou() {
             return (
               <RestaurantCard
                 key={chef._id}
-                image={chef.image || food7} // Use a default image if not provided
+                image={chef.image} // Use a default image if not provided
                 rating={chef.average_rating}
                 name={`${chef.name}`}
                 cuisine={cuisines} // Set the cuisine directly

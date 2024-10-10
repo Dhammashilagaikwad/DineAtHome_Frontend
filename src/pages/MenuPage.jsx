@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "../styles/MenuPage.css"; // Add custom styles here
 import axiosInstance from "../utils/axiosService";
+import { useNotification } from "../components/NotificationContext";
 
 const MenuPage = () => {
   const [menu, setMenu] = useState([]);
   const [sortOption, setSortOption] = useState("");
+  const [sortedMenu, setSortedMenu] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { triggerNotification } = useNotification();
 
   useEffect(() => {
     // Scroll to the top when the page is loaded
@@ -17,6 +20,7 @@ const MenuPage = () => {
         const response = await axiosInstance.get("/addItem/getAllItem"); // Fetch items from the backend
         console.log("Fetched menu items:", response.data); // Log the fetched data
         setMenu(response.data); // Set the fetched items to the state
+        setSortedMenu(response.data);
       } catch (error) {
         console.error("Error fetching menu items:", error);
       }
@@ -26,49 +30,50 @@ const MenuPage = () => {
   }, []);
 
   const handleSort = (option) => {
-    let sortedMenu;
+    let newSortedMenu;;
     switch (option) {
       case "price-low-to-high":
-        sortedMenu = [...menu].sort((a, b) => a.amount - b.amount);
+        newSortedMenu = [...menu].sort((a, b) => a.amount - b.amount);
         break;
       case "price-high-to-low":
-        sortedMenu = [...menu].sort((a, b) => b.amount - a.amount);
+        newSortedMenu = [...menu].sort((a, b) => b.amount - a.amount);
         break;
       case "main-course":
-        sortedMenu = menu.filter((item) => item.category === "Main Course");
+        newSortedMenu = menu.filter((item) => item.category === "Main Course");
         break;
       case "dessert":
-        sortedMenu = menu.filter((item) => item.category === "Dessert");
+        newSortedMenu = menu.filter((item) => item.category === "Dessert");
         break;
       case "salad":
-        sortedMenu = menu.filter((item) => item.category === "Salad");
+        newSortedMenu = menu.filter((item) => item.category === "Salad");
         break;
       case "bread":
-        sortedMenu = menu.filter((item) => item.category === "Bread");
+        newSortedMenu = menu.filter((item) => item.category === "Bread");
         break;
-      default:
-        sortedMenu = menu;
+      default: // For the "All" option or any unrecognized sort option
+        newSortedMenu = menu;
     }
-    setMenu(sortedMenu);
+    setSortedMenu(newSortedMenu);
     setSortOption(option);
   };
 
 
   const handleAddToCart = (dish) => {
     if (!isLoggedIn) {
-      alert("Please log in to add items to your cart.");
+      // alert("Please log in to add items to your cart.");
+      triggerNotification('Please log in to add items to your cart.','red')
       return;
     }
     // Add the dish to cart logic here
     console.log(`Added ${dish.name} to cart.`);
+    triggerNotification("Item added successfully",'green');
   };
 
   return (
     <div className="menu-page-container">
       <div className="menu-list-container">
-        {menu.length > 0 ? (
-          menu.map((dish) => (
-            
+        {sortedMenu.length > 0 ? (
+          sortedMenu.map((dish) => (
             <div key={dish._id} className="menu-card">
               {dish.foodPhoto ? (
         <img
@@ -108,11 +113,12 @@ const MenuPage = () => {
         <button onClick={() => handleSort("price-high-to-low")}>
           Price High to Low
         </button>
-        <h3>Categories</h3>
+        {/* <h3>Categories</h3>
+        <button onClick={() => handleSort("all")}>All</button> 
         <button onClick={() => handleSort("main-course")}>Main Course</button>
         <button onClick={() => handleSort("dessert")}>Dessert</button>
         <button onClick={() => handleSort("salad")}>Salad</button>
-        <button onClick={() => handleSort("bread")}>Bread</button>
+        <button onClick={() => handleSort("bread")}>Bread</button> */}
       </div>
     </div>
   );

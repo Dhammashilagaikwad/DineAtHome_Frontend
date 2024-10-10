@@ -3,6 +3,7 @@ import "../styles/Shop.css";
 import axiosInstance from "../../utils/axiosService"; // Use your axiosInstance
 import food from "../images/picklepapad.jpeg";
 import { useNavigate } from 'react-router-dom'; 
+import { useNotification } from "../../components/NotificationContext";
 
 function Shop() {
   useEffect(() => {
@@ -14,6 +15,7 @@ function Shop() {
   const [products, setProducts] = useState([]); 
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [isMobile, setIsMobile] = useState(false);
+  const { triggerNotification } = useNotification();
   const navigate = useNavigate();
 
   // Fetch products from backend
@@ -80,10 +82,10 @@ function Shop() {
   // Add function to handle adding to cart
   const addToCart = async (product) => {
     console.log("Add to Cart clicked for:", product.itemname);
-    if (!isLoggedIn()) {
-      alert('Please log in to add items to your cart');
-      return;
-    }
+    // if (!isLoggedIn()) {
+    //   alert('Please log in to add items to your cart');
+    //   return;
+    // }
    
     try {
       const token = localStorage.getItem("token"); // Get the token from local storage
@@ -101,11 +103,13 @@ function Shop() {
       );
       
       console.log(response.data.message); // Log the success message from the server
-      alert('Item added to cart successfully!'); // Notify user
+      // alert('Item added to cart successfully!'); 
+      triggerNotification('Item added to cart successfully!','green')
       navigate('/user/usercart');
     } catch (error) {
       console.error("Error adding item to cart:", error);
-      alert('There was an error adding the item to the cart.'); // Notify user of the error
+      // alert('There was an error adding the item to the cart.'); 
+      triggerNotification('There was an error adding the item to the cart.','red')
     }
   };
 
