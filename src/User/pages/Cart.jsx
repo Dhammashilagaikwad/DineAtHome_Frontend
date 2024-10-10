@@ -23,26 +23,34 @@ export default function UserCart() {
     window.scrollTo(0, 0); // Scroll to the top when the page is loaded
 
     const fetchData = async () => {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        alert('You need to log in first.');
-        return;
-      }
-
       try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          alert('You need to log in first.');
+          return;
+        }
+  
         // Fetch menu cart items
         const menuResponse = await axiosInstance.get('/api/menuCart/userMenuCart', {
           headers: { Authorization: `Bearer ${token}` },
         });
-        const menuCartItems = menuResponse.data.items || [];
-        setCartItems(menuCartItems.map(item => ({ ...item, quantity: 1 })));
+        console.log('Menu cart response:', menuResponse.data);
+        // const menuCartItems = menuResponse.data.items || [];
+        // setCartItems(menuCartItems.map(item => ({ ...item, quantity: 1 })));
+        setCartItems(menuResponse.data.items || []);
+        console.log('Cart Items:', cartItems);
+        cartItems.forEach(item => console.log('Cart Item:', item));
 
         // Fetch shop cart items
         const shopResponse = await axiosInstance.get('/api/cart/getallitems', {
-          headers: { Authorization: `Bearer ${token}` }, // Make sure the token is included here
+          headers: { Authorization: `Bearer ${token}` },
         });
-        const shopCartItems = shopResponse.data.cart.items || [];
-        setShopCartItems(shopCartItems.map(item => ({ ...item, quantity: 1 })));
+        console.log('Shop cart response:', shopResponse.data);
+        // const shopCartItems = shopResponse.data.cart.items || [];
+        // setShopCartItems(shopCartItems.map(item => ({ ...item, quantity: 1 })));
+        setShopCartItems(shopResponse.data.cart.items || []);
+        console.log('Shop Cart Items:', shopCartItems);
+        shopCartItems.forEach(item => console.log('Item:', item));
 
         // Fetch chefs
         const chefsResponse = await axiosInstance.get('/api/chefs');
@@ -51,14 +59,15 @@ export default function UserCart() {
           return acc;
         }, {});
         setChefs(chefsData);
-
+  
       } catch (error) {
         console.error("Error fetching data:", error.response ? error.response.data : error);
       }
     };
-
+  
     fetchData();
   }, []);
+
 
   const timeOptions = [
     '8 AM - 9 AM',
@@ -86,15 +95,25 @@ export default function UserCart() {
 
   const calculateTotalCharges = (items) => {
     return items.reduce((total, item) => {
-      const price = item.item?.price; // Use optional chaining to prevent errors
-      return total + (price ? price * item.quantity : 0); // Use a fallback if price is undefined
+      const price = item.itemId ? item.itemId.amount : (item.item ? item.item.price : 0);
+      const quantity = item.quantity || 0; // Default to 0 if quantity is not present
+     
+      return total + (price * quantity);
+
     }, 0);
   };
+  
+const dishCharges = calculateTotalCharges(cartItems) || 0;
+const shopCharges = calculateTotalCharges(shopCartItems) || 0;
+const taxCharges = (dishCharges + shopCharges) * taxRate || 0;
+const totalAmount = dishCharges + shopCharges + deliveryCharges + tip + taxCharges || 0;
 
-  const dishCharges = calculateTotalCharges(cartItems);
-  const shopCharges = calculateTotalCharges(shopCartItems);
-  const taxCharges = (dishCharges + shopCharges) * taxRate;
-  const totalAmount = dishCharges + shopCharges + deliveryCharges + tip + taxCharges;
+  console.log("Dish Charges:", dishCharges);
+  console.log("Shop Charges:", shopCharges);
+  console.log("Tax Charges:", taxCharges);
+  console.log("Delivery Charges:", deliveryCharges);
+  console.log("Tip:", tip);
+
 
   const handleAddressButtonClick = () => {
     setIsAddressEditing(!isAddressEditing); // Toggle editing state
@@ -111,20 +130,20 @@ export default function UserCart() {
       <div>
         {cartItems.length > 0 || shopCartItems.length > 0 ? (
           <>
-            {cartItems.map(item => {
-              const itemData = item.itemId || {}; // Use an empty object as a fallback
-              console.log("menu data", itemData);
-              return (
-                <CartC 
-                  key={item._id} // Use the cart item's _id
-                  foodName={itemData.foodName || "Unknown Item"} // Ensure to provide fallback
-                  foodName2={chefs[itemData.chefId] || "Unknown Chef"} // Use chefId from your itemData
-                  rate={`Rs. ${itemData.amount ? itemData.amount * item.quantity : '0'}`} // Ensure correct calculation
-                  qty={`Quantity: ${item.quantity}`} // Display user's selected quantity
-                  imageSrc={itemData.foodPhoto || ''} // Ensure food photo is displayed
-                />
-              );
-            })}
+           {cartItems.map(item => {
+  const itemData = item.itemId || {}; // Use an empty object as a fallback
+  return (
+    <CartC 
+      key={item._id} // Use the cart item's _id
+      foodName={itemData.foodName || "Unknown Item"} // Ensure to provide fallback
+      foodName2={chefs[itemData.chefId] || "Unknown Chef"} // Use chefId from your itemData
+      rate={`Rs. ${itemData.amount ? (itemData.amount * item.quantity).toFixed(2) : '0.00'}`} // Updated rate calculation
+      quantity={itemData.quantity} 
+      // qty={`Quantity: ${item.quantity }`} // Display user's selected quantity
+      imageSrc={itemData.foodPhoto || ''} // Ensure food photo is displayed
+    />
+  );
+})}
 
             {shopCartItems.map(item => {
               const itemData = item.item || {};
@@ -134,8 +153,9 @@ export default function UserCart() {
                   key={item._id}
                   foodName={itemData.itemname || "Unknown Item"}
                   foodName2={itemData.chefname|| "Unknown Chef"}
-                  rate={`Rs. ${itemData.price ? itemData.price * item.quantity : '0'}`}
-                  qty={`Qty: ${item.quantity}`}
+                  rate={`Rs. ${itemData.price ? (itemData.price * item.quantity).toFixed(2) : '0.00'}`} // Ensure correct calculation
+                  quantity={item.quantity}
+                  // quantity={`Qty: ${itemData.quantity || 1}`} 
                   imgSrc={itemData.image || itemData.foodPhoto || "defaultImage.jpg"} // Provide a fallback image source
                 />
               );
@@ -193,7 +213,7 @@ export default function UserCart() {
         </div>
       </div>
       <hr />
-
+{/* 
       <div className="chargesContainermain">
         <div className="chargesContainer">
           <div className="dishChargesBox">
@@ -227,8 +247,19 @@ export default function UserCart() {
       </div>
 
       <div className="totalAmountForCart">
-        <h3>Total Amount: ₹ {totalAmount.toFixed(2)}</h3>
+  <h3>Total Amount: ₹ {totalAmount.toFixed(2)}</h3>
+</div> */}
+
+
+<div className="chargesDisplay">
+        <p>Dish Charges: ₹{dishCharges.toFixed(2)}</p>
+        <p>Delivery & Packaging Charges: ₹{deliveryCharges.toFixed(2)}</p>
+        <p>Tip to Rider: ₹{tip.toFixed(2)}</p>
+        <p>Shop Charges: ₹{isNaN(shopCharges) ? '0.00' : shopCharges.toFixed(2)}</p>
+<p>Tax Charges: ₹{isNaN(taxCharges) ? '0.00' : taxCharges.toFixed(2)}</p>
+        <p>Total Amount: ₹{totalAmount.toFixed(2)}</p>
       </div>
+ 
 
       <Link to="/checkout">
         <button className='checkoutBtn'>Proceed to Checkout</button>
