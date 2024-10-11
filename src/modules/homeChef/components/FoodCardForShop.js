@@ -1,18 +1,17 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/FoodCardForShop.css'; 
 import axiosInstance from '../../../utils/axiosService';
-import {jwtDecode } from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
-function FoodCardForShop({ id }) {
-  const [foodName, setFoodName] = useState('');
-  const [foodDescription, setFoodDescription] = useState('');
-  const [quantity, setQuantity] = useState('0'); // Changed to quantity
-  const [unit, setUnit] = useState('kilogram'); // New state for unit
-  const [price, setPrice] = useState('0');
+function FoodCardForShop({ id, itemname, description, price, image, quantity, unit }) {
+  const [foodName, setFoodName] = useState(itemname || ''); // Initialize with prop
+  const [foodDescription, setFoodDescription] = useState(description || ''); // Initialize with prop
+  const [quantityState, setQuantity] = useState(quantity || '0'); // Initialize with prop
+  const [unitState, setUnit] = useState(unit || 'kilogram'); // Initialize with prop
+  const [priceState, setPrice] = useState(price || '0'); // Initialize with prop
 
   const [isEditable, setIsEditable] = useState(false);
-  const [image, setImage] = useState(null);
+  const [imageState, setImage] = useState(image || null); // Initialize with prop
   const [isDeleted, setIsDeleted] = useState(false);
 
   // Handle image upload
@@ -34,12 +33,15 @@ function FoodCardForShop({ id }) {
 
   // Handle delete card
   const handleDeleteClick = () => {
-    setIsDeleted(true);
+    if (window.confirm("Are you sure you want to delete this item?")) {
+      setIsDeleted(true);
+    }
   };
 
   if (isDeleted) {
     return null; // If deleted, return nothing
   }
+
   const handleSubmit = async () => {
     const token = localStorage.getItem('token');
 
@@ -57,7 +59,7 @@ function FoodCardForShop({ id }) {
     }
 
     // Validate required fields
-    if (!foodName || !foodDescription || quantity < 0 || price < 0) {
+    if (!foodName || !foodDescription || quantityState < 0 || priceState < 0) {
       alert('Please fill in all required fields with valid values.');
       return;
     }
@@ -65,10 +67,10 @@ function FoodCardForShop({ id }) {
     const foodData = {
       itemname: foodName,
       description: foodDescription,
-      price: parseFloat(price), // Ensure price is a number
-      image,
-      quantity: parseInt(quantity, 10), // Ensure quantity is an integer
-      unit,
+      price: parseFloat(priceState), // Ensure price is a number
+      image: imageState,
+      quantity: parseInt(quantityState, 10), // Ensure quantity is an integer
+      unit: unitState,
     };
 
     console.log('Sending foodData:', foodData); // Debugging output
@@ -92,13 +94,14 @@ function FoodCardForShop({ id }) {
       <div className="cardForShop">
         <div className="image-containerForShop">
           <label htmlFor={`photo-upload-${id}`}>
-            {image ? (
-              <img src={image} alt="Food" className="food-imageForShop" />
+            {imageState ? (
+              <img src={imageState} alt="Food" className="food-imageForShop" />
             ) : (
               <div className="photo-placeholderForShop">Food Photo</div>
             )}
           </label>
-          <input className='inputForShop'
+          <input
+            className='inputForShop'
             id={`photo-upload-${id}`}
             type="file"
             style={{ display: 'none' }}
@@ -108,14 +111,16 @@ function FoodCardForShop({ id }) {
         </div>
 
         <div className="contentForShop">
-          <input className='inputForShop'
+          <input
+            className='inputForShop'
             type="text"
             value={foodName}
             placeholder="Enter Food Name"
             onChange={(e) => setFoodName(e.target.value)}
             disabled={!isEditable}
           />
-          <textarea className='textareaForShop'
+          <textarea
+            className='textareaForShop'
             value={foodDescription}
             placeholder="Enter Food Description"
             onChange={(e) => setFoodDescription(e.target.value)}
@@ -123,36 +128,36 @@ function FoodCardForShop({ id }) {
           />
 
           <div className="quantity-inputForShop">
-          {/* <span>que</span> */}
-            <input className='inputForShop'
+            <input
+              className='inputForShop'
               type="number"
-              value={quantity}
+              value={quantityState}
               onChange={(e) => setQuantity(e.target.value)}
               disabled={!isEditable}
             />
             <select 
               className='unit-dropdownForShop' 
-              value={unit} 
+              value={unitState} 
               onChange={(e) => setUnit(e.target.value)} 
               disabled={!isEditable}
             >
               <option value="kilogram">Kilogram (KG)</option>
               <option value="gram">Gram (G)</option>
               <option value="liter">Liter (L)</option>
-              <option value="liter">Milli Lite (ML)</option>
+              <option value="milliliter">Milli Liter (ML)</option>
             </select>
           </div>
         </div>
 
-
         <div className="price-inputForShop">
-            <span>₹</span>
-            <input className='inputForShop'
-                type="number"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-                disabled={!isEditable}
-            />
+          <span>₹</span>
+          <input
+            className='inputForShop'
+            type="number"
+            value={priceState}
+            onChange={(e) => setPrice(e.target.value)}
+            disabled={!isEditable}
+          />
         </div>
 
         <div className="actionsForShop">
