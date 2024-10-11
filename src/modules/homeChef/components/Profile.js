@@ -89,6 +89,7 @@ const Profile = () => {
           <label htmlFor="upload-photoOfChef">Upload Photo:</label>
           <input
             type="file"
+            name="profilePhoto"
             id="upload-photoOfChef"
             accept="image/*"
             onChange={handlePhotoUpload}
