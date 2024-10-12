@@ -61,7 +61,7 @@ function ChefsNearYou() {
             return (
               <RestaurantCard
                 key={chef._id}
-                image={chef.image} // Use a default image if not provided
+                image={chef.coverImage ? `http://localhost:4000/coverImage-uploads/${chef.coverImage}` : "https://via.placeholder.com/150"} // Use coverImage // Use a default image if not provided
                 rating={chef.average_rating}
                 name={`${chef.name}`}
                 cuisine={cuisines} // Set the cuisine directly
