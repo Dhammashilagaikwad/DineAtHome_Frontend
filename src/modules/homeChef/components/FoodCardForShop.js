@@ -1,37 +1,41 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import '../styles/FoodCardForShop.css'; 
 import axiosInstance from '../../../utils/axiosService';
 import { jwtDecode } from 'jwt-decode';
 
 function FoodCardForShop({ id, itemname, description, price, image, quantity, unit }) {
-  const [foodName, setFoodName] = useState(itemname || ''); // Initialize with prop
-  const [foodDescription, setFoodDescription] = useState(description || ''); // Initialize with prop
-  const [quantityState, setQuantity] = useState(quantity || '0'); // Initialize with prop
-  const [unitState, setUnit] = useState(unit || 'kilogram'); // Initialize with prop
-  const [priceState, setPrice] = useState(price || '0'); // Initialize with prop
-
+  const [foodName, setFoodName] = useState(itemname || '');
+  const [foodDescription, setFoodDescription] = useState(description || '');
+  const [quantityState, setQuantity] = useState(quantity || '0');
+  const [unitState, setUnit] = useState(unit || 'kilogram');
+  const [priceState, setPrice] = useState(price || '0');
   const [isEditable, setIsEditable] = useState(false);
-  const [imageState, setImage] = useState(image || null); // Initialize with prop
+  
+  // Set the initial image state properly
+  const [imageState, setImage] = useState(image ? `http://localhost:4000${image}` : null);
+  const [uploadedFile, setUploadedFile] = useState(null);
   const [isDeleted, setIsDeleted] = useState(false);
 
-  // Handle image upload
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result);
-      };
-      reader.readAsDataURL(file);
+        setUploadedFile(file); // Store the file object
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setImage(reader.result); // Set the preview image
+        };
+        reader.readAsDataURL(file);
+    } else {
+        // Reset image state if no file is selected
+        setImage(null);
+        setUploadedFile(null);
     }
-  };
+};
 
-  // Handle editing
   const handleEditClick = () => {
     setIsEditable(!isEditable);
   };
 
-  // Handle delete card
   const handleDeleteClick = () => {
     if (window.confirm("Are you sure you want to delete this item?")) {
       setIsDeleted(true);
@@ -64,21 +68,23 @@ function FoodCardForShop({ id, itemname, description, price, image, quantity, un
       return;
     }
 
-    const foodData = {
-      itemname: foodName,
-      description: foodDescription,
-      price: parseFloat(priceState), // Ensure price is a number
-      image: imageState,
-      quantity: parseInt(quantityState, 10), // Ensure quantity is an integer
-      unit: unitState,
-    };
+    const formData = new FormData();
+    formData.append('itemname', foodName);
+    formData.append('description', foodDescription);
+    formData.append('price', parseFloat(priceState));
+    formData.append('quantity', parseInt(quantityState, 10));
+    formData.append('unit', unitState);
 
-    console.log('Sending foodData:', foodData); // Debugging output
+    // Append the actual file object if uploaded
+    if (uploadedFile) {
+      formData.append('image', uploadedFile);
+    }
 
     try {
-      const response = await axiosInstance.post(`/api/shop/additem/${chefId}`, foodData, {
+      const response = await axiosInstance.post(`/api/shop/additem/${chefId}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
         },
       });
       alert('Food item added successfully!');

@@ -140,23 +140,24 @@ const totalAmount = dishCharges + shopCharges + deliveryCharges + tip + taxCharg
       rate={`Rs. ${itemData.amount ? (itemData.amount * item.quantity).toFixed(2) : '0.00'}`} // Updated rate calculation
       quantity={itemData.quantity} 
       // qty={`Quantity: ${item.quantity }`} // Display user's selected quantity
-      imageSrc={itemData.foodPhoto || ''} // Ensure food photo is displayed
+      imageSrc={itemData.foodPhoto ? `http://localhost:4000${itemData.foodPhoto}` : ''} // Ensure food photo is displayed
     />
   );
 })}
 
             {shopCartItems.map(item => {
               const itemData = item.item || {};
-              console.log("shop data", itemData);
+              console.log("shopdetail", itemData);
+              console.log("chefname", itemData.chef?.name);
               return (
                 <CartC
                   key={item._id}
                   foodName={itemData.itemname || "Unknown Item"}
-                  foodName2={itemData.chefname|| "Unknown Chef"}
+                  foodName2={itemData.chef?.name || "Unknown Chef"}
                   rate={`Rs. ${itemData.price ? (itemData.price * item.quantity).toFixed(2) : '0.00'}`} // Ensure correct calculation
                   quantity={item.quantity}
                   // quantity={`Qty: ${itemData.quantity || 1}`} 
-                  imgSrc={itemData.image || itemData.foodPhoto || "defaultImage.jpg"} // Provide a fallback image source
+                  imageSrc={itemData.image? `http://localhost:4000${itemData.image}` : "defaultImage.jpg"} // Provide a fallback image source
                 />
               );
             })}
