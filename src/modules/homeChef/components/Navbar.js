@@ -15,7 +15,7 @@ const Navbar = () => {
   const handleLogout = async () => {
     try {
       await axiosInstance.post('/api/chefs/logout'); // Make the logout request with the axiosInstance
-      localStorage.removeItem('authToken'); // Remove the token from local storage
+      localStorage.removeItem('Token'); // Remove the token from local storage
       navigate('/login'); // Redirect to the login page or any other page
     } catch (error) {
       console.error('Logout error:', error); // Handle any errors here
