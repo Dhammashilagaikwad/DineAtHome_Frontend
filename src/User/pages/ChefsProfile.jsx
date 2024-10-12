@@ -7,8 +7,11 @@ import AfterLoginNavbar from "../components/AfterLoginNavbar";
 import axiosInstance from "../../utils/axiosService";
 import {jwtDecode} from 'jwt-decode'; // Correct import
 import { useNavigate } from 'react-router-dom';
+import { useNotification } from "../../components/NotificationContext";
 
 function UserChefProfile() {
+  const { triggerNotification } = useNotification();
+
   useEffect(() => {
     window.scrollTo(0, 0); // Scroll to the top when the page is loaded
 }, []);
@@ -97,7 +100,8 @@ function UserChefProfile() {
     
     // Client-side validation
     if (!customizedOrder.name || !customizedOrder.description || !customizedOrder.quantity || !selectedDate) {
-      alert("All fields are required.");
+      // alert("All fields are required.");
+      triggerNotification('All fields are required.','red')
       return;
     }
   
@@ -118,28 +122,20 @@ function UserChefProfile() {
         headers: { Authorization: `Bearer ${token}` }
       });
   
-      alert("Customized order request sent successfully!");
+      // alert("Customized order request sent successfully!");
+      triggerNotification('Customized order request sent successfully!','green')
       setShowCustomizedForm(false);
       setCustomizedOrder({ name: "", description: "", quantity: "", deliveryDate: new Date() });
     } catch (error) {
       console.error("Error sending customized order:", error);
-      alert("Failed to send customized order: " + error.response?.data?.message || error.message);
+      // alert("Failed to send customized order: " + error.response?.data?.message || error.message);
+      triggerNotification('Failed to send customized order','red')
     }
   };
   
-  
-
-
-  
-  
-  
-
   const handleCloseForm = () => {
     setShowCustomizedForm(false);
   };
-  
- 
-
 const addToMenuCart = async (itemId) => {
   try {
     // Retrieve the token from local storage
@@ -170,11 +166,13 @@ const addToMenuCart = async (itemId) => {
 
     );
     console.log('Item added to menu cart:', response.data);
-    alert("Item added to the cart successfully!");
-    navigate('/usercart')
+    // alert("Item added to the cart successfully!");
+    triggerNotification('Item added to the cart successfully!','green')
+    navigate('/user/usercart')
   } catch (error) {
     console.error('Error adding item to menu cart:', error);
-    alert("Failed to add item to the cart.");
+    // alert("Failed to add item to the cart.");
+    triggerNotification('Failed to add item to the cart.','red')
   }
 };
 
@@ -193,17 +191,13 @@ const addToMenuCart = async (itemId) => {
         {chefData ? (
   <div>
     <h1>{chefData.name}</h1>
-    {chefData.coverImg ? (
-      <img
-      src={`http://localhost:4000/coverImage-uploads/${chefData.coverImage}`}  // Make sure this matches your backend
-          alt={`${chefData.name}'s Cover Image`}
-          style={{ width: "100%", height: "300px", objectFit: "cover" }}
-      />
-    ) : (
-      <div style={{ width: "200px", height: "auto", backgroundColor: "#f0f0f0", textAlign: "center", padding: "20px" }}>
-        No Profile Photo Available
-      </div>
-    )}
+    {chefData.coverImage && (
+                    <img
+                    src={`http://localhost:4000/coverImage-uploads/${chefData.coverImage}`}  // Make sure this matches your backend
+                        alt={`${chefData.name}'s Cover Image`}
+                        style={{ width: "100%", height: "300px", objectFit: "cover" }}
+                    />
+                )}
     <p>Rating: {chefData.average_rating}</p>
     <p>Cuisine: {chefData.cuisine.join(", ")}</p> {/* Join cuisines if it's an array */}
     <p>Specialities: {Array.isArray(chefData.specialities) ? chefData.specialities.join(", ") : chefData.specialities}</p>
@@ -239,15 +233,19 @@ const addToMenuCart = async (itemId) => {
         {menuItems.length > 0 ? (
           menuItems.map((item) => (
             <div key={item._id} style={styles.menuItem}>
-              {item.foodPhoto ? (
-                <img src={`/${item.foodPhoto}`} alt={item.foodName} style={styles.image} />
-              ) : (
-                <div style={styles.imagePlaceholder}>No Image Available</div>
-              )}
+               {item.foodPhoto ? (
+          <img 
+            src={`http://localhost:4000${item.foodPhoto}`} // Ensure correct URL
+            alt={item.foodName} 
+            style={styles.image} 
+          />
+        ) : (
+          <div style={styles.imagePlaceholder}>No Image Available</div>
+        )}
               <div>
                 <h3>{item.foodName}</h3>
                 <p>{item.foodDescription}</p>
-                <p>Price: ${item.amount}</p>
+                <p>Price: Rs {item.amount}</p>
                 {/* Display the chef's name instead of chefId */}
                 {chefData && <p>Chef: {chefData.name}</p>}
                 <button onClick={() => addToMenuCart(item._id)}>Add to Cart</button>
@@ -259,7 +257,7 @@ const addToMenuCart = async (itemId) => {
         )}
       </div>
 
-      <div>
+      {/* <div>
   <h2>Pre-Orders</h2>
   {preOrders.length > 0 ? (
     preOrders.map((order) => (
@@ -269,13 +267,13 @@ const addToMenuCart = async (itemId) => {
         <p>Quantity: {order.quantity}</p>
         <p>Price Range: ${order.priceRange.minPrice} - ${order.priceRange.maxPrice}</p>
         <p>Delivery Date: {new Date(order.deliveryDate).toLocaleDateString()}</p>
-        {/* Add buttons for update and delete here */}
+        Add buttons for update and delete here
       </div>
     ))
   ) : (
     <p>No pre-orders available.</p>
   )}
-</div>
+</div> */}
 
       {/* Customized Food Form */}
       {showCustomizedForm && (

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import food7 from "../images/food7.jpg";
+// import food7 from "../images/food7.jpg";
 import opendoor from "../images/opendoor.png";
 import closedoor from "../images/closedoor.png";
 import { useNavigate } from "react-router-dom";
@@ -61,7 +61,7 @@ function ChefsNearYou() {
             return (
               <RestaurantCard
                 key={chef._id}
-                image={chef.image || food7} // Use a default image if not provided
+                image={chef.coverImage ? `http://localhost:4000/coverImage-uploads/${chef.coverImage}` : "https://via.placeholder.com/150"} // Use coverImage // Use a default image if not provided
                 rating={chef.average_rating}
                 name={`${chef.name}`}
                 cuisine={cuisines} // Set the cuisine directly
@@ -205,7 +205,7 @@ const styles = {
   },
   image: {
     width: "100%",
-    height: "auto",
+    height: "200px",
   },
   rating: {
     position: "absolute",

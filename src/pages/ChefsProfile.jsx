@@ -3,10 +3,13 @@ import { useParams } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "../styles/ChefProfile.css";
 import "react-datepicker/dist/react-datepicker.css";
-import axios from "axios";
+import axiosInstance from "../utils/axiosService";
+import { useNotification } from "../components/NotificationContext";
 
 //ChefProfile
 function ChefProfile() {
+  const { triggerNotification } = useNotification();
+
   useEffect(() => {
     window.scrollTo(0, 0); // Scroll to the top when the page is loaded
   }, []);
@@ -61,11 +64,11 @@ checkLoginStatus();
 
     const fetchChefData = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/api/chefs/${id}`);
+        const response = await axiosInstance.get(`/api/chefs/${id}`);
         setChefData(response.data);
 
         // Use the chef ID dynamically in the URL
-        const menuResponse = await axios.get(`http://localhost:4000/addItem/getitembychefid/${id}`);
+        const menuResponse = await axiosInstance.get(`/addItem/getitembychefid/${id}`);
         setMenuItems(menuResponse.data);
       } catch (error) {
         console.error("Error fetching chef data:", error);
@@ -84,7 +87,8 @@ checkLoginStatus();
 
   const handleCustomizedFoodClick = () => {
     if (!isLoggedIn) {
-      alert("Please log in to proceed with Preorders.");
+      // alert("Please log in to proceed with Preorders.");
+      triggerNotification('Please log in to proceed with Preorders.','red')
       return;
     }
     setShowCustomizedForm(true);
@@ -112,7 +116,7 @@ checkLoginStatus();
     e.preventDefault();
 
     try {
-      await axios.post(`http://localhost:4000/preOrderRoutes/preOrder`, {
+      await axiosInstance.post(`/preOrderRoutes/preOrder`, {
         ...customizedOrder,
         priceRange: {
           minPrice: parseFloat(customizedOrder.priceRange.minPrice),
@@ -120,7 +124,8 @@ checkLoginStatus();
         },
         deliveryDate: selectedDate, // Ensure deliveryDate is set to selected date
       });
-      alert("Customized order request sent successfully!");
+      // alert("Customized order request sent successfully!");
+      triggerNotification('Customized order request sent successfully!','green')
       setShowCustomizedForm(false);
       setCustomizedOrder({
         name: "",
@@ -131,14 +136,16 @@ checkLoginStatus();
       });
     } catch (error) {
       console.error("Error sending customized order:", error);
-      alert("Failed to send customized order.");
+      // alert("Failed to send customized order.");
+      triggerNotification('Failed to send customized order.','red')
     }
   };
 
   const updatePreOrder = async (id, updatedData) => {
     try {
-      const response = await axios.put(`http://localhost:4000/preOrderRoutes/edit-preOrder/${id}`, updatedData);
-      alert("Pre-order updated successfully!");
+      const response = await axiosInstance.put(`/preOrderRoutes/edit-preOrder/${id}`, updatedData);
+      // alert("Pre-order updated successfully!");
+      triggerNotification('Pre-order updated successfully!','green')
       // Update local state as needed
     } catch (error) {
       console.error("Error updating pre-order:", error);
@@ -147,8 +154,9 @@ checkLoginStatus();
 
   const deletePreOrder = async (id) => {
     try {
-      await axios.delete(`http://localhost:4000/preOrderRoutes/delete-preOrder/${id}`);
-      alert("Pre-order deleted successfully!");
+      await axiosInstance.delete(`/preOrderRoutes/delete-preOrder/${id}`);
+      // alert("Pre-order deleted successfully!");
+      triggerNotification('Pre-order deleted successfully!','green')
       // Update local state as needed
     } catch (error) {
       console.error("Error deleting pre-order:", error);
@@ -164,7 +172,8 @@ checkLoginStatus();
 
   const handleAddToCart = (item) => {
     if (!isLoggedIn) {
-      alert("Please log in to add items to the cart.");
+      // alert("Please log in to add items to the cart.");
+      triggerNotification('Please log in to add items to the cart.','red')
       return;
     }
 
@@ -173,10 +182,10 @@ checkLoginStatus();
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.menuCard}>
-        <h5 style={{ textAlign: "center", paddingTop: "70px" }}>
-          {chefData ? `${chefData.name} - ${chefData.cuisine} Specialist` : 'Loading...'}
+    <div className="menu-card-container">
+      <div className="menu-card">
+        <h5>
+          {chefData ? `${chefData.name} - ${chefData.cuisine}` : 'Loading...'}
         </h5>
 
         {chefData ? (
@@ -186,22 +195,23 @@ checkLoginStatus();
                     <img
                     src={`http://localhost:4000/coverImage-uploads/${chefData.coverImage}`}  // Make sure this matches your backend
                         alt={`${chefData.name}'s Cover Image`}
-                        style={{ width: "100%", height: "300px", objectFit: "cover" }}
+                        style={{ width: "100%", height: "300px", objectFit: "cover",padding:"10px" }}
                     />
                 )}
                 
-   
-            <p>Rating: {chefData.average_rating}</p>
-            <p>Cuisine: {chefData.cuisine}</p> {/* Directly displaying Cuisine */}
-            <p>Specialities: {Array.isArray(chefData.specialities) ? chefData.specialities.join(", ") : chefData.specialities}</p> {/* Check if specialities is an array */}
+            <div style={{textAlign:"left",paddingLeft:"10px"}}>
+            <p><strong>Rating: </strong>{chefData.average_rating}</p>
+            <p><strong>Cuisine: </strong>{chefData.cuisine}</p> {/* Directly displaying Cuisine */}
+            <p><strong>Specialities: </strong>{Array.isArray(chefData.specialities) ? chefData.specialities.join(", ") : chefData.specialities}</p> {/* Check if specialities is an array */}
             <p>{chefData.is_active ? "Open" : "Closed"}</p>
+            </div>
           </div>
         ) : (
           <p>No data available for this chef.</p>
         )}
 
-        <div>
-          <label>Select Delivery Date:</label>
+        <div style={{textAlign:"left"}}>
+          <label><strong>Select Delivery Date:</strong></label>
           <DatePicker
             selected={selectedDate}
             onChange={handleDateChange}
@@ -220,23 +230,27 @@ checkLoginStatus();
           )}
         </div>
       </div>
-      <div style={styles.menuSection}>
-        <h2>Menu</h2>
+      <div className="menuSection">
+        <strong><h2 style={{padding:"10px",fontSize:"20px"}}>Menu</h2></strong>
         {menuItems.length > 0 ? (
           menuItems.map((item) => (
             <div key={item._id} style={styles.menuItem}>
               {item.foodPhoto ? (
-                <img src={`http://localhost:4000/${item.foodPhoto}`} alt={item.foodName} style={styles.image} />
-              ) : (
-                <div style={styles.imagePlaceholder}>No Image Available</div>
-              )}
+          <img 
+            src={`http://localhost:4000${item.foodPhoto}`} // Ensure correct URL
+            alt={item.foodName} 
+            style={styles.image} 
+          />
+        ) : (
+          <div style={styles.imagePlaceholder}>No Image Available</div>
+        )}
               <div>
-                <h3>{item.foodName}</h3>
+                <strong><h3>{item.foodName}</h3></strong>
                 <p>{item.foodDescription}</p>
-                <p>Price: ${item.amount}</p>
+                <p><strong>Price:</strong> Rs {item.amount}</p>
                 {/* Display the chef's name instead of chefId */}
-                {chefData && <p>Chef: {chefData.name}</p>}
-                <button onClick={() => handleAddToCart(item)}>Add to Cart</button>
+                {chefData && <p><strong>Chef: </strong>{chefData.name}</p>}
+                <button className="addtocart" onClick={() => handleAddToCart(item)}>Add to Cart</button>
               </div>
             </div>
           ))
@@ -247,7 +261,7 @@ checkLoginStatus();
 
 
 
-      <div>
+      {/* <div>
         <h2>Pre-Orders</h2>
         {preOrders.length > 0 ? (
           preOrders.map((order) => (
@@ -257,13 +271,13 @@ checkLoginStatus();
               <p>Quantity: {order.quantity}</p>
               <p>Price Range: ${order.priceRange.minPrice} - ${order.priceRange.maxPrice}</p>
               <p>Delivery Date: {new Date(order.deliveryDate).toLocaleDateString()}</p>
-              {/* Add buttons for update and delete here */}
+              Add buttons for update and delete here
             </div>
           ))
         ) : (
           <p>No pre-orders available.</p>
         )}
-      </div>
+      </div> */}
 
       {/* Customized Food Form */}
       {showCustomizedForm && (
@@ -360,28 +374,6 @@ checkLoginStatus();
 }
 
 const styles = {
-  container: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    padding: "20px",
-  },
-  menuCard: {
-    width: "70%",
-    maxWidth: "1200px",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    marginTop: "10px",
-  },
-  menuSection: {
-    width: "70%",
-    maxWidth: "1200px",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    marginTop: "20px",
-  },
   menuItem: {
     display: "flex",
     alignItems: "center",

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import "../styles/Shop.css";
 import axiosInstance from "../../utils/axiosService"; // Use your axiosInstance
 import food from "../images/picklepapad.jpeg";
+import { useNavigate } from 'react-router-dom'; 
+import { useNotification } from "../../components/NotificationContext";
 
 function Shop() {
   useEffect(() => {
@@ -13,15 +15,22 @@ function Shop() {
   const [products, setProducts] = useState([]); 
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [isMobile, setIsMobile] = useState(false);
+  const { triggerNotification } = useNotification();
+  const navigate = useNavigate();
 
   // Fetch products from backend
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await axiosInstance.get('/api/shop/items'); // Use axiosInstance here
-        setProducts(response.data); // Store all products
-        setFilteredProducts(response.data); // Set filteredProducts to the fetched data
-      } catch (error) {
+       // Assuming response.data contains the items with image paths
+       const productsWithImages = response.data.map(product => ({
+        ...product,
+        image: `http://localhost:4000${product.image}` // Ensure the image URL is correct
+      }));
+      setProducts(productsWithImages); // Store all products
+      setFilteredProducts(productsWithImages); // Set filteredProducts to the fetched data
+    } catch (error) {
         console.error("There was an error fetching the products!", error);
       }
     };
@@ -76,15 +85,37 @@ function Shop() {
   console.log("islogin", isLoggedIn());
 
   // Add function to handle adding to cart
-  const addToCart = (product) => {
+  const addToCart = async (product) => {
     console.log("Add to Cart clicked for:", product.itemname);
-    if (!isLoggedIn()) {
-      alert('Please log in to add items to your cart');
-      return;
+    // if (!isLoggedIn()) {
+    //   alert('Please log in to add items to your cart');
+    //   return;
+    // }
+   
+    try {
+      const token = localStorage.getItem("token"); // Get the token from local storage
+      const response = await axiosInstance.post(
+        '/api/cart/add', // Endpoint for adding item to cart
+        {
+          itemId: product._id, // Use product ID for the cart
+          quantity: 1, // Set default quantity to 1 or adjust as needed
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include token in headers
+          },
+        }
+      );
+      
+      console.log(response.data.message); // Log the success message from the server
+      // alert('Item added to cart successfully!'); 
+      triggerNotification('Item added to cart successfully!','green')
+      navigate('/user/usercart');
+    } catch (error) {
+      console.error("Error adding item to cart:", error);
+      // alert('There was an error adding the item to the cart.'); 
+      triggerNotification('There was an error adding the item to the cart.','red')
     }
-
-    // Add the product to the cart logic here (e.g., API call)
-    console.log(`Product added to cart: ${product.itemname}`);
   };
 
   return (

@@ -1,5 +1,5 @@
-import React from 'react'
-import "../styles/HistoryC.css"
+import React from 'react';
+import "../styles/HistoryC.css";
 
 export default function HistoryC(props) {
   return (
@@ -13,11 +13,9 @@ export default function HistoryC(props) {
 
           <div className="customerInfo">{props.customerInfo}</div>
           <div className="item-price">₹{props.itemPrice} </div>
-
-          {/* <div className="boxR"></div> */}
+          <div className="item-quantity">Quantity: {props.quantity}</div> {/* Display the quantity */}
         </div>
       </div>
-
     </>
-  )
+  );
 }

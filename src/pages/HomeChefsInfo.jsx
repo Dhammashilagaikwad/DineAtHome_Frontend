@@ -3,7 +3,7 @@ import '../styles/HomeChefsInfo.css';
 import food1 from '../images/food11.jpg';
 import axios from 'axios'; // Import Axios
 import HomeChefProfileCard from "../components/HomeChefProfileCard"; 
-import self from '../images/Baker-cuate.png';
+// import self from '../images/Baker-cuate.png';
 
 export default function HomeChefsInfo() {
     useEffect(() => {
@@ -39,8 +39,8 @@ export default function HomeChefsInfo() {
                         key={chef._id} // Use chef's unique ID
                         name={chef.name}
                         speciality={chef.specialities.join(', ')} // Join specialities if it's an array
-                        photo={chef.profilePhoto || self} // Use the chef's photo or a default
-                        selfphoto={self} // Adjust as necessary for the self photo
+                        coverImage={`http://localhost:4000/coverImage-uploads/${chef.coverImage}`}// Use the chef's photo or a default
+                        profilePhoto={`http://localhost:4000/coverImage-uploads/${chef.profilePhoto}`}// Adjust as necessary for the profile photo
                     />
                 ))}
             </div>

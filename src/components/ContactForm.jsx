@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import "../styles/contactUs.css"; 
 import axiosInstance from '../utils/axiosService';
-import toastService from "../utils/toastService";
+// import toastService from "../utils/toastService";
+import { useNotification } from "./NotificationContext";
 
 const ContactForm = () => {
+  const { triggerNotification } = useNotification();
   const [formData, setFormData] = useState({
     name: "",
     mobileNumber: "",
@@ -33,8 +35,9 @@ const ContactForm = () => {
       console.log('API Response:', response.data); // Log the response from the API
       
       if (response.data.status) {
-        toastService.success(response.data.message);
+        // toastService.success(response.data.message);
           // Reset form fields
+          triggerNotification("Form submitted successfully",'green');
           setFormData({
               name: '',
               email: '',
@@ -43,11 +46,13 @@ const ContactForm = () => {
               message: ''
           });
         } else {
-          toastService.warn("Submission failed. Please try again.");
+          // toastService.warn("Submission failed. Please try again.");
+          triggerNotification("Submission failed. Please try again.",'red')
         }
     } catch (error) {
         console.error("Error during form submission:", error); // Log the error
-        toastService.error("An error occurred. Please try again later.");
+        // toastService.error("An error occurred. Please try again later.");
+        triggerNotification("An error occurred. Please try again later.",'red')
     }
 };
 
