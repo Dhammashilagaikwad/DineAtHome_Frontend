@@ -99,12 +99,20 @@ const ChefShop = () => {
   };
 
   const handleAddCard = () => {
-    setCards((prevCards) => {
-      const newCards = [...prevCards, nextId];
-      setNextId(nextId + 1); // Increment the ID for the next card
-      return newCards;
-    });
-  };
+    setCards((prevCards) => [
+        ...prevCards,
+        {
+            id: nextId,
+            itemname: '',
+            description: '',
+            price: '',
+            image: null,
+            quantity: '0',
+            unit: 'kilogram',
+        },
+    ]);
+    setNextId(nextId + 1); // Increment the ID for the next card
+};
 
   useEffect(() => {
     if (lastCardRef.current) {
@@ -127,10 +135,11 @@ const ChefShop = () => {
             cards.map((item, index) => (
               <div key={item._id} ref={index === cards.length - 1 ? lastCardRef : null}>
                 <FoodCardForShop 
+                  id={item._id}  // Pass the unique ID
                   itemname={item.itemname} 
                   description={item.description} 
                   price={item.price} 
-                  image={item.foodphoto} 
+                  image={item.image } 
                   quantity={item.quantity} 
                   unit={item.unit} 
                 />
