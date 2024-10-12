@@ -1,4 +1,4 @@
-const TOKEN_KEY = "authToken";
+const TOKEN_KEY = "DinneAppSecret";
 
 const tokenService = {
   setToken: (token) => {
