@@ -207,16 +207,16 @@ const [selectedCity, setSelectedCity] = useState("Mumbai");
       </div>
 
       <div className="profile">
-          <li>
+          {/* <li>
             <NavLink onClick={handleSearchIconClick} id="navs-icons">
               <i className="fa-solid fa-magnifying-glass"></i>
             </NavLink>
-          </li>
-          <li>
+          </li> */}
+          {/* <li>
             <NavLink id="navs-icons" onClick={Cart}>
               <i className="fa-solid fa-cart-shopping"></i>
             </NavLink>
-          </li>
+          </li> */}
         <li>
           <button id='navs-icons' onClick={() => navigate('/login')}>Log in</button>
         </li>

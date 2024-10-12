@@ -45,7 +45,7 @@
 
   .chef-card {
     position: relative;
-    width: 400px; /* Default width for larger screens */
+    width: 350px; /* Default width for larger screens */
     height: 300px; /* Default height for larger screens */
     border: 1px solid #ccc;
     padding: 20px;
@@ -84,14 +84,14 @@
 
   .self-photo{
     opacity: 1;
-    border-radius: 50%;
-    height: 70%; 
+    border-radius: 20%;
+    height: 60%; 
     width: 40%; 
     margin-bottom: 0;
-    top: 30%;
-    left: 0%;
+    top: 35%;
+    left: 5%;
     background-color: white;
-    border: 5px rgb(197, 197, 197) solid;
+    border: 2px rgb(197, 197, 197) solid;
   }
   
   .chef-name {

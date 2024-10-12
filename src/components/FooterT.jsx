@@ -11,28 +11,29 @@ export default function FooterT() {
           </div>
 
           <div className="FooterrTwo">
-            <strong><p>Heading 1</p></strong>
-            <p>Content 1</p>
-            <p>Content 2</p>
-            <p>Content 3</p>
+            <strong><p>About Us</p></strong>
+            <p>Behind the Kitchen</p>
+            <p>Meet Our Chefs</p>
+            {/* <p>Content 3</p> */}
           </div>
 
           <div className="FooterrThree">
-            <strong><p>Heading 2</p></strong>
-            <p>Content 4</p>
-            <p>Content 5</p>
-            <p>Content 6</p>
-            <strong><p>Heading 3</p></strong>
-            <p>Content 7</p>
-            <p>Content 8</p>
-            <p>Content 9</p>
+            <strong><p>Join Us</p></strong>
+            <p>HomeChef</p>
+            <p>Delivery Partner</p>
+            {/* <p>Content 6</p> */}
+            <strong><p>Shop</p></strong>
+            <strong><p>FAQs</p></strong>
+            {/* <p>Content 7</p> */}
+            {/* <p>Content 8</p> */}
+            {/* <p>Content 9</p> */}
           </div>
 
           <div className="FooterrFour">
-            <p>PATILKAKI ECOM VENTURES PVT LTD</p>
-            <p>34/265, Anand Nagar,</p>
-            <p>Vakola, Santacruz East,</p>
-            <strong><p>+918591336124</p></strong>
+            <p>DINE AT HOME</p>
+            {/* <p>34/265, Anand Nagar,</p> */}
+            {/* <p>Vakola, Santacruz East,</p> */}
+            <p>A platform developed by a group of friends.</p>
             <strong><p>DineAtHome.com</p></strong>
           </div>
         </div>
