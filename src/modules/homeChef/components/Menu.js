@@ -1,22 +1,43 @@
 import Navbar from "./Navbar";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import FoodCard from "./FoodCard";
+import axiosInstance from '../../../utils/axiosService'; // Import your axios instance
+import { jwtDecode } from 'jwt-decode'; // Import jwtDecode for token decoding
 import "../styles/Menu.css";
 
 function Menu() {
   const [cards, setCards] = useState([]);
-  const [nextId, setNextId] = useState(0);
   const lastCardRef = useRef(null);
+  
+  // Get chef ID from token
+  const token = localStorage.getItem('token');
+  const chefId = token ? jwtDecode(token).id : null;
+
+  useEffect(() => {
+    // Fetch items added by the chef
+    const fetchItems = async () => {
+      if (chefId) {
+        try {
+          const response = await axiosInstance.get(`/addItem/getitembychefid/${chefId}`);
+          setCards(response.data); // Store the full item details in state
+        } catch (error) {
+          console.error('Error fetching items:', error);
+          alert('Failed to fetch items.');
+        }
+      }
+    };
+
+    fetchItems();
+  }, [chefId]); // Run when chefId changes
 
   const handleAddCard = () => {
-    setCards((prevCards) => {
-      const newCards = [...prevCards, nextId];
-      setNextId(nextId + 1); // Increment the ID for the next card
-      return newCards;
-    });
+    // Add a new card with isNew property to distinguish it from existing cards
+    const newCard = { foodName: '', foodDescription: '', amount: 0, isNew: true }; // New card initialization
+    setCards((prevCards) => [...prevCards, newCard]); // Add new card to state
   };
+  
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (lastCardRef.current) {
       lastCardRef.current.scrollIntoView({
         behavior: "smooth",
@@ -36,9 +57,13 @@ function Menu() {
         </div>
 
         <div className="card-container-menu">
-          {cards.map((id, index) => (
-            <div key={id} ref={index === cards.length - 1 ? lastCardRef : null}>
-              <FoodCard id={id} />
+          {cards.map((item, index) => (
+            <div key={item._id || index} ref={index === cards.length - 1 ? lastCardRef : null}>
+              <FoodCard 
+                id={item._id} 
+                initialFoodData={item} 
+                isNew={item.isNew} 
+              />
             </div>
           ))}
         </div>
@@ -46,4 +71,5 @@ function Menu() {
     </>
   );
 }
+
 export default Menu;
