@@ -235,10 +235,14 @@ checkLoginStatus();
           menuItems.map((item) => (
             <div key={item._id} style={styles.menuItem}>
               {item.foodPhoto ? (
-                <img src={`http://localhost:4000/${item.foodPhoto}`} alt={item.foodName} style={styles.image} />
-              ) : (
-                <div style={styles.imagePlaceholder}>No Image Available</div>
-              )}
+          <img 
+            src={`http://localhost:4000${item.foodPhoto}`} // Ensure correct URL
+            alt={item.foodName} 
+            style={styles.image} 
+          />
+        ) : (
+          <div style={styles.imagePlaceholder}>No Image Available</div>
+        )}
               <div>
                 <h3>{item.foodName}</h3>
                 <p>{item.foodDescription}</p>
@@ -256,7 +260,7 @@ checkLoginStatus();
 
 
 
-      <div>
+      {/* <div>
         <h2>Pre-Orders</h2>
         {preOrders.length > 0 ? (
           preOrders.map((order) => (
@@ -266,13 +270,13 @@ checkLoginStatus();
               <p>Quantity: {order.quantity}</p>
               <p>Price Range: ${order.priceRange.minPrice} - ${order.priceRange.maxPrice}</p>
               <p>Delivery Date: {new Date(order.deliveryDate).toLocaleDateString()}</p>
-              {/* Add buttons for update and delete here */}
+              Add buttons for update and delete here
             </div>
           ))
         ) : (
           <p>No pre-orders available.</p>
         )}
-      </div>
+      </div> */}
 
       {/* Customized Food Form */}
       {showCustomizedForm && (
