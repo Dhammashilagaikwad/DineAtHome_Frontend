@@ -32,7 +32,7 @@ function FoodCard({ id, initialFoodData }) {
       try {
         const token = localStorage.getItem('token');
         console.log('Deleting food item with ID:', id);
-        await axiosInstance.delete(`/api/shop/deleteItem/${id}`, {
+        await axiosInstance.delete(`/api/addItem/deleteItem/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

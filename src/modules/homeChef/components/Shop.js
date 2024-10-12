@@ -130,7 +130,7 @@ const ChefShop = () => {
                   itemname={item.itemname} 
                   description={item.description} 
                   price={item.price} 
-                  image={item.image} 
+                  image={item.foodphoto} 
                   quantity={item.quantity} 
                   unit={item.unit} 
                 />
