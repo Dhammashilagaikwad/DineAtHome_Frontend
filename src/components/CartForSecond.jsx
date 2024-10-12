@@ -47,7 +47,7 @@ const CartForSecond = () => {
         {chefs.map((chef) => (
           <RestaurantCard
             key={chef._id}
-            image={chef.profilePhoto || "https://via.placeholder.com/150"}
+            image={chef.coverImage ? `http://localhost:4000/coverImage-uploads/${chef.coverImage}` : "https://via.placeholder.com/150"} // Use coverImage
             rating={chef.average_rating || "No rating"}
             name={chef.name}
             cuisine={chef.cuisine.join(", ")}
