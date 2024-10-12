@@ -23,9 +23,14 @@ function Shop() {
     const fetchProducts = async () => {
       try {
         const response = await axiosInstance.get('/api/shop/items'); // Use axiosInstance here
-        setProducts(response.data); // Store all products
-        setFilteredProducts(response.data); // Set filteredProducts to the fetched data
-      } catch (error) {
+       // Assuming response.data contains the items with image paths
+       const productsWithImages = response.data.map(product => ({
+        ...product,
+        image: `http://localhost:4000${product.image}` // Ensure the image URL is correct
+      }));
+      setProducts(productsWithImages); // Store all products
+      setFilteredProducts(productsWithImages); // Set filteredProducts to the fetched data
+    } catch (error) {
         console.error("There was an error fetching the products!", error);
       }
     };
