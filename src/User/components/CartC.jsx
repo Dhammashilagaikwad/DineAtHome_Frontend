@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import '../styles/CartC.css'; // Import the external CSS file
-import localImage from "../assets/1st.jpg";
 
-const CartC = (props) => {
+const CartC = ({ foodName, foodName2, rate, imageSrc, quantity }) => {
   // State to manage the display of the cart item
   const [isDeleted, setIsDeleted] = useState(false);
   
   // State to manage the quantity of the cart item
-  const [quantity, setQuantity] = useState(1);
+  const [itemQuantity, setItemQuantity] = useState(quantity || 1);
 
   // Function to handle delete button click
   const handleDelete = () => {
@@ -16,12 +15,12 @@ const CartC = (props) => {
 
   // Function to increase quantity
   const handleIncrease = () => {
-    setQuantity(prevQuantity => prevQuantity + 1);
+    setItemQuantity(prevQuantity => prevQuantity + 1);
   };
 
   // Function to decrease quantity
   const handleDecrease = () => {
-    setQuantity(prevQuantity => (prevQuantity > 1 ? prevQuantity - 1 : 1));
+    setItemQuantity(prevQuantity => (prevQuantity > 1 ? prevQuantity - 1 : 1));
   };
 
   return (
@@ -29,12 +28,12 @@ const CartC = (props) => {
       {!isDeleted && (
         <div className="cart-item">
           <div className="cart-details">
-          <img src={props.imageSrc} alt={props.foodName} className="cart-image" />
+            <img src={imageSrc} alt={foodName} className="cart-image" />
             <div className="cart-text">
-              <h3>{props.foodName}</h3>
-              <p>{props.foodName2}</p>
-              <p>{props.rate}</p>
-              <p>{props.qty} {quantity}</p>
+              <h3>{foodName}</h3>
+              <p>{foodName2}</p>
+              <p>Rate: {rate}</p>
+              <p>Quantity: {itemQuantity}</p>
             </div>
           </div>
           <div className="cart-buttons">
