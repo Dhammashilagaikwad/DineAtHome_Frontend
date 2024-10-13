@@ -22,12 +22,6 @@ const EditProfile = lazy(() => import('./User/pages/EditProfile'));
 const AfterLoginPage = lazy(() => import('./User/pages/AfterLoginPage'));
 const HowtoOrder = lazy(() => import('./pages/HowtoOrder'));
 const AfterLoginHowtoOrder = lazy(() => import('./User/pages/Afterloginhowtoorder'));
-// const AppFAQs = lazy(() => import('./HomeChef/Pages/Faqs'));
-// const HomechefHome = lazy(() => import('./HomeChef/Pages/Home'));
-// const History = lazy(() => import('./HomeChef/Pages/History'));
-// const Notification = lazy(() => import('./HomeChef/Pages/Notification'));
-// const HomechefOurInfo = lazy(() => import('./HomeChef/Pages/OurInfo'));
-// const HomeChefShop = lazy(() => import('./HomeChef/Pages/Shop'));
 const HomeChefsInfo = lazy(() => import('./pages/HomeChefsInfo'));
 const Usershop = lazy(() => import('./User/pages/Shop'));
 const UserOurInfo = lazy(() => import('./User/pages/OurInfo'));
@@ -68,7 +62,9 @@ function Layout() {
       const isAfterLoginPage = afterLoginRoutes.some((route) =>
         location.pathname.includes(route)
       );
-      const hiddenNavbarRoutes = ['/home-shefs/dashboard'];  
+      const hiddenNavbarRoutes = ['/home-shefs/dashboard','/home-shefs/dashboard/menu',
+        '/home-shefs/dashboard/shop','/home-shefs/dashboard/history','/home-shefs/dashboard/prenotification',
+        '/home-shefs/dashboard/profile'];  
 
       const hideNavbar = hiddenNavbarRoutes.some((route) => location.pathname.includes(route));
 
@@ -112,13 +108,7 @@ function Routing() {
           <Route path="/ourchefsinfo" element={<HomeChefsInfo />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
-{/* 
-          <Route path="/homechef/homechefourinfo" element={<HomechefOurInfo />} />
-          <Route path="/homechef/homecheffaqs" element={<AppFAQs />} />
-          <Route path="/homechef/homechefhome" element={<HomechefHome />} />
-          <Route path="/homechef/notification" element={<Notification />} />
-          <Route path="/homechef/homechefshop" element={<HomeChefShop />} />
-           */}
+          
           <Route path="/user/afterloginhowtoorder" element={<AfterLoginHowtoOrder />} />
           <Route path="/user/usershop" element={<Usershop />} />
           <Route path="/user/userourinfo" element={<UserOurInfo />} />

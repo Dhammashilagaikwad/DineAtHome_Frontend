@@ -207,11 +207,11 @@ const navigate = useNavigate();
             </Link>
           </li>
 
-          <li>
+          {/* <li>
             <Link onClick={handleSearchIconClick} id="navs-icons">
               <i className="fa-solid fa-magnifying-glass"></i>
             </Link>
-          </li>
+          </li> */}
           <li>
             <Link id="navs-icons" to="/user/usercart">
               <i className="fa-solid fa-cart-shopping"></i>

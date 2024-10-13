@@ -36,10 +36,25 @@ export default function UserCart() {
         });
         console.log('Menu cart response:', menuResponse.data);
         // const menuCartItems = menuResponse.data.items || [];
-        // setCartItems(menuCartItems.map(item => ({ ...item, quantity: 1 })));
-        setCartItems(menuResponse.data.items || []);
-        console.log('Cart Items:', cartItems);
-        cartItems.forEach(item => console.log('Cart Item:', item));
+        const menuCartItems = menuResponse.data.items || [];
+
+      // Process cart items to handle duplicates
+      const updatedCartItems = menuCartItems.reduce((acc, item) => {
+        const existingItemIndex = acc.findIndex(i => i.itemId._id === item.itemId._id);
+
+        if (existingItemIndex >= 0) {
+          // If the item exists, increment its quantity
+          acc[existingItemIndex].quantity += item.quantity;
+        } else {
+          // If it's a new item, add it to the cart
+          acc.push({ ...item });
+        }
+
+        return acc;
+      }, []);
+
+      setCartItems(updatedCartItems);
+      console.log('Updated Cart Items:', updatedCartItems);
 
         // Fetch shop cart items
         const shopResponse = await axiosInstance.get('/api/cart/getallitems', {
@@ -124,6 +139,10 @@ const totalAmount = dishCharges + shopCharges + deliveryCharges + tip + taxCharg
   maxDate.setDate(today.getDate() + 7);
   const maxDateString = maxDate.toISOString().split('T')[0];
 
+
+
+  
+
   return (
     <>
       <AfterLoginNavbar />
@@ -138,11 +157,18 @@ const totalAmount = dishCharges + shopCharges + deliveryCharges + tip + taxCharg
       foodName={itemData.foodName || "Unknown Item"} // Ensure to provide fallback
       foodName2={chefs[itemData.chefId] || "Unknown Chef"} // Use chefId from your itemData
       rate={`Rs. ${itemData.amount ? (itemData.amount * item.quantity).toFixed(2) : '0.00'}`} // Updated rate calculation
-      quantity={itemData.quantity} 
+      quantity={`Qty: ${item.quantity}`}
       // qty={`Quantity: ${item.quantity }`} // Display user's selected quantity
       imageSrc={itemData.foodPhoto ? `http://localhost:4000${itemData.foodPhoto}` : ''} // Ensure food photo is displayed
-    />
+      itemId={item._id} // Pass the itemId
+      onDelete={(deletedItemId) => {
+        setCartItems(prevItems => prevItems.filter(item => item._id !== deletedItemId)); // Remove item from state
+      }}
+        />
   );
+
+
+
 })}
 
             {shopCartItems.map(item => {
@@ -158,6 +184,11 @@ const totalAmount = dishCharges + shopCharges + deliveryCharges + tip + taxCharg
                   quantity={item.quantity}
                   // quantity={`Qty: ${itemData.quantity || 1}`} 
                   imageSrc={itemData.image? `http://localhost:4000${itemData.image}` : "defaultImage.jpg"} // Provide a fallback image source
+                  itemId={item._id} // Pass the itemId
+                  onDelete={(deletedItemId) => {
+                    setShopCartItems(prevItems => prevItems.filter(item => item._id !== deletedItemId)); // Remove item from state
+                  }}
+                
                 />
               );
             })}

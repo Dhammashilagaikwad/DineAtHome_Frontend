@@ -182,35 +182,36 @@ checkLoginStatus();
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.menuCard}>
-        <h5 style={{ textAlign: "center", paddingTop: "70px" }}>
-          {chefData ? `${chefData.name} - ${chefData.cuisine} Specialist` : 'Loading...'}
+    <div className="menu-card-container">
+      <div className="menu-card">
+        <h5>
+          {chefData ? `${chefData.name} - ${chefData.cuisine}` : 'Loading...'}
         </h5>
 
         {chefData ? (
           <div>
-            <h1>{chefData.name}</h1>
+            {/* <h1>{chefData.name}</h1> */}
             {chefData.coverImage && (
                     <img
                     src={`http://localhost:4000/coverImage-uploads/${chefData.coverImage}`}  // Make sure this matches your backend
                         alt={`${chefData.name}'s Cover Image`}
-                        style={{ width: "100%", height: "300px", objectFit: "cover" }}
+                        style={{ width: "100%", height: "300px", objectFit: "cover",padding:"10px" }}
                     />
                 )}
                 
-   
-            <p>Rating: {chefData.average_rating}</p>
-            <p>Cuisine: {chefData.cuisine}</p> {/* Directly displaying Cuisine */}
-            <p>Specialities: {Array.isArray(chefData.specialities) ? chefData.specialities.join(", ") : chefData.specialities}</p> {/* Check if specialities is an array */}
+            <div style={{textAlign:"left",paddingLeft:"10px"}}>
+            <p><strong>Rating: </strong>{chefData.average_rating}</p>
+            <p><strong>Cuisine: </strong>{chefData.cuisine}</p> {/* Directly displaying Cuisine */}
+            <p><strong>Specialities: </strong>{Array.isArray(chefData.specialities) ? chefData.specialities.join(", ") : chefData.specialities}</p> {/* Check if specialities is an array */}
             <p>{chefData.is_active ? "Open" : "Closed"}</p>
+            </div>
           </div>
         ) : (
           <p>No data available for this chef.</p>
         )}
 
-        <div>
-          <label>Select Delivery Date:</label>
+        <div style={{textAlign:"left"}}>
+          <label><strong>Select Delivery Date:</strong></label>
           <DatePicker
             selected={selectedDate}
             onChange={handleDateChange}
@@ -229,8 +230,8 @@ checkLoginStatus();
           )}
         </div>
       </div>
-      <div style={styles.menuSection}>
-        <h2>Menu</h2>
+      <div className="menuSection">
+        <strong><h2 style={{padding:"10px",fontSize:"20px"}}>Menu</h2></strong>
         {menuItems.length > 0 ? (
           menuItems.map((item) => (
             <div key={item._id} style={styles.menuItem}>
@@ -244,12 +245,12 @@ checkLoginStatus();
           <div style={styles.imagePlaceholder}>No Image Available</div>
         )}
               <div>
-                <h3>{item.foodName}</h3>
+                <strong><h3>{item.foodName}</h3></strong>
                 <p>{item.foodDescription}</p>
-                <p>Price: Rs {item.amount}</p>
+                <p><strong>Price:</strong> Rs {item.amount}</p>
                 {/* Display the chef's name instead of chefId */}
-                {chefData && <p>Chef: {chefData.name}</p>}
-                <button onClick={() => handleAddToCart(item)}>Add to Cart</button>
+                {chefData && <p><strong>Chef: </strong>{chefData.name}</p>}
+                <button className="addtocart" onClick={() => handleAddToCart(item)}>Add to Cart</button>
               </div>
             </div>
           ))
@@ -373,28 +374,6 @@ checkLoginStatus();
 }
 
 const styles = {
-  container: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    padding: "20px",
-  },
-  menuCard: {
-    width: "70%",
-    maxWidth: "1200px",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    marginTop: "10px",
-  },
-  menuSection: {
-    width: "70%",
-    maxWidth: "1200px",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    marginTop: "20px",
-  },
   menuItem: {
     display: "flex",
     alignItems: "center",

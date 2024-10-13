@@ -9,16 +9,18 @@ import {jwtDecode} from 'jwt-decode'; // Correct import
 import { useNavigate } from 'react-router-dom';
 import { useNotification } from "../../components/NotificationContext";
 
+
 function UserChefProfile() {
   const { triggerNotification } = useNotification();
 
   useEffect(() => {
     window.scrollTo(0, 0); // Scroll to the top when the page is loaded
-}, []);
+  }, []);
   const { id } = useParams();
   const [chefData, setChefData] = useState(null);
   const [menuItems, setMenuItems] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // New state to check login status
   const today = new Date();
   const maxDate = new Date(today);
   maxDate.setDate(maxDate.getDate() + 7);
@@ -27,30 +29,42 @@ function UserChefProfile() {
     name: "",
     description: "",
     quantity: "",
-    // priceRange: {
-    //   minPrice: "",
-    //   maxPrice: "",
-    // },
+    priceRange: {
+      minPrice: "",
+      maxPrice: "",
+    },
     deliveryDate: new Date(),
   });
 
   const [preOrders, setPreOrders] = useState([]);
-  const navigate = useNavigate(); // Define navigate
 
   // useEffect(() => {
   //   const fetchPreOrders = async () => {
   //     try {
-  //       const response = await axiosInstance.get(`/preOrderRoutes/get-preOrder`);
+  //       const response = await axios.get(`http://localhost:4000/preOrderRoutes/get-preOrder`);
   //       setPreOrders(response.data);
   //     } catch (error) {
   //       console.error("Error fetching pre-orders:", error);
   //     }
   //   };
-  
+
   //   fetchPreOrders();
   // }, []);
 
   useEffect(() => {
+
+ // Fetch user login status from your auth system (e.g., JWT token check)
+ const checkLoginStatus = () => {
+  // Example: Checking token in localStorage
+  const token = localStorage.getItem("token");
+  if (token) {
+    setIsLoggedIn(true);
+  } else {
+    setIsLoggedIn(false);
+  }
+};
+checkLoginStatus();
+
     const fetchChefData = async () => {
       try {
         const response = await axiosInstance.get(`/api/chefs/${id}`);
@@ -64,6 +78,7 @@ function UserChefProfile() {
       }
     };
 
+
     fetchChefData();
   }, [id]);
 
@@ -74,6 +89,11 @@ function UserChefProfile() {
   const isFutureDate = selectedDate > today;
 
   const handleCustomizedFoodClick = () => {
+    if (!isLoggedIn) {
+      // alert("Please log in to proceed with Preorders.");
+      triggerNotification('Please log in to proceed with Preorders.','red')
+      return;
+    }
     setShowCustomizedForm(true);
   };
 
@@ -85,131 +105,116 @@ function UserChefProfile() {
     }));
   };
 
-  // const handlePriceRangeChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setCustomizedOrder((prevOrder) => ({
-  //     ...prevOrder,
-  //     // priceRange: {
-  //     //   ...prevOrder.priceRange,
-  //     //   [name]: value,
-  //     // },
-  //   }));
-  // };
+  const handlePriceRangeChange = (e) => {
+    const { name, value } = e.target;
+    setCustomizedOrder((prevOrder) => ({
+      ...prevOrder,
+      priceRange: {
+        ...prevOrder.priceRange,
+        [name]: value,
+      },
+    }));
+  };
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    
-    // Client-side validation
-    if (!customizedOrder.name || !customizedOrder.description || !customizedOrder.quantity || !selectedDate) {
-      // alert("All fields are required.");
-      triggerNotification('All fields are required.','red')
-      return;
-    }
-  
-    // Proceed with sending the request if validation passes
+
     try {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        alert("Token not found. Please log in again.");
-        return;
-      }
-  
-      await axiosInstance.post('/preOrder/add-preOrder', {
+      await axiosInstance.post(`/preOrderRoutes/preOrder`, {
         ...customizedOrder,
-        deliveryDate: selectedDate,
-        chefId: chefData._id // Include chefId from chefData
-      },
-      {
-        headers: { Authorization: `Bearer ${token}` }
+        priceRange: {
+          minPrice: parseFloat(customizedOrder.priceRange.minPrice),
+          maxPrice: parseFloat(customizedOrder.priceRange.maxPrice),
+        },
+        deliveryDate: selectedDate, // Ensure deliveryDate is set to selected date
       });
-  
       // alert("Customized order request sent successfully!");
       triggerNotification('Customized order request sent successfully!','green')
       setShowCustomizedForm(false);
-      setCustomizedOrder({ name: "", description: "", quantity: "", deliveryDate: new Date() });
+      setCustomizedOrder({
+        name: "",
+        description: "",
+        quantity: "",
+        priceRange: { minPrice: "", maxPrice: "" },
+        deliveryDate: new Date(),
+      });
     } catch (error) {
       console.error("Error sending customized order:", error);
-      // alert("Failed to send customized order: " + error.response?.data?.message || error.message);
-      triggerNotification('Failed to send customized order','red')
+      // alert("Failed to send customized order.");
+      triggerNotification('Failed to send customized order.','red')
     }
   };
-  
+
+  const updatePreOrder = async (id, updatedData) => {
+    try {
+      const response = await axiosInstance.put(`/preOrderRoutes/edit-preOrder/${id}`, updatedData);
+      // alert("Pre-order updated successfully!");
+      triggerNotification('Pre-order updated successfully!','green')
+      // Update local state as needed
+    } catch (error) {
+      console.error("Error updating pre-order:", error);
+    }
+  };
+
+  const deletePreOrder = async (id) => {
+    try {
+      await axiosInstance.delete(`/preOrderRoutes/delete-preOrder/${id}`);
+      // alert("Pre-order deleted successfully!");
+      triggerNotification('Pre-order deleted successfully!','green')
+      // Update local state as needed
+    } catch (error) {
+      console.error("Error deleting pre-order:", error);
+    }
+  };
+
+
+
   const handleCloseForm = () => {
     setShowCustomizedForm(false);
   };
-const addToMenuCart = async (itemId) => {
-  try {
-    // Retrieve the token from local storage
-    const token = localStorage.getItem('token'); // Change 'tokens' to 'token' since your JWT is stored under 'token'
-    
-    // Check if token exists
-    if (!token) {
-      alert("Token not found. Please log in again.");
+
+
+  const handleAddToCart = (item) => {
+    if (!isLoggedIn) {
+      // alert("Please log in to add items to the cart.");
+      triggerNotification('Please log in to add items to the cart.','red')
       return;
     }
 
-    // Decode the token to get the userId
-    const decodedToken = jwtDecode(token);
-    const userId = decodedToken.id; // Adjust this according to your token structure
-
-    // Log userId and itemId
-    console.log("User ID:", userId);
-    console.log("Item ID:", itemId);
-
-    // Ensure userId and itemId are defined
-    if (!userId || !itemId) {
-      alert("User ID or Item ID is missing.");
-      return;
-    }
-
-    const response = await axiosInstance.post('/api/menuCart/addToMenuCart', { itemId, userId },
-      { headers: { Authorization: `Bearer ${token}` } }  // Pass the token here
-
-    );
-    console.log('Item added to menu cart:', response.data);
-    // alert("Item added to the cart successfully!");
-    triggerNotification('Item added to the cart successfully!','green')
-    navigate('/user/usercart')
-  } catch (error) {
-    console.error('Error adding item to menu cart:', error);
-    // alert("Failed to add item to the cart.");
-    triggerNotification('Failed to add item to the cart.','red')
-  }
-};
-
-
-
+    // Add item to cart logic here
+    console.log(`Item added to cart: ${item.foodName}`);
+  };
 
   return (
-    <>
-    {/* <AfterLoginNavbar/> */}
-    <div style={styles.container}>
-      <div style={styles.menuCard}>
-        <h5 style={{ textAlign: "center", paddingTop: "70px" }}>
-          {chefData ? `${chefData.name} - ${chefData.cuisine} Specialist` : 'Loading...'}
+    <div className="menu-card-container">
+      <div className="menu-card">
+        <h5>
+          {chefData ? `${chefData.name} - ${chefData.cuisine}` : 'Loading...'}
         </h5>
 
         {chefData ? (
-  <div>
-    <h1>{chefData.name}</h1>
-    {chefData.coverImage && (
+          <div>
+            {/* <h1>{chefData.name}</h1> */}
+            {chefData.coverImage && (
                     <img
                     src={`http://localhost:4000/coverImage-uploads/${chefData.coverImage}`}  // Make sure this matches your backend
                         alt={`${chefData.name}'s Cover Image`}
-                        style={{ width: "100%", height: "300px", objectFit: "cover" }}
+                        style={{ width: "100%", height: "300px", objectFit: "cover",padding:"10px" }}
                     />
                 )}
-    <p>Rating: {chefData.average_rating}</p>
-    <p>Cuisine: {chefData.cuisine.join(", ")}</p> {/* Join cuisines if it's an array */}
-    <p>Specialities: {Array.isArray(chefData.specialities) ? chefData.specialities.join(", ") : chefData.specialities}</p>
-    <p>{chefData.is_active ? "Open" : "Closed"}</p>
-  </div>
-) : (
-  <p>No data available for this chef.</p>
-)}
+                
+            <div style={{textAlign:"left",paddingLeft:"10px"}}>
+            <p><strong>Rating: </strong>{chefData.average_rating}</p>
+            <p><strong>Cuisine: </strong>{chefData.cuisine}</p> {/* Directly displaying Cuisine */}
+            <p><strong>Specialities: </strong>{Array.isArray(chefData.specialities) ? chefData.specialities.join(", ") : chefData.specialities}</p> {/* Check if specialities is an array */}
+            <p>{chefData.is_active ? "Open" : "Closed"}</p>
+            </div>
+          </div>
+        ) : (
+          <p>No data available for this chef.</p>
+        )}
 
-
-        <div>
-          <label>Select Delivery Date:</label>
+        <div style={{textAlign:"left"}}>
+          <label><strong>Select Delivery Date:</strong></label>
           <DatePicker
             selected={selectedDate}
             onChange={handleDateChange}
@@ -228,12 +233,12 @@ const addToMenuCart = async (itemId) => {
           )}
         </div>
       </div>
-      <div style={styles.menuSection}>
-        <h2>Menu</h2>
+      <div className="menuSection">
+        <strong><h2 style={{padding:"10px",fontSize:"20px"}}>Menu</h2></strong>
         {menuItems.length > 0 ? (
           menuItems.map((item) => (
             <div key={item._id} style={styles.menuItem}>
-               {item.foodPhoto ? (
+              {item.foodPhoto ? (
           <img 
             src={`http://localhost:4000${item.foodPhoto}`} // Ensure correct URL
             alt={item.foodName} 
@@ -243,12 +248,12 @@ const addToMenuCart = async (itemId) => {
           <div style={styles.imagePlaceholder}>No Image Available</div>
         )}
               <div>
-                <h3>{item.foodName}</h3>
+                <strong><h3>{item.foodName}</h3></strong>
                 <p>{item.foodDescription}</p>
-                <p>Price: Rs {item.amount}</p>
+                <p><strong>Price:</strong> Rs {item.amount}</p>
                 {/* Display the chef's name instead of chefId */}
-                {chefData && <p>Chef: {chefData.name}</p>}
-                <button onClick={() => addToMenuCart(item._id)}>Add to Cart</button>
+                {chefData && <p><strong>Chef: </strong>{chefData.name}</p>}
+                <button className="addtocart" onClick={() => handleAddToCart(item)}>Add to Cart</button>
               </div>
             </div>
           ))
@@ -257,23 +262,25 @@ const addToMenuCart = async (itemId) => {
         )}
       </div>
 
+
+
       {/* <div>
-  <h2>Pre-Orders</h2>
-  {preOrders.length > 0 ? (
-    preOrders.map((order) => (
-      <div key={order._id}>
-        <h3>{order.name}</h3>
-        <p>{order.description}</p>
-        <p>Quantity: {order.quantity}</p>
-        <p>Price Range: ${order.priceRange.minPrice} - ${order.priceRange.maxPrice}</p>
-        <p>Delivery Date: {new Date(order.deliveryDate).toLocaleDateString()}</p>
-        Add buttons for update and delete here
-      </div>
-    ))
-  ) : (
-    <p>No pre-orders available.</p>
-  )}
-</div> */}
+        <h2>Pre-Orders</h2>
+        {preOrders.length > 0 ? (
+          preOrders.map((order) => (
+            <div key={order._id}>
+              <h3>{order.name}</h3>
+              <p>{order.description}</p>
+              <p>Quantity: {order.quantity}</p>
+              <p>Price Range: ${order.priceRange.minPrice} - ${order.priceRange.maxPrice}</p>
+              <p>Delivery Date: {new Date(order.deliveryDate).toLocaleDateString()}</p>
+              Add buttons for update and delete here
+            </div>
+          ))
+        ) : (
+          <p>No pre-orders available.</p>
+        )}
+      </div> */}
 
       {/* Customized Food Form */}
       {showCustomizedForm && (
@@ -321,7 +328,7 @@ const addToMenuCart = async (itemId) => {
                   required
                 />
               </label>
-              {/* <label style={styles.customized_order}>
+              <label style={styles.customized_order}>
                 Price Range:
                 <input
                   type="number"
@@ -341,7 +348,7 @@ const addToMenuCart = async (itemId) => {
                   style={styles.customized_input}
                   required
                 />
-              </label> */}
+              </label>
               <label style={styles.customized_order}>
                 Delivery Date:
                 <DatePicker
@@ -366,34 +373,10 @@ const addToMenuCart = async (itemId) => {
         </div>
       )}
     </div>
-    </>
   );
 }
 
-
 const styles = {
-  container: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    padding: "20px",
-  },
-  menuCard: {
-    width: "70%",
-    maxWidth: "1200px",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    marginTop: "10px",
-  },
-  menuSection: {
-    width: "70%",
-    maxWidth: "1200px",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    marginTop: "20px",
-  },
   menuItem: {
     display: "flex",
     alignItems: "center",
@@ -469,4 +452,6 @@ const styles = {
     width: "100%",
   },
 };
+
 export default UserChefProfile;
+
