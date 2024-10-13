@@ -90,7 +90,7 @@ const Navbar = () => {
         </div>
         <div className="md:flex hidden gap-4 items-center text-blue-800 text-xl">
           <div>
-            <label className="relative flex justify-between items-center group p-2">
+            {/* <label className="relative flex justify-between items-center group p-2">
               <p className="text-base">{isOnline ? "Online" : "Offline"}</p>
               <input
                 type="checkbox"
@@ -99,7 +99,7 @@ const Navbar = () => {
                 className="absolute left-1/2 -translate-x-1/2 w-full h-full peer appearance-none rounded-md cursor-pointer"
               />
               <span className="w-12 h-6 flex items-center flex-shrink-0 ml-4 p-1 bg-red-400 rounded-full duration-300 ease-in-out peer-checked:bg-green-600 after:w-4 after:h-4 after:bg-white after:rounded-full after:shadow-md after:duration-300 peer-checked:after:translate-x-6 group-hover:after:translate-x-1"></span>
-            </label>
+            </label> */}
           </div>
           <Link className="cursor-pointer" to="/home-shefs/dashboard/prenotification">
             <IoIosNotifications />
@@ -132,8 +132,8 @@ const Navbar = () => {
       </div>
 
       {isMobileMenuOpen && (
-        <div className="flex flex-col items-center bg-blue-100 p-4 md:hidden rounded-md">
-          <label className="relative flex justify-between items-center group p-2 w-full">
+        <div className="flex flex-row items-center bg-blue-100 p-4 md:hidden rounded-md">
+          {/* <label className="relative flex justify-between items-center group p-2 w-full">
             <p className="text-base">{isOnline ? "Online" : "Offline"}</p>
             <input
               type="checkbox"
@@ -142,7 +142,7 @@ const Navbar = () => {
               className="absolute left-1/2 -translate-x-1/2 w-full h-full peer appearance-none rounded-md cursor-pointer"
             />
             <span className="w-12 h-6 flex items-center flex-shrink-0 ml-4 p-1 bg-red-400 rounded-full duration-300 ease-in-out peer-checked:bg-green-600 after:w-4 after:h-4 after:bg-white after:rounded-full after:shadow-md after:duration-300 peer-checked:after:translate-x-6 group-hover:after:translate-x-1"></span>
-          </label>
+          </label> */}
           <Link className="cursor-pointer" to="/home-shefs/dashboard/prenotification">
             <IoIosNotifications className="text-2xl" />
           </Link>

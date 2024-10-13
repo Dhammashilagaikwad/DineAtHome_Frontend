@@ -17,7 +17,7 @@
   border: 1px solid hsl(0, 1%, 67%);
   padding: 20px;
   border-radius: 10px;
-  max-width: 400px; /* Adjust max width as needed */
+  max-width: 300px; /* Adjust max width as needed */
   /* width: calc(33% - 20px);  */
   margin: 10px; /* Add margin to space out cards */
   display: flex;
