@@ -117,7 +117,7 @@
   /* background-color: violet; */
   display: flex;
   flex-direction: column;
-  justify-content:space-between; 
+  justify-content:start; 
   align-items: start;
   width: 90%;
   padding: 0 1rem;
@@ -141,6 +141,7 @@
   /* border: 1px solid black; */
   background: transparent;
   text-decoration: underline;
+  margin-top: 10px;
 
 }
 
