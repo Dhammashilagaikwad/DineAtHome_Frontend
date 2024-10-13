@@ -4,7 +4,9 @@ import { Link } from "react-router-dom";
 
 const SideBar = () => {
   return (
-    <div className="bg-blue-900 rounded-md p-4 w-[20%] min-h-screen">
+    <>
+    <div>
+    <div className="bg-blue-900 rounded-md p-4 w-[20%] min-h-screen md:flex-col flex-row">
       <ul className="cursor-pointer ">
         {CHEFS_SIDEBAR.map((item) => {
           return (
@@ -18,6 +20,8 @@ const SideBar = () => {
         })}
       </ul>
     </div>
+    </div>
+    </>
   );
 };
 
