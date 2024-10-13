@@ -45,7 +45,7 @@
 .food-imageForFoodCard {
   width: 100%;
   object-fit: cover;
-  background-color: red;
+  /* background-color: red; */
 }
 
 .contentForFoodCard {

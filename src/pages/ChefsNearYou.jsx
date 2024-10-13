@@ -198,10 +198,11 @@ const styles = {
   },
   imageContainer: {
     position: "relative",
+    height:"180px"
   },
   image: {
     width: "100%",
-    height: "auto",
+    height: "100%",
   },
   rating: {
     position: "absolute",

@@ -190,7 +190,7 @@ checkLoginStatus();
 
         {chefData ? (
           <div>
-            <h1>{chefData.name}</h1>
+            {/* <h1>{chefData.name}</h1> */}
             {chefData.coverImage && (
                     <img
                     src={`http://localhost:4000/coverImage-uploads/${chefData.coverImage}`}  // Make sure this matches your backend

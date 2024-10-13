@@ -1,0 +1,172 @@
+.PreOrderInModule-Height{
+  height: auto ;
+}
+
+.PreOrderInModule-type {
+  padding: 2rem 0 0 1rem;
+  font-size: 1.2rem;
+  color: #555;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-style: italic;
+}
+
+
+.PreOrderInModule-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  margin: 20px auto;
+  padding: 16px ;
+  /* padding: 1rem ; */
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  background-color: #f9f9f9;
+  width: 100%;
+  max-width: 800px;
+}
+
+
+.PreOrderInModule-content {
+  width: 100%;
+  /* background-color: red; */
+}
+
+.PreOrderInModule-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  width: 100%;
+  padding: 1rem 0 0 0;
+}
+
+.PreOrderInModule-title {
+  font-size: 1.1em;
+  font-weight: 600;
+  color: #333;
+}
+
+.PreOrderInModule-date {
+  font-size: 0.9em;
+  color: #666;
+}
+
+.PreOrderInModule-details {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1rem 0 0 0;
+}
+
+.PreOrderInModule-qty {
+  font-size: 0.9em;
+  color: #555;
+}
+
+.PreOrderInModule-Description {
+  width: 50%;
+  height: 2rem;
+  overflow: auto;
+  /* border: 1px solid rgb(177, 177, 177); */
+  resize: none;
+  border-radius: 5px;
+  padding: 3px;
+}
+
+.PreOrderInModule-AcceptDeclineBtn{
+  display: flex;
+  justify-content: space-between;
+  /* background-color: red; */
+  width: 33%;
+}
+
+.PreOrderInModule-AcceptSetPrice {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1rem 0 3rem 0;
+  border-bottom: 1px solid rgb(149, 149, 149);
+
+}
+.PreOrderInModule-AcceptSetPriceBtn {
+  font-weight: bold;
+  padding: 3px 8px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  background-color: #48c78e;
+  transition: background-color 0.3s;
+}
+
+.PreOrderInModule-AcceptSetPriceBtn:hover {
+  background-color: #3bb77e;
+}
+
+.PreOrderInModule-DeclineNotSetPriceBtn {
+  font-weight: bold;
+  padding: 3px 8px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  background-color: #ff6b6b;
+  transition: background-color 0.3s;
+}
+
+.PreOrderInModule-DeclineNotSetPriceBtn:hover {
+  background-color: #ff5252;
+}
+
+.PreOrderInModule-Input {
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  width: 13%;
+  border: 1px solid rgb(137, 131, 131);
+  padding: 0 0 0 0.5rem;
+}
+
+
+.PreOrderInModule-StatusPrice {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1rem 0 3rem 0;
+  border-bottom: 1px solid rgb(149, 149, 149);
+
+}
+
+.PreOrderInModule-Status {
+  font-weight: bold;
+  padding: 3px 8px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  background-color: #48c78e;
+  transition: background-color 0.3s;
+}
+
+.PreOrderInModule-Price {
+  color: #555;
+}
+
+@media (max-width: 600px) {
+  .PreOrderInModule-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .PreOrderInModule-Input {
+
+    width: 40%;
+    height: fit-content;
+
+  }
+
+.PreOrderInModule-AcceptDeclineBtn{
+  /* background-color: red; */
+  padding: 0;
+  margin: 0;
+  width:55%;
+  font-size: 11px;
+}
+}
