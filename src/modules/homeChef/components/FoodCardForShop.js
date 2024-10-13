@@ -1,48 +1,76 @@
-
-import React, { useState } from 'react';
-import '../styles/FoodCardForShop.css'; 
+import React, { useState, useEffect } from 'react';
+import '../styles/FoodCardForShop.css';
 import axiosInstance from '../../../utils/axiosService';
-import {jwtDecode } from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
-function FoodCardForShop({ id }) {
-  const [foodName, setFoodName] = useState('');
-  const [foodDescription, setFoodDescription] = useState('');
-  const [quantity, setQuantity] = useState('0'); // Changed to quantity
-  const [unit, setUnit] = useState('kilogram'); // New state for unit
-  const [price, setPrice] = useState('0');
-
-  const [isEditable, setIsEditable] = useState(false);
-  const [image, setImage] = useState(null);
+function FoodCardForShop({ id, itemname, description, price, image, quantity, unit }) {
+  const [foodName, setFoodName] = useState(itemname || '');
+  const [foodDescription, setFoodDescription] = useState(description || '');
+  const [quantityState, setQuantity] = useState(quantity || '0');
+  const [unitState, setUnit] = useState(unit || 'kilogram');
+  const [priceState, setPrice] = useState(price || '0');
+  const [isEditable, setIsEditable] = useState(!id);
+  const [imageState, setImage] = useState(image ? `http://localhost:4000${image}` : null);
+  const [uploadedFile, setUploadedFile] = useState(null);
   const [isDeleted, setIsDeleted] = useState(false);
 
-  // Handle image upload
+  useEffect(() => {
+    setIsEditable(!id); // Enable edit mode if no id is present
+  }, [id]);
+
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
+      setUploadedFile(file);
       const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result);
-      };
-      reader.readAsDataURL(file);
+      reader.onloadend = () => setImage(reader.result); // Preview the image locally
+      reader.readAsDataURL(file); // Make sure the image loads
+    } else {
+      setImage(null);
+      setUploadedFile(null);
     }
   };
 
-  // Handle editing
-  const handleEditClick = () => {
-    setIsEditable(!isEditable);
+  const handleEditClick = () => setIsEditable(!isEditable); // Toggle edit mode
+
+  const handleDeleteClick = async () => {
+    if (window.confirm("Are you sure you want to delete this item?")) {
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+        alert("No token found. Please log in again.");
+        return;
+      }
+
+      try {
+        const response = await axiosInstance.delete(`/api/shop/items/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        alert('Food item deleted successfully!');
+        setIsDeleted(true);
+      } catch (error) {
+        console.error('Error deleting food item:', error.response ? error.response.data : error.message);
+        alert('Failed to delete food item. ' + (error.response ? error.response.data : ''));
+      }
+    }
   };
 
-  // Handle delete card
-  const handleDeleteClick = () => {
-    setIsDeleted(true);
+  if (isDeleted) return null; // Return null if the item has been deleted
+
+  const validateInputs = () => {
+    if (!foodName || !foodDescription || quantityState <= 0 || priceState <= 0) {
+      alert('Please fill in all required fields with valid values.');
+      return false;
+    }
+    return true;
   };
 
-  if (isDeleted) {
-    return null; // If deleted, return nothing
-  }
   const handleSubmit = async () => {
-    const token = localStorage.getItem('token');
+    if (!validateInputs()) return; // Validate inputs before proceeding
 
+    const token = localStorage.getItem('token');
     if (!token) {
       alert("No token found. Please log in again.");
       return;
@@ -51,39 +79,46 @@ function FoodCardForShop({ id }) {
     const decodedToken = jwtDecode(token);
     const chefId = decodedToken.id;
 
-    if (!chefId) {
-      alert('Chef ID not found in the token');
-      return;
+    const formData = new FormData();
+    formData.append('itemname', foodName);
+    formData.append('description', foodDescription);
+    formData.append('price', parseFloat(priceState));
+    formData.append('quantity', parseInt(quantityState, 10));
+    formData.append('unit', unitState || 'kilogram');
+
+    if (uploadedFile) {
+      formData.append('image', uploadedFile);
     }
-
-    // Validate required fields
-    if (!foodName || !foodDescription || quantity < 0 || price < 0) {
-      alert('Please fill in all required fields with valid values.');
-      return;
-    }
-
-    const foodData = {
-      itemname: foodName,
-      description: foodDescription,
-      price: parseFloat(price), // Ensure price is a number
-      image,
-      quantity: parseInt(quantity, 10), // Ensure quantity is an integer
-      unit,
-    };
-
-    console.log('Sending foodData:', foodData); // Debugging output
 
     try {
-      const response = await axiosInstance.post(`/api/shop/additem/${chefId}`, foodData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      alert('Food item added successfully!');
-      console.log(response.data);
+      let response;
+      if (id) {
+        // Update existing item if id is present
+        response = await axiosInstance.put(`/api/shop/updateitem/${id}`, formData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        alert('Food item updated successfully!');
+      } else {
+        // Create new item if id is not present
+        response = await axiosInstance.post(`/api/shop/additem/${chefId}`, formData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        alert('Food item added successfully!');
+      }
+      console.log('Response from server:', response.data);  // Log response for debugging
+
+      // Disable editing after submitting
+      setIsEditable(false);
+
     } catch (error) {
-      console.error('Error adding food item:', error.response ? error.response.data : error.message);
-      alert('Failed to add food item. ' + (error.response ? error.response.data : ''));
+      console.error('Error processing food item:', error.response ? error.response.data : error.message);
+      alert('Failed to process food item. ' + (error.response ? error.response.data : ''));
     }
   };
 
@@ -92,13 +127,14 @@ function FoodCardForShop({ id }) {
       <div className="cardForShop">
         <div className="image-containerForShop">
           <label htmlFor={`photo-upload-${id}`}>
-            {image ? (
-              <img src={image} alt="Food" className="food-imageForShop" />
+            {imageState ? (
+              <img src={imageState} alt="Food" className="food-imageForShop" />
             ) : (
               <div className="photo-placeholderForShop">Food Photo</div>
             )}
           </label>
-          <input className='inputForShop'
+          <input
+            className='inputForShop'
             id={`photo-upload-${id}`}
             type="file"
             style={{ display: 'none' }}
@@ -108,14 +144,16 @@ function FoodCardForShop({ id }) {
         </div>
 
         <div className="contentForShop">
-          <input className='inputForShop'
+          <input
+            className='inputForShop'
             type="text"
             value={foodName}
             placeholder="Enter Food Name"
             onChange={(e) => setFoodName(e.target.value)}
             disabled={!isEditable}
           />
-          <textarea className='textareaForShop'
+          <textarea
+            className='textareaForShop'
             value={foodDescription}
             placeholder="Enter Food Description"
             onChange={(e) => setFoodDescription(e.target.value)}
@@ -123,36 +161,38 @@ function FoodCardForShop({ id }) {
           />
 
           <div className="quantity-inputForShop">
-          {/* <span>que</span> */}
-            <input className='inputForShop'
+            <input
+              className='inputForShop'
               type="number"
-              value={quantity}
+              value={quantityState}
               onChange={(e) => setQuantity(e.target.value)}
               disabled={!isEditable}
+              min="0"
             />
             <select 
               className='unit-dropdownForShop' 
-              value={unit} 
+              value={unitState} 
               onChange={(e) => setUnit(e.target.value)} 
               disabled={!isEditable}
             >
               <option value="kilogram">Kilogram (KG)</option>
               <option value="gram">Gram (G)</option>
               <option value="liter">Liter (L)</option>
-              <option value="liter">Milli Lite (ML)</option>
+              <option value="milliliter">Milli Liter (ML)</option>
             </select>
           </div>
         </div>
 
-
         <div className="price-inputForShop">
-            <span>₹</span>
-            <input className='inputForShop'
-                type="number"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-                disabled={!isEditable}
-            />
+          <span>₹</span>
+          <input
+            className='inputForShop'
+            type="number"
+            value={priceState}
+            onChange={(e) => setPrice(e.target.value)}
+            disabled={!isEditable}
+            min="0"
+          />
         </div>
 
         <div className="actionsForShop">
@@ -162,8 +202,8 @@ function FoodCardForShop({ id }) {
           <button className='cardDeleteForShop cardEditDoneForShop' onClick={handleDeleteClick}>
             Delete
           </button>
-          <button className='cardAddForShop' onClick={handleSubmit} disabled={!isEditable}>
-            Add Food Item
+          <button className='cardAddForShop' onClick={handleSubmit} disabled={!isEditable && !id}>
+            {id ? 'Update Food Item' : 'Add Food Item'}
           </button>
         </div>
       </div>

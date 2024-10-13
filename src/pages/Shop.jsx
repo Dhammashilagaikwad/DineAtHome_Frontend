@@ -15,14 +15,21 @@ function Shop() {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [isMobile, setIsMobile] = useState(false);
   const { triggerNotification } = useNotification();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
   // Fetch products from backend
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await axiosInstance.get('/api/shop/items'); // Use axiosInstance here
-        setProducts(response.data); // Store all products
-        setFilteredProducts(response.data); // Set filteredProducts to the fetched data
-      } catch (error) {
+       // Assuming response.data contains the items with image paths
+       const productsWithImages = response.data.map(product => ({
+        ...product,
+        image: `http://localhost:4000${product.image}` // Ensure the image URL is correct
+      }));
+      setProducts(productsWithImages); // Store all products
+      setFilteredProducts(productsWithImages); // Set filteredProducts to the fetched data
+    } catch (error) {
         console.error("There was an error fetching the products!", error);
       }
     };
@@ -59,27 +66,27 @@ function Shop() {
   };
 
   // Function to check if user is logged in
-  const isLoggedIn = () => {
-    const token = localStorage.getItem("token");
-    console.log("Token:", token); // Debugging line to check if token is present
-    if (!token) {
-      return false;
-    }
+  // const isLoggedIn = () => {
+  //   const token = localStorage.getItem("token");
+  //   console.log("Token:", token); // Debugging line to check if token is present
+  //   if (!token) {
+  //     return false;
+  //   }
 
-    // Optionally, you can decode the token and check its expiration
-    const payload = JSON.parse(atob(token.split('.')[1]));
-    const currentTime = Date.now() / 1000; // Get current time in seconds
+  //   // Optionally, you can decode the token and check its expiration
+  //   const payload = JSON.parse(atob(token.split('.')[1]));
+  //   const currentTime = Date.now() / 1000; // Get current time in seconds
 
-    // Check if token is expired
-    return payload.exp > currentTime;
-  };
+  //   // Check if token is expired
+  //   return payload.exp > currentTime;
+  // };
 
-  console.log("islogin", isLoggedIn());
+  // console.log("islogin", isLoggedIn());
 
   // Add function to handle adding to cart
   const addToCart = (product) => {
     console.log("Add to Cart clicked for:", product.itemname);
-    if (!isLoggedIn()) {
+    if (!isLoggedIn) {
       // alert('Please log in to add items to your cart');
       triggerNotification('Please log in to add items to your cart','red')
       return;
@@ -143,7 +150,7 @@ function Shop() {
                   <h3>{product.itemname}</h3>
                   <p>Chef: {product.chef?.name || 'Unknown'}</p>  {/* Chef's name */}
                   <p>Quantity: {product.quantity} {product.unit || ''}</p> {/* Quantity with Unit */}
-                  <p>Price: ₹{product.price}</p>
+                  <p>Price: ₹ {product.price}</p>
                   <button onClick={() => addToCart(product)} className="addtocart-button">Add to Cart</button>
                 </div>
               ))

@@ -14,7 +14,7 @@
   @media(max-width:890px){
     .notification {
         position: fixed;
-        top: 50px;
+        top: 80px;
         left: 50px;
         padding: 5px;
         color: white;

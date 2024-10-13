@@ -49,7 +49,7 @@ const ThirdPg = () => {
 
   return (
     <>
-      <div className="search-containerForThirdPg">
+      {/* <div className="search-containerForThirdPg">
         <h1 className="search-titleForThirdPg">Looking for something?</h1>
         <p className="search-subtitleForThirdPg">
           Browse over 450+ easy and fail-proof recipes that deliver{" "}
@@ -67,7 +67,7 @@ const ThirdPg = () => {
             <i className="fa fa-search"></i>
           </button>
         </div>
-      </div>
+      </div> */}
 
 
       <div className="shopImageAndPraContainerForThirdPgMain">

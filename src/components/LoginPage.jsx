@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; 
 import '../styles/LoginPage.css';
 import axiosInstance from '../utils/axiosService';
@@ -7,6 +7,9 @@ import ForgetPasswordForm from './ForgetPasswordForm'; // Import ForgetPasswordF
 
 const LoginPage = () => {
     const navigate = useNavigate();
+    useEffect(() => {
+        window.scrollTo(0, 0); // Scroll to the top when the page is loaded
+    }, []);
     const { triggerNotification } = useNotification();
     const [isForgetPassword, setIsForgetPassword] = useState(false); 
 

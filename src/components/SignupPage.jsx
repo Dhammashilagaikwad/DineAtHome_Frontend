@@ -23,7 +23,7 @@ const SignupPage = () => {
       
 
       if (response.data.status) {
-        alert("Signup successful!, Please Login!");
+        // alert("Signup successful!, Please Login!");
         triggerNotification('Signup successful!, Please Login!','green')
       } else {
         // alert(response.data.message || "Signup failed");
@@ -32,7 +32,7 @@ const SignupPage = () => {
     } catch (error) {
       console.error('Signup error: ', error);
       const errorMessage = error.response?.data?.message || 'Something went wrong, please try again';
-      alert(`Signup failed: ${errorMessage}`);
+      // alert(`Signup failed: ${errorMessage}`);
       // triggerNotification('Something went wrong, please try again','red')
     }
   }
@@ -54,7 +54,7 @@ const SignupPage = () => {
             </p>
 
             <button type="submit">Sign Up</button>
-            <p>*Sign Up for HomeChef for is at Join Us Page</p>
+            <p>*Sign Up for HomeChef is at Join Us Page</p>
           </form>
         </div>
       </div>

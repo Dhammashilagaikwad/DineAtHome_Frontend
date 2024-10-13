@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axiosInstance from '../../../utils/axiosService';
-import { jwtDecode } from 'jwt-decode'; // Corrected jwtDecode import
+import { jwtDecode } from 'jwt-decode';
 import '../styles/FoodCard.css';
 
 function FoodCard({ id, initialFoodData }) {
@@ -23,10 +23,7 @@ function FoodCard({ id, initialFoodData }) {
 
   // Toggle edit mode
   const handleEditClick = () => {
-    setIsEditable((prevState) => {
-      console.log(`Edit mode: ${!prevState}`);
-      return !prevState; // Toggle the edit mode
-    });
+    setIsEditable((prevState) => !prevState);
   };
 
   // Handle deletion of food item
@@ -35,7 +32,7 @@ function FoodCard({ id, initialFoodData }) {
       try {
         const token = localStorage.getItem('token');
         console.log('Deleting food item with ID:', id);
-        await axiosInstance.delete(`/api/shop/deleteItem/${id}`, {
+        await axiosInstance.delete(`/addItem/deleteItem/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -66,7 +63,8 @@ function FoodCard({ id, initialFoodData }) {
       return;
     }
 
-    if (!foodName || !foodDescription || amount < 0) {
+    // Validate inputs
+    if (!foodName.trim() || !foodDescription.trim() || amount < 0) {
       alert('Please fill in all required fields with valid values.');
       return;
     }
@@ -89,13 +87,13 @@ function FoodCard({ id, initialFoodData }) {
 
     try {
       let response;
-      if (initialFoodData) {
+      if (id) {
         // Update an existing food item
         console.log('Updating food item with ID:', id);
         response = await axiosInstance.put(`/additem/edit-item/${id}`, formData, {
           headers: {
             Authorization: `Bearer ${token}`,
-            'Content-Type': 'multipart/form-data', // Ensure correct header for FormData
+            'Content-Type': 'multipart/form-data',
           },
         });
         alert('Food item updated successfully!');
@@ -105,15 +103,20 @@ function FoodCard({ id, initialFoodData }) {
         response = await axiosInstance.post(`/additem/${chefId}`, formData, {
           headers: {
             Authorization: `Bearer ${token}`,
-            'Content-Type': 'multipart/form-data', // Ensure correct header for FormData
+            'Content-Type': 'multipart/form-data',
           },
         });
         alert('Food item added successfully!');
       }
       console.log('Response:', response.data);
     } catch (error) {
-      console.error('Error adding/updating food item:', error.response ? error.response.data : error.message);
-      alert('Failed to add/update food item.');
+      if (error.response) {
+        console.error('Error adding/updating food item:', error.response.data);
+        alert(`Failed to add/update food item: ${error.response.data.message || error.response.data}`);
+      } else {
+        console.error('Error adding/updating food item:', error.message);
+        alert('Failed to add/update food item.');
+      }
     }
 
     // After submission, disable edit mode
@@ -133,7 +136,11 @@ function FoodCard({ id, initialFoodData }) {
             {image ? (
               <img src={URL.createObjectURL(image)} alt="Food" className="food-imageForFoodCard" />
             ) : (
-              <div className="photo-placeholderForFoodCard">Food Photo</div>
+              initialFoodData?.image ? ( // Display image from initialFoodData if no new image is selected
+                <img src={initialFoodData.image} alt="Food" className="food-imageForFoodCard" />
+              ) : (
+                <div className="photo-placeholderForFoodCard">Food Photo</div>
+              )
             )}
           </label>
           <input

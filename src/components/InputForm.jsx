@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import '../styles/InputForm.css';
 import TermsCheckbox from '../components/TermsCheckbox';
 import axiosInstance from '../utils/axiosService';
+import { useNotification } from './NotificationContext';
 
 const InputForm = () => {
+  const { triggerNotification } = useNotification();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -85,13 +88,16 @@ const InputForm = () => {
             confirm_password: "", // Reset to empty
           });
           setIsChecked(false);
-          alert("Successfully submitted");
+          // alert("Successfully submitted");
+          triggerNotification("Successfully submitted",'green')
         }
       } catch (error) {
         console.error('There was an error submitting the form:', error);
+        triggerNotification("There was an error submitting the form",'red')
       }
     } else {
       console.log("Form validation failed", errors); // Log errors for better debugging
+      triggerNotification("Form validation failed",'red')
     }
   };
 
