@@ -3,7 +3,7 @@ import axios from "axios";
 
 // Create an instance of Axios for centralized configuration
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:4000",
+  baseURL: "https://dineathomebackend.vercel.app/?vercelToolbarCode=2gCLZ-dLZ-g3UI5",
   timeout: 5000,
   headers: {
     "Content-Type": "application/json",
