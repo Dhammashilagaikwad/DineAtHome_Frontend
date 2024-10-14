@@ -109,7 +109,7 @@ const MenuPage = () => {
           sortedMenu.map((dish) => (
             <div key={dish._id} className="menu-card">
               <img
-  src={`http://localhost:4000${dish.foodPhoto}`} // Append your backend URL
+  src={`https://dineathomebackend.vercel.app${dish.foodPhoto}`} // Append your backend URL
   alt={dish.foodName}
   className="dish-image"
 />

@@ -3,7 +3,7 @@ import food7 from "../images/food7.jpg";
 import opendoor from "../images/opendoor.png";
 import closedoor from "../images/closedoor.png";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "../utils/axiosService";
 
 function ChefsNearYou() {
   useEffect(() => {
@@ -16,7 +16,7 @@ function ChefsNearYou() {
   useEffect(() => {
     const fetchChefs = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/api/chefs/'); // Adjust the API endpoint
+        const response = await axiosInstance.get('/api/chefs/'); // Adjust the API endpoint
         setChefs(response.data);
       } catch (error) {
         console.error("Error fetching chefs:", error);
@@ -58,7 +58,7 @@ function ChefsNearYou() {
             return (
               <RestaurantCard
                 key={chef._id}
-                image={chef.coverImage ? `http://localhost:4000/coverImage-uploads/${chef.coverImage}` : "https://via.placeholder.com/150"} // Use coverImage // Use a default image if not provided
+                image={chef.coverImage ? `https://dineathomebackend.vercel.app/coverImage-uploads/${chef.coverImage}` : "https://via.placeholder.com/150"} // Use coverImage // Use a default image if not provided
                 rating={chef.average_rating}
                 name={`${chef.name}`}
                 cuisine={cuisines} // Set the cuisine directly
