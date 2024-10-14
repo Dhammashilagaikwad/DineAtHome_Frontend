@@ -29,10 +29,10 @@ function UserChefProfile() {
     name: "",
     description: "",
     quantity: "",
-    priceRange: {
-      minPrice: "",
-      maxPrice: "",
-    },
+    // priceRange: {
+    //   minPrice: "",
+    //   maxPrice: "",
+    // },
     deliveryDate: new Date(),
   });
 
@@ -105,26 +105,26 @@ checkLoginStatus();
     }));
   };
 
-  const handlePriceRangeChange = (e) => {
-    const { name, value } = e.target;
-    setCustomizedOrder((prevOrder) => ({
-      ...prevOrder,
-      priceRange: {
-        ...prevOrder.priceRange,
-        [name]: value,
-      },
-    }));
-  };
+  // const handlePriceRangeChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setCustomizedOrder((prevOrder) => ({
+  //     ...prevOrder,
+  //     priceRange: {
+  //       ...prevOrder.priceRange,
+  //       [name]: value,
+  //     },
+  //   }));
+  // };
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
     try {
       await axiosInstance.post(`/preOrderRoutes/preOrder`, {
         ...customizedOrder,
-        priceRange: {
-          minPrice: parseFloat(customizedOrder.priceRange.minPrice),
-          maxPrice: parseFloat(customizedOrder.priceRange.maxPrice),
-        },
+        // priceRange: {
+        //   minPrice: parseFloat(customizedOrder.priceRange.minPrice),
+        //   maxPrice: parseFloat(customizedOrder.priceRange.maxPrice),
+        // },
         deliveryDate: selectedDate, // Ensure deliveryDate is set to selected date
       });
       // alert("Customized order request sent successfully!");
@@ -134,7 +134,7 @@ checkLoginStatus();
         name: "",
         description: "",
         quantity: "",
-        priceRange: { minPrice: "", maxPrice: "" },
+        // priceRange: { minPrice: "", maxPrice: "" },
         deliveryDate: new Date(),
       });
     } catch (error) {
@@ -328,7 +328,7 @@ checkLoginStatus();
                   required
                 />
               </label>
-              <label style={styles.customized_order}>
+              {/* <label style={styles.customized_order}>
                 Price Range:
                 <input
                   type="number"
@@ -348,7 +348,7 @@ checkLoginStatus();
                   style={styles.customized_input}
                   required
                 />
-              </label>
+              </label> */}
               <label style={styles.customized_order}>
                 Delivery Date:
                 <DatePicker
