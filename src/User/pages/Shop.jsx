@@ -26,7 +26,7 @@ function Shop() {
        // Assuming response.data contains the items with image paths
        const productsWithImages = response.data.map(product => ({
         ...product,
-        image: `http://localhost:4000${product.image}` // Ensure the image URL is correct
+        image: `https://dineathomebackend.vercel.app${product.image}` // Ensure the image URL is correct
       }));
       setProducts(productsWithImages); // Store all products
       setFilteredProducts(productsWithImages); // Set filteredProducts to the fetched data

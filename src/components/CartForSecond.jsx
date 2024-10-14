@@ -47,7 +47,7 @@ const CartForSecond = () => {
         {chefs.map((chef) => (
           <RestaurantCard
             key={chef._id}
-            image={chef.coverImage ? `http://localhost:4000/coverImage-uploads/${chef.coverImage}` : "https://via.placeholder.com/150"} // Use coverImage
+            image={chef.coverImage ? `https://dineathomebackend.vercel.app/coverImage-uploads/${chef.coverImage}` : "https://via.placeholder.com/150"} // Use coverImage
             rating={chef.average_rating || "No rating"}
             name={chef.name}
             cuisine={chef.cuisine.join(", ")}

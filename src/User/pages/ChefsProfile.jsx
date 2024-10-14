@@ -29,10 +29,10 @@ function UserChefProfile() {
     name: "",
     description: "",
     quantity: "",
-    priceRange: {
-      minPrice: "",
-      maxPrice: "",
-    },
+    // priceRange: {
+    //   minPrice: "",
+    //   maxPrice: "",
+    // },
     deliveryDate: new Date(),
   });
 
@@ -105,26 +105,26 @@ checkLoginStatus();
     }));
   };
 
-  const handlePriceRangeChange = (e) => {
-    const { name, value } = e.target;
-    setCustomizedOrder((prevOrder) => ({
-      ...prevOrder,
-      priceRange: {
-        ...prevOrder.priceRange,
-        [name]: value,
-      },
-    }));
-  };
+  // const handlePriceRangeChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setCustomizedOrder((prevOrder) => ({
+  //     ...prevOrder,
+  //     priceRange: {
+  //       ...prevOrder.priceRange,
+  //       [name]: value,
+  //     },
+  //   }));
+  // };
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
     try {
       await axiosInstance.post(`/preOrderRoutes/preOrder`, {
         ...customizedOrder,
-        priceRange: {
-          minPrice: parseFloat(customizedOrder.priceRange.minPrice),
-          maxPrice: parseFloat(customizedOrder.priceRange.maxPrice),
-        },
+        // priceRange: {
+        //   minPrice: parseFloat(customizedOrder.priceRange.minPrice),
+        //   maxPrice: parseFloat(customizedOrder.priceRange.maxPrice),
+        // },
         deliveryDate: selectedDate, // Ensure deliveryDate is set to selected date
       });
       // alert("Customized order request sent successfully!");
@@ -134,7 +134,7 @@ checkLoginStatus();
         name: "",
         description: "",
         quantity: "",
-        priceRange: { minPrice: "", maxPrice: "" },
+        // priceRange: { minPrice: "", maxPrice: "" },
         deliveryDate: new Date(),
       });
     } catch (error) {
@@ -196,7 +196,7 @@ checkLoginStatus();
             {/* <h1>{chefData.name}</h1> */}
             {chefData.coverImage && (
                     <img
-                    src={`http://localhost:4000/coverImage-uploads/${chefData.coverImage}`}  // Make sure this matches your backend
+                    src={`https://dineathomebackend.vercel.app/coverImage-uploads/${chefData.coverImage}`}  // Make sure this matches your backend
                         alt={`${chefData.name}'s Cover Image`}
                         style={{ width: "100%", height: "300px", objectFit: "cover",padding:"10px" }}
                     />
@@ -240,7 +240,7 @@ checkLoginStatus();
             <div key={item._id} style={styles.menuItem}>
               {item.foodPhoto ? (
           <img 
-            src={`http://localhost:4000${item.foodPhoto}`} // Ensure correct URL
+            src={`https://dineathomebackend.vercel.app${item.foodPhoto}`} // Ensure correct URL
             alt={item.foodName} 
             style={styles.image} 
           />
@@ -328,7 +328,7 @@ checkLoginStatus();
                   required
                 />
               </label>
-              <label style={styles.customized_order}>
+              {/* <label style={styles.customized_order}>
                 Price Range:
                 <input
                   type="number"
@@ -348,7 +348,7 @@ checkLoginStatus();
                   style={styles.customized_input}
                   required
                 />
-              </label>
+              </label> */}
               <label style={styles.customized_order}>
                 Delivery Date:
                 <DatePicker
