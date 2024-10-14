@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import '../styles/HomeChefsInfo.css';
 import food1 from '../images/food11.jpg';
-import axios from 'axios'; // Import Axios
+import axios from 'axios';
 import HomeChefProfileCard from "../components/HomeChefProfileCard"; 
 // import self from '../images/Baker-cuate.png';
+import axiosInstance from "../utils/axiosService";
 
 export default function HomeChefsInfo() {
     useEffect(() => {
@@ -14,7 +15,7 @@ export default function HomeChefsInfo() {
     useEffect(() => {
         const fetchChefs = async () => {
             try {
-                const response = await axios.get('http://localhost:4000/api/chefs'); // Adjust the URL as necessary
+                const response = await axiosInstance.get('/api/chefs'); // Adjust the URL as necessary
                 setHomeChefs(response.data); // Set the state with fetched data
             } catch (error) {
                 console.error("Error fetching chefs:", error);
@@ -39,8 +40,8 @@ export default function HomeChefsInfo() {
                         key={chef._id} // Use chef's unique ID
                         name={chef.name}
                         speciality={chef.specialities.join(', ')} // Join specialities if it's an array
-                        coverImage={`http://localhost:4000/coverImage-uploads/${chef.coverImage}`}// Use the chef's photo or a default
-                        profilePhoto={`http://localhost:4000/coverImage-uploads/${chef.profilePhoto}`}// Adjust as necessary for the profile photo
+                        coverImage={`https://dineathomebackend.vercel.app/${chef.coverImage}`}// Use the chef's photo or a default
+                        profilePhoto={`https://dineathomebackend.vercel.app/${chef.profilePhoto}`}// Adjust as necessary for the profile photo
                     />
                 ))}
             </div>
