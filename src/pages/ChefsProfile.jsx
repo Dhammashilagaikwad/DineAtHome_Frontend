@@ -385,8 +385,8 @@ const styles = {
     maxWidth: "800px",
   },
   image: {
-    width: "100px",
-    height: "100px",
+    width: "130px",
+    height: "130px",
     marginRight: "20px",
   },
   customizedButton: {
