@@ -10,7 +10,7 @@ function FoodCardForShop({ id, itemname, description, price, image, quantity, un
   const [unitState, setUnit] = useState(unit || 'kilogram');
   const [priceState, setPrice] = useState(price || '0');
   const [isEditable, setIsEditable] = useState(!id);
-  const [imageState, setImage] = useState(image ? `http://localhost:4000${image}` : null);
+  const [imageState, setImage] = useState(image ? `https://dineathomebackend.vercel.app${image}` : null);
   const [uploadedFile, setUploadedFile] = useState(null);
   const [isDeleted, setIsDeleted] = useState(false);
 

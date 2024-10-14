@@ -159,7 +159,7 @@ const totalAmount = dishCharges + shopCharges + deliveryCharges + tip + taxCharg
       rate={`Rs. ${itemData.amount ? (itemData.amount * item.quantity).toFixed(2) : '0.00'}`} // Updated rate calculation
       quantity={`Qty: ${item.quantity}`}
       // qty={`Quantity: ${item.quantity }`} // Display user's selected quantity
-      imageSrc={itemData.foodPhoto ? `http://localhost:4000${itemData.foodPhoto}` : ''} // Ensure food photo is displayed
+      imageSrc={itemData.foodPhoto ? `https://dineathomebackend.vercel.app${itemData.foodPhoto}` : ''} // Ensure food photo is displayed
       itemId={item._id} // Pass the itemId
       onDelete={(deletedItemId) => {
         setCartItems(prevItems => prevItems.filter(item => item._id !== deletedItemId)); // Remove item from state
@@ -183,7 +183,7 @@ const totalAmount = dishCharges + shopCharges + deliveryCharges + tip + taxCharg
                   rate={`Rs. ${itemData.price ? (itemData.price * item.quantity).toFixed(2) : '0.00'}`} // Ensure correct calculation
                   quantity={item.quantity}
                   // quantity={`Qty: ${itemData.quantity || 1}`} 
-                  imageSrc={itemData.image? `http://localhost:4000${itemData.image}` : "defaultImage.jpg"} // Provide a fallback image source
+                  imageSrc={itemData.image? `https://dineathomebackend.vercel.app${itemData.image}` : "defaultImage.jpg"} // Provide a fallback image source
                   itemId={item._id} // Pass the itemId
                   onDelete={(deletedItemId) => {
                     setShopCartItems(prevItems => prevItems.filter(item => item._id !== deletedItemId)); // Remove item from state
