@@ -40,8 +40,8 @@ export default function HomeChefsInfo() {
                         key={chef._id} // Use chef's unique ID
                         name={chef.name}
                         speciality={chef.specialities.join(', ')} // Join specialities if it's an array
-                        coverImage={`https://dineathomebackend.vercel.app/${chef.coverImage}`}// Use the chef's photo or a default
-                        profilePhoto={`https://dineathomebackend.vercel.app/${chef.profilePhoto}`}// Adjust as necessary for the profile photo
+                        coverImage={`https://dineathomebackend.vercel.app${chef.coverImage}`}// Use the chef's photo or a default
+                        profilePhoto={`https://dineathomebackend.vercel.app${chef.profilePhoto}`}// Adjust as necessary for the profile photo
                     />
                 ))}
             </div>
