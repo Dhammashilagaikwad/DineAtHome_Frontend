@@ -77,7 +77,7 @@ const MenuPage = () => {
             <div key={dish._id} className="menu-card">
               {dish.foodPhoto ? (
         <img
-          src={`http://localhost:4000${dish.foodPhoto}`}
+          src={`https://dineathomebackend.vercel.app${dish.foodPhoto}`}
           alt={dish.foodName}
           className="dish-image"
         />
