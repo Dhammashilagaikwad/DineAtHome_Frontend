@@ -371,19 +371,38 @@ const totalAmount = dishCharges + shopCharges + deliveryCharges + taxCharges || 
 
 
 <div className="chargesDisplay">
-        <p>Dish Charges: ₹{dishCharges.toFixed(2)}</p>
-        <p>Delivery & Packaging Charges: ₹{deliveryCharges.toFixed(2)}</p>
+         <div className="dishChargesBox">
+            <p>Dish Charges:</p>
+            <p>₹{dishCharges.toFixed(2)}</p>
+          </div >
+          <div className='deliveryAndPackagingChargesBox'>
+            <p>Delivery & Packaging Charges:</p>
+            <p>₹{deliveryCharges.toFixed(2)}</p>
+          </div>
         {/* <p>Tip to Rider: ₹{tip.toFixed(2)}</p> */}
-        <p>Shop Charges: ₹{isNaN(shopCharges) ? '0.00' : shopCharges.toFixed(2)}</p>
-<p>Tax Charges: ₹{isNaN(taxCharges) ? '0.00' : taxCharges.toFixed(2)}</p>
-        <p>Total Amount: ₹{totalAmount.toFixed(2)}</p>
+        <div className='tipTORiderBox'>
+        <p>Shop Charges: </p>
+        <p>₹{isNaN(shopCharges) ? '0.00' : shopCharges.toFixed(2)}</p>
+        </div>
+        {/* <p>Shop Charges: ₹{isNaN(shopCharges) ? '0.00' : shopCharges.toFixed(2)}</p> */}
+        <div className='taxChargesBox'>
+        <p>Tax Charges: </p>
+        <p>₹{isNaN(taxCharges) ? '0.00' : taxCharges.toFixed(2)}</p>
+        </div>
+{/* <p>Tax Charges: ₹{isNaN(taxCharges) ? '0.00' : taxCharges.toFixed(2)}</p> */}
+       <div className='TotalAmountBox'>
+        <p>Total Amount: </p>
+        <p>₹{totalAmount.toFixed(2)}</p>
+      </div>
+        {/* <p>Total Amount: ₹{totalAmount.toFixed(2)}</p> */}
       </div>
  
 {/* 
       <Link to="/user/PaymentOptions"> */}
-      <button className="checkoutBtn" onClick={handleCheckout}>
-            Proceed to Checkout
-        </button>
+      <div className='placeOrderForCartBox'>
+      <button className='checkoutBtn placeOrderForCart' onClick={handleCheckout}>
+            Checkout
+        </button></div>
       {/* </Link> */}
     </>
   );

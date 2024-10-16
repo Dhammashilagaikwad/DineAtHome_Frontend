@@ -215,7 +215,7 @@ const navigate = useNavigate();
           <li>
             <Link id="navs-icons" to="/user/usercart">
               <i className="fa-solid fa-cart-shopping"></i>
-              <span>Cart Items: {cartItems.length}</span> {/* Example use of cartItems */}
+              {/* <span>Cart Items: {cartItems.length}</span> Example use of cartItems */}
             </Link>
           </li>
           <li>
