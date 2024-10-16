@@ -3,6 +3,7 @@ import CartC from '../components/CartC';
 import AfterLoginNavbar from '../components/AfterLoginNavbar';
 import axiosInstance from '../../utils/axiosService';
 import '../styles/Cart.css';
+import {jwtDecode} from 'jwt-decode'; // Correct import
 import { Link } from 'react-router-dom';
 
 export default function UserCart() {
@@ -18,6 +19,11 @@ export default function UserCart() {
   const [chefs, setChefs] = useState({});
   const [deliveryCharges, setDeliveryCharges] = useState(40);
   const [taxRate] = useState(0.10); // 10% tax rate
+
+  const baseURL = process.env.NODE_ENV === "development" 
+  ? 'http://localhost:4000' // Localhost URL
+  : 'https://dineathomebackend.vercel.app'; // Deployed URL
+
 
   useEffect(() => {
     window.scrollTo(0, 0); // Scroll to the top when the page is loaded
@@ -100,13 +106,13 @@ export default function UserCart() {
     '8 PM - 9 PM',
   ];
 
-  const increaseTip = () => {
-    if (tip < 50) setTip(tip + 10);
-  };
+  // const increaseTip = () => {
+  //   if (tip < 50) setTip(tip + 10);
+  // };
 
-  const decreaseTip = () => {
-    if (tip > 0) setTip(tip - 10);
-  };
+  // const decreaseTip = () => {
+  //   if (tip > 0) setTip(tip - 10);
+  // };
 
   const calculateTotalCharges = (items) => {
     return items.reduce((total, item) => {
@@ -121,7 +127,7 @@ export default function UserCart() {
 const dishCharges = calculateTotalCharges(cartItems) || 0;
 const shopCharges = calculateTotalCharges(shopCartItems) || 0;
 const taxCharges = (dishCharges + shopCharges) * taxRate || 0;
-const totalAmount = dishCharges + shopCharges + deliveryCharges + tip + taxCharges || 0;
+const totalAmount = dishCharges + shopCharges + deliveryCharges + taxCharges || 0;
 
   console.log("Dish Charges:", dishCharges);
   console.log("Shop Charges:", shopCharges);
@@ -140,7 +146,88 @@ const totalAmount = dishCharges + shopCharges + deliveryCharges + tip + taxCharg
   const maxDateString = maxDate.toISOString().split('T')[0];
 
 
-
+  // Move handleCheckout function outside
+  const handleCheckout = async () => {
+    try {
+      // Fetch Razorpay API Key
+      const { data: { key } } = await axiosInstance.get('/api/payments/getkey');
+  
+      // Create an order on your backend with the total amount
+      const { data: { order } } = await axiosInstance.post('/api/payments/create-order', {
+        amount: totalAmount,
+        currency: 'INR',
+      });
+  
+      // Get token from localStorage (or your state management system)
+      const token = localStorage.getItem('token');
+      
+      if (!token) {
+        alert("Token not found. Please log in again.");
+        return;
+      }
+  
+      const decodedToken = jwtDecode(token);
+      const userId = decodedToken.id;// Or wherever your JWT token is stored
+  
+      // Configure Razorpay Checkout
+      const options = {
+        key,  // Razorpay API key
+        amount: order.amount, // Amount in paise (make sure amount is converted properly in backend)
+        currency: order.currency,
+        name: 'DINE AT HOME',
+        description: 'Transaction',
+        order_id: order.id, // Order ID from backend
+        handler: async function (response) {
+          const { razorpay_payment_id, razorpay_order_id, razorpay_signature } = response;
+  
+          try {
+            // Process the payment on the backend
+            const paymentResponse = await axiosInstance.post(
+              '/api/payments/process-payment', 
+              {
+                amount: totalAmount,
+                orderId: razorpay_order_id,
+                paymentId: razorpay_payment_id,
+                signature: razorpay_signature,
+              }, 
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`, // Include token in the headers
+                }
+              }
+            );
+  
+            if (paymentResponse.data.status) {
+              alert('Payment Successful!');
+            } else {
+              alert('Payment Failed: ' + paymentResponse.data.message);
+            }
+          } catch (paymentError) {
+            console.error('Error processing payment:', paymentError);
+            alert('Payment failed during processing.');
+          }
+        },
+        prefill: {
+          name: 'DINE AT HOME',  // Optional: prefill fields in Razorpay modal
+          email: 'dhammashila025@gmail.com',  // Replace with actual user email
+          contact: '9324486349',  // Replace with actual user contact
+        },
+        theme: {
+          color: '#3399cc',
+        },
+      };
+  
+      // Open Razorpay Checkout modal
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } catch (error) {
+      console.error('Error during checkout:', error);
+      alert('Something went wrong. Please try again.');
+    }
+  };
+  
+  
+  
   
 
   return (
@@ -159,7 +246,7 @@ const totalAmount = dishCharges + shopCharges + deliveryCharges + tip + taxCharg
       rate={`Rs. ${itemData.amount ? (itemData.amount * item.quantity).toFixed(2) : '0.00'}`} // Updated rate calculation
       quantity={`Qty: ${item.quantity}`}
       // qty={`Quantity: ${item.quantity }`} // Display user's selected quantity
-      imageSrc={itemData.foodPhoto ? `https://dineathomebackend.vercel.app${itemData.foodPhoto}` : ''} // Ensure food photo is displayed
+      imageSrc={itemData.foodPhoto ? `${baseURL}${itemData.foodPhoto}` : ''} // Ensure food photo is displayed
       itemId={item._id} // Pass the itemId
       onDelete={(deletedItemId) => {
         setCartItems(prevItems => prevItems.filter(item => item._id !== deletedItemId)); // Remove item from state
@@ -183,7 +270,7 @@ const totalAmount = dishCharges + shopCharges + deliveryCharges + tip + taxCharg
                   rate={`Rs. ${itemData.price ? (itemData.price * item.quantity).toFixed(2) : '0.00'}`} // Ensure correct calculation
                   quantity={item.quantity}
                   // quantity={`Qty: ${itemData.quantity || 1}`} 
-                  imageSrc={itemData.image? `https://dineathomebackend.vercel.app${itemData.image}` : "defaultImage.jpg"} // Provide a fallback image source
+                  imageSrc={itemData.image? `${baseURL}${itemData.image}` : "defaultImage.jpg"} // Provide a fallback image source
                   itemId={item._id} // Pass the itemId
                   onDelete={(deletedItemId) => {
                     setShopCartItems(prevItems => prevItems.filter(item => item._id !== deletedItemId)); // Remove item from state
@@ -284,18 +371,39 @@ const totalAmount = dishCharges + shopCharges + deliveryCharges + tip + taxCharg
 
 
 <div className="chargesDisplay">
-        <p>Dish Charges: ₹{dishCharges.toFixed(2)}</p>
-        <p>Delivery & Packaging Charges: ₹{deliveryCharges.toFixed(2)}</p>
-        <p>Tip to Rider: ₹{tip.toFixed(2)}</p>
-        <p>Shop Charges: ₹{isNaN(shopCharges) ? '0.00' : shopCharges.toFixed(2)}</p>
-<p>Tax Charges: ₹{isNaN(taxCharges) ? '0.00' : taxCharges.toFixed(2)}</p>
-        <p>Total Amount: ₹{totalAmount.toFixed(2)}</p>
+         <div className="dishChargesBox">
+            <p>Dish Charges:</p>
+            <p>₹{dishCharges.toFixed(2)}</p>
+          </div >
+          <div className='deliveryAndPackagingChargesBox'>
+            <p>Delivery & Packaging Charges:</p>
+            <p>₹{deliveryCharges.toFixed(2)}</p>
+          </div>
+        {/* <p>Tip to Rider: ₹{tip.toFixed(2)}</p> */}
+        <div className='tipTORiderBox'>
+        <p>Shop Charges: </p>
+        <p>₹{isNaN(shopCharges) ? '0.00' : shopCharges.toFixed(2)}</p>
+        </div>
+        {/* <p>Shop Charges: ₹{isNaN(shopCharges) ? '0.00' : shopCharges.toFixed(2)}</p> */}
+        <div className='taxChargesBox'>
+        <p>Tax Charges: </p>
+        <p>₹{isNaN(taxCharges) ? '0.00' : taxCharges.toFixed(2)}</p>
+        </div>
+{/* <p>Tax Charges: ₹{isNaN(taxCharges) ? '0.00' : taxCharges.toFixed(2)}</p> */}
+       <div className='TotalAmountBox'>
+        <p>Total Amount: </p>
+        <p>₹{totalAmount.toFixed(2)}</p>
+      </div>
+        {/* <p>Total Amount: ₹{totalAmount.toFixed(2)}</p> */}
       </div>
  
-
-      <Link to="/user/PaymentOptions">
-        <button className='checkoutBtn'>Proceed to Checkout</button>
-      </Link>
+{/* 
+      <Link to="/user/PaymentOptions"> */}
+      <div className='placeOrderForCartBox'>
+      <button className='checkoutBtn placeOrderForCart' onClick={handleCheckout}>
+            Checkout
+        </button></div>
+      {/* </Link> */}
     </>
   );
 }

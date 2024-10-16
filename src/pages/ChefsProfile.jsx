@@ -35,6 +35,11 @@ function ChefProfile() {
 
   const [preOrders, setPreOrders] = useState([]);
 
+  const baseURL = process.env.NODE_ENV === "development" 
+  ? 'http://localhost:4000' // Localhost URL
+  : 'https://dineathomebackend.vercel.app'; // Deployed URL
+
+
   // useEffect(() => {
   //   const fetchPreOrders = async () => {
   //     try {
@@ -193,7 +198,7 @@ checkLoginStatus();
             {/* <h1>{chefData.name}</h1> */}
             {chefData.coverImage && (
                     <img
-                    src={`https://dineathomebackend.vercel.app/coverImage-uploads/${chefData.coverImage}`}  // Make sure this matches your backend
+                    src={`${baseURL}/coverImage-uploads/${chefData.coverImage}`}  // Make sure this matches your backend
                         alt={`${chefData.name}'s Cover Image`}
                         style={{ width: "100%", height: "300px", objectFit: "cover",padding:"10px" }}
                     />
@@ -237,7 +242,7 @@ checkLoginStatus();
             <div key={item._id} style={styles.menuItem}>
               {item.foodPhoto ? (
           <img 
-            src={`https://dineathomebackend.vercel.app${item.foodPhoto}`} // Ensure correct URL
+            src={`${baseURL}${item.foodPhoto}`} // Ensure correct URL
             alt={item.foodName} 
             style={styles.image} 
           />
