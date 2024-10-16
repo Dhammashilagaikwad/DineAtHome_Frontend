@@ -13,6 +13,10 @@ const MenuPage = () => {
   const navigate = useNavigate();
   const { triggerNotification } = useNotification();
 
+  const baseURL = process.env.NODE_ENV === "development" 
+  ? 'http://localhost:4000' // Localhost URL
+  : 'https://dineathomebackend.vercel.app'; // Deployed URL
+
 
   useEffect(() => {
     // Scroll to the top when the page is loaded
@@ -109,7 +113,7 @@ const MenuPage = () => {
           sortedMenu.map((dish) => (
             <div key={dish._id} className="menu-card">
               <img
-  src={`https://dineathomebackend.vercel.app${dish.foodPhoto}`} // Append your backend URL
+  src={`${baseURL}${dish.foodPhoto}`} // Append your backend URL
   alt={dish.foodName}
   className="dish-image"
 />

@@ -18,6 +18,11 @@ function Shop() {
   const { triggerNotification } = useNotification();
   const navigate = useNavigate();
 
+  const baseURL = process.env.NODE_ENV === "development" 
+  ? 'http://localhost:4000' // Localhost URL
+  : 'https://dineathomebackend.vercel.app'; // Deployed URL
+
+
   // Fetch products from backend
   useEffect(() => {
     const fetchProducts = async () => {
@@ -26,7 +31,7 @@ function Shop() {
        // Assuming response.data contains the items with image paths
        const productsWithImages = response.data.map(product => ({
         ...product,
-        image: `https://dineathomebackend.vercel.app${product.image}` // Ensure the image URL is correct
+        image: `${baseURL}${product.image}` // Ensure the image URL is correct
       }));
       setProducts(productsWithImages); // Store all products
       setFilteredProducts(productsWithImages); // Set filteredProducts to the fetched data

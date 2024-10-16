@@ -3,12 +3,15 @@ import axios from "axios";
 
 // Create an instance of Axios for centralized configuration
 const axiosInstance = axios.create({
-  baseURL: "https://dineathomebackend.vercel.app",
+  baseURL: process.env.NODE_ENV === "development"
+    ? "http://localhost:4000" // Local backend during development
+    : "https://dineathomebackend.vercel.app", // Production backend
   timeout: 5000,
   headers: {
     "Content-Type": "application/json",
   },
 });
+
 
 // You can add interceptors here if needed
 axiosInstance.interceptors.request.use(
