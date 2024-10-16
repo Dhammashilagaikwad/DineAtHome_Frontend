@@ -210,7 +210,7 @@ const totalAmount = dishCharges + shopCharges + deliveryCharges + taxCharges || 
         prefill: {
           name: 'DINE AT HOME',  // Optional: prefill fields in Razorpay modal
           email: 'dhammashila025@gmail.com',  // Replace with actual user email
-          contact: '9876543210',  // Replace with actual user contact
+          contact: '9324486349',  // Replace with actual user contact
         },
         theme: {
           color: '#3399cc',
