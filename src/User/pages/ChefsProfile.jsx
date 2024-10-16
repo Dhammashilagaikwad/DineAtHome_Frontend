@@ -5,10 +5,9 @@ import "../styles/ChefProfile.css";
 import "react-datepicker/dist/react-datepicker.css";
 import AfterLoginNavbar from "../components/AfterLoginNavbar";
 import axiosInstance from "../../utils/axiosService";
-import {jwtDecode} from 'jwt-decode'; // Correct import
-import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from "jwt-decode"; // Correct import
+import { useNavigate } from "react-router-dom";
 import { useNotification } from "../../components/NotificationContext";
-
 
 function UserChefProfile() {
   const { triggerNotification } = useNotification();
@@ -38,6 +37,11 @@ function UserChefProfile() {
 
   const [preOrders, setPreOrders] = useState([]);
 
+  const baseURL =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:4000" // Localhost URL
+      : "https://dineathomebackend.vercel.app"; // Deployed URL
+
   // useEffect(() => {
   //   const fetchPreOrders = async () => {
   //     try {
@@ -52,18 +56,17 @@ function UserChefProfile() {
   // }, []);
 
   useEffect(() => {
-
- // Fetch user login status from your auth system (e.g., JWT token check)
- const checkLoginStatus = () => {
-  // Example: Checking token in localStorage
-  const token = localStorage.getItem("token");
-  if (token) {
-    setIsLoggedIn(true);
-  } else {
-    setIsLoggedIn(false);
-  }
-};
-checkLoginStatus();
+    // Fetch user login status from your auth system (e.g., JWT token check)
+    const checkLoginStatus = () => {
+      // Example: Checking token in localStorage
+      const token = localStorage.getItem("token");
+      if (token) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+    };
+    checkLoginStatus();
 
     const fetchChefData = async () => {
       try {
@@ -71,13 +74,14 @@ checkLoginStatus();
         setChefData(response.data);
 
         // Use the chef ID dynamically in the URL
-        const menuResponse = await axiosInstance.get(`/addItem/getitembychefid/${id}`);
+        const menuResponse = await axiosInstance.get(
+          `/addItem/getitembychefid/${id}`
+        );
         setMenuItems(menuResponse.data);
       } catch (error) {
         console.error("Error fetching chef data:", error);
       }
     };
-
 
     fetchChefData();
   }, [id]);
@@ -91,7 +95,7 @@ checkLoginStatus();
   const handleCustomizedFoodClick = () => {
     if (!isLoggedIn) {
       // alert("Please log in to proceed with Preorders.");
-      triggerNotification('Please log in to proceed with Preorders.','red')
+      triggerNotification("Please log in to proceed with Preorders.", "red");
       return;
     }
     setShowCustomizedForm(true);
@@ -118,37 +122,47 @@ checkLoginStatus();
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
+    const token = localStorage.getItem("token"); // Ensure that you're retrieving the token correctly
+
     try {
-      await axiosInstance.post(`/preOrderRoutes/preOrder`, {
-        ...customizedOrder,
-        // priceRange: {
-        //   minPrice: parseFloat(customizedOrder.priceRange.minPrice),
-        //   maxPrice: parseFloat(customizedOrder.priceRange.maxPrice),
-        // },
-        deliveryDate: selectedDate, // Ensure deliveryDate is set to selected date
-      });
-      // alert("Customized order request sent successfully!");
-      triggerNotification('Customized order request sent successfully!','green')
+      await axiosInstance.post(
+        `/preOrder/add-preOrder`,
+        {
+          ...customizedOrder,
+          deliveryDate: selectedDate,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Add the token in the Authorization header
+          },
+        }
+      );
+
+      triggerNotification(
+        "Customized order request sent successfully!",
+        "green"
+      );
       setShowCustomizedForm(false);
       setCustomizedOrder({
         name: "",
         description: "",
         quantity: "",
-        // priceRange: { minPrice: "", maxPrice: "" },
         deliveryDate: new Date(),
       });
     } catch (error) {
       console.error("Error sending customized order:", error);
-      // alert("Failed to send customized order.");
-      triggerNotification('Failed to send customized order.','red')
+      triggerNotification("Failed to send customized order.", "red");
     }
   };
 
   const updatePreOrder = async (id, updatedData) => {
     try {
-      const response = await axiosInstance.put(`/preOrderRoutes/edit-preOrder/${id}`, updatedData);
+      const response = await axiosInstance.put(
+        `/preOrder/edit-preOrder/${id}`,
+        updatedData
+      );
       // alert("Pre-order updated successfully!");
-      triggerNotification('Pre-order updated successfully!','green')
+      triggerNotification("Pre-order updated successfully!", "green");
       // Update local state as needed
     } catch (error) {
       console.error("Error updating pre-order:", error);
@@ -157,26 +171,23 @@ checkLoginStatus();
 
   const deletePreOrder = async (id) => {
     try {
-      await axiosInstance.delete(`/preOrderRoutes/delete-preOrder/${id}`);
+      await axiosInstance.delete(`/preOrder/delete-preOrder/${id}`);
       // alert("Pre-order deleted successfully!");
-      triggerNotification('Pre-order deleted successfully!','green')
+      triggerNotification("Pre-order deleted successfully!", "green");
       // Update local state as needed
     } catch (error) {
       console.error("Error deleting pre-order:", error);
     }
   };
 
-
-
   const handleCloseForm = () => {
     setShowCustomizedForm(false);
   };
 
-
   const handleAddToCart = (item) => {
     if (!isLoggedIn) {
       // alert("Please log in to add items to the cart.");
-      triggerNotification('Please log in to add items to the cart.','red')
+      triggerNotification("Please log in to add items to the cart.", "red");
       return;
     }
 
@@ -188,33 +199,53 @@ checkLoginStatus();
     <div className="menu-card-container">
       <div className="menu-card">
         <h5>
-          {chefData ? `${chefData.name} - ${chefData.cuisine}` : 'Loading...'}
+          {chefData ? `${chefData.name} - ${chefData.cuisine}` : "Loading..."}
         </h5>
 
         {chefData ? (
           <div>
             {/* <h1>{chefData.name}</h1> */}
             {chefData.coverImage && (
-                    <img
-                    src={`https://dineathomebackend.vercel.app/coverImage-uploads/${chefData.coverImage}`}  // Make sure this matches your backend
-                        alt={`${chefData.name}'s Cover Image`}
-                        style={{ width: "100%", height: "300px", objectFit: "cover",padding:"10px" }}
-                    />
-                )}
-                
-            <div style={{textAlign:"left",paddingLeft:"10px"}}>
-            <p><strong>Rating: </strong>{chefData.average_rating}</p>
-            <p><strong>Cuisine: </strong>{chefData.cuisine}</p> {/* Directly displaying Cuisine */}
-            <p><strong>Specialities: </strong>{Array.isArray(chefData.specialities) ? chefData.specialities.join(", ") : chefData.specialities}</p> {/* Check if specialities is an array */}
-            <p>{chefData.is_active ? "Open" : "Closed"}</p>
+              <img
+                src={`${baseURL}/coverImage-uploads/${chefData.coverImage}`} // Make sure this matches your backend
+                alt={`${chefData.name}'s Cover Image`}
+                style={{
+                  width: "100%",
+                  height: "300px",
+                  objectFit: "cover",
+                  padding: "10px",
+                }}
+              />
+            )}
+
+            <div style={{ textAlign: "left", paddingLeft: "10px" }}>
+              <p>
+                <strong>Rating: </strong>
+                {chefData.average_rating}
+              </p>
+              <p>
+                <strong>Cuisine: </strong>
+                {chefData.cuisine}
+              </p>{" "}
+              {/* Directly displaying Cuisine */}
+              <p>
+                <strong>Specialities: </strong>
+                {Array.isArray(chefData.specialities)
+                  ? chefData.specialities.join(", ")
+                  : chefData.specialities}
+              </p>{" "}
+              {/* Check if specialities is an array */}
+              <p>{chefData.is_active ? "Open" : "Closed"}</p>
             </div>
           </div>
         ) : (
           <p>No data available for this chef.</p>
         )}
 
-        <div style={{textAlign:"left"}}>
-          <label><strong>Select Delivery Date:</strong></label>
+        <div style={{ textAlign: "left" }}>
+          <label>
+            <strong>Select Delivery Date:</strong>
+          </label>
           <DatePicker
             selected={selectedDate}
             onChange={handleDateChange}
@@ -234,26 +265,42 @@ checkLoginStatus();
         </div>
       </div>
       <div className="menuSection">
-        <strong><h2 style={{padding:"10px",fontSize:"20px"}}>Menu</h2></strong>
+        <strong>
+          <h2 style={{ padding: "10px", fontSize: "20px" }}>Menu</h2>
+        </strong>
         {menuItems.length > 0 ? (
           menuItems.map((item) => (
             <div key={item._id} style={styles.menuItem}>
               {item.foodPhoto ? (
-          <img 
-            src={`https://dineathomebackend.vercel.app${item.foodPhoto}`} // Ensure correct URL
-            alt={item.foodName} 
-            style={styles.image} 
-          />
-        ) : (
-          <div style={styles.imagePlaceholder}>No Image Available</div>
-        )}
+                <img
+                  src={`${baseURL}${item.foodPhoto}`} // Ensure correct URL
+                  alt={item.foodName}
+                  style={styles.image}
+                />
+              ) : (
+                <div style={styles.imagePlaceholder}>No Image Available</div>
+              )}
               <div>
-                <strong><h3>{item.foodName}</h3></strong>
+                <strong>
+                  <h3>{item.foodName}</h3>
+                </strong>
                 <p>{item.foodDescription}</p>
-                <p><strong>Price:</strong> Rs {item.amount}</p>
+                <p>
+                  <strong>Price:</strong> Rs {item.amount}
+                </p>
                 {/* Display the chef's name instead of chefId */}
-                {chefData && <p><strong>Chef: </strong>{chefData.name}</p>}
-                <button className="addtocart" onClick={() => handleAddToCart(item)}>Add to Cart</button>
+                {chefData && (
+                  <p>
+                    <strong>Chef: </strong>
+                    {chefData.name}
+                  </p>
+                )}
+                <button
+                  className="addtocart"
+                  onClick={() => handleAddToCart(item)}
+                >
+                  Add to Cart
+                </button>
               </div>
             </div>
           ))
@@ -261,8 +308,6 @@ checkLoginStatus();
           <p>No menu items available for this chef.</p>
         )}
       </div>
-
-
 
       {/* <div>
         <h2>Pre-Orders</h2>
@@ -289,8 +334,9 @@ checkLoginStatus();
             <button
               style={styles.customized_close_button}
               onClick={handleCloseForm}
+              aria-label="Close"
             >
-              X
+              &times; {/* This is a more accessible close icon */}
             </button>
             <h3 style={styles.customized_form_heading}>
               Customize Your Food Order
@@ -328,27 +374,6 @@ checkLoginStatus();
                   required
                 />
               </label>
-              {/* <label style={styles.customized_order}>
-                Price Range:
-                <input
-                  type="number"
-                  name="minPrice"
-                  value={customizedOrder.priceRange.minPrice}
-                  onChange={handlePriceRangeChange}
-                  placeholder="Min Price"
-                  style={styles.customized_input}
-                  required
-                />
-                <input
-                  type="number"
-                  name="maxPrice"
-                  value={customizedOrder.priceRange.maxPrice}
-                  onChange={handlePriceRangeChange}
-                  placeholder="Max Price"
-                  style={styles.customized_input}
-                  required
-                />
-              </label> */}
               <label style={styles.customized_order}>
                 Delivery Date:
                 <DatePicker
@@ -410,37 +435,42 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    zIndex: 1000,
   },
   customized_form: {
-    backgroundColor: "#fff",
-    padding: "20px",
-    borderRadius: "10px",
-    width: "400px",
-    boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)",
+    backgroundColor: '#fff',
+    padding: '20px',
+    borderRadius: '8px',
+    width: '400px',
+    position: 'relative', // To position the close button correctly
   },
   customized_close_button: {
-    background: "none",
-    border: "none",
-    fontSize: "20px",
-    position: "absolute",
-    right: "10px",
-    top: "10px",
-    cursor: "pointer",
+    position: 'absolute',
+    top: '10px',
+    right: '10px',
+    background: 'none',
+    border: 'none',
+    fontSize: '20px',
+    cursor: 'pointer',
   },
   customized_form_heading: {
     textAlign: "center",
     marginBottom: "20px",
   },
   customized_order: {
-    display: "flex",
-    flexDirection: "column",
+    display: "block",
     marginBottom: "10px",
   },
   customized_input: {
-    padding: "5px",
+    padding: "8px",
+    width: '100%',
     margin: "5px 0",
     border: "1px solid #ddd",
     borderRadius: "5px",
+  },
+  datePicker: {
+    width: '100%',
+    padding: '8px',
   },
   customized_submit_button: {
     backgroundColor: "#4CAF50",
@@ -454,4 +484,3 @@ const styles = {
 };
 
 export default UserChefProfile;
-

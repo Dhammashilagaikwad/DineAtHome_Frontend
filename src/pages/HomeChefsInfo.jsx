@@ -25,6 +25,11 @@ export default function HomeChefsInfo() {
         fetchChefs(); // Call the fetch function
     }, []); // Empty dependency array to run once on mount
 
+    const baseURL = process.env.NODE_ENV === "development" 
+  ? 'http://localhost:4000' // Localhost URL
+  : 'https://dineathomebackend.vercel.app'; // Deployed URL
+
+
     return (
         <>
             <div className="homechefs-container">
@@ -40,8 +45,8 @@ export default function HomeChefsInfo() {
                         key={chef._id} // Use chef's unique ID
                         name={chef.name}
                         speciality={chef.specialities.join(', ')} // Join specialities if it's an array
-                        coverImage={`https://dineathomebackend.vercel.app/coverImage-uploads/${chef.coverImage}`}// Use the chef's photo or a default
-                        profilePhoto={`https://dineathomebackend.vercel.app/coverImage-uploads/${chef.profilePhoto}`}// Adjust as necessary for the profile photo
+                        coverImage={`${baseURL}/coverImage-uploads/${chef.coverImage}`}// Use the chef's photo or a default
+                        profilePhoto={`${baseURL}/coverImage-uploads/${chef.profilePhoto}`}// Adjust as necessary for the profile photo
                     />
                 ))}
             </div>

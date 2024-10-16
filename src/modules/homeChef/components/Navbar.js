@@ -40,23 +40,25 @@ const Navbar = () => {
       await axiosInstance.post('/api/chefs/logout'); // Backend logout request
       const tokenKey = 'token';
       const tokenBefore = localStorage.getItem(tokenKey);
-      console.log("Token before logout:", tokenBefore);  // Log token before removal
-
+      
       if (tokenBefore) {
-        localStorage.removeItem(tokenKey);  // Remove token using the correct key
+        console.log("Token before logout:", tokenBefore);  // Check token before removal
+        localStorage.removeItem(tokenKey);  // Remove token from localStorage
         console.log("Token removed successfully.");
       } else {
-        console.log("No token found in localStorage.");
+        console.log("No token found in localStorage before logout.");
       }
-
+  
+      // Ensure this happens after token removal
       const tokenAfter = localStorage.getItem(tokenKey);  // Check if token is removed
-      console.log("Token after logout:", tokenAfter);  // Should be null after removal
-
+      console.log("Token after logout (should be null):", tokenAfter);  // Should be null after removal
+  
       navigate('/login');  // Redirect to login page
     } catch (error) {
       console.error('Logout error:', error);  // Handle any errors
     }
   };
+  
 
   // Optional: Use effect to initialize online status from the backend or local storage
   useEffect(() => {

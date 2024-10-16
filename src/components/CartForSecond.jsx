@@ -9,6 +9,10 @@ const CartForSecond = () => {
   const [chefs, setChefs] = useState([]);
   const [showMore, setShowMore] = useState(false);
   const navigate = useNavigate();
+  const baseURL = process.env.NODE_ENV === "development" 
+  ? 'http://localhost:4000' // Localhost URL
+  : 'https://dineathomebackend.vercel.app'; // Deployed URL
+
 
   // Fetch chefs from backend
   useEffect(() => {
@@ -47,7 +51,7 @@ const CartForSecond = () => {
         {chefs.map((chef) => (
           <RestaurantCard
             key={chef._id}
-            image={chef.coverImage ? `https://dineathomebackend.vercel.app/coverImage-uploads/${chef.coverImage}` : "https://via.placeholder.com/150"} // Use coverImage
+            image={chef.coverImage ? `${baseURL}/coverImage-uploads/${chef.coverImage}` : "https://via.placeholder.com/150"} // Use coverImage
             rating={chef.average_rating || "No rating"}
             name={chef.name}
             cuisine={chef.cuisine.join(", ")}
