@@ -31,7 +31,7 @@ const LoginPage = () => {
             const response = await axiosInstance.post("/api/login", { email, password });
 
             if (response.data && response.data.token) {
-                localStorage.setItem("token", response.data.token);
+                localStorage.setItem("tokecn", response.data.token);
                 localStorage.setItem("username", response.data.username);
 
                 if (response.data.role === "chef") {
