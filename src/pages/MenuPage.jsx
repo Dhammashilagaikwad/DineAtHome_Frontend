@@ -75,6 +75,21 @@ const MenuPage = () => {
 
   return (
     <div className="menu-page-container">
+      <div className="sort-options">
+        <h3>Sort By</h3>
+        <button onClick={() => handleSort("price-low-to-high")}>
+          Price Low to High
+        </button>
+        <button onClick={() => handleSort("price-high-to-low")}>
+          Price High to Low
+        </button>
+        {/* <h3>Categories</h3>
+        <button onClick={() => handleSort("all")}>All</button> 
+        <button onClick={() => handleSort("main-course")}>Main Course</button>
+        <button onClick={() => handleSort("dessert")}>Dessert</button>
+        <button onClick={() => handleSort("salad")}>Salad</button>
+        <button onClick={() => handleSort("bread")}>Bread</button> */}
+      </div>
       <div className="menu-list-container">
         {sortedMenu.length > 0 ? (
           sortedMenu.map((dish) => (
@@ -109,21 +124,21 @@ const MenuPage = () => {
       </div>
       
 
-      <div className="sort-options">
-        <h3>Sort By</h3>
-        <button onClick={() => handleSort("price-low-to-high")}>
-          Price Low to High
-        </button>
-        <button onClick={() => handleSort("price-high-to-low")}>
-          Price High to Low
-        </button>
+      {/* <div className="sort-options"> */}
+        {/* <h3>Sort By</h3> */}
+        {/* <button onClick={() => handleSort("price-low-to-high")}> */}
+          {/* Price Low to High */}
+        {/* </button> */}
+        {/* <button onClick={() => handleSort("price-high-to-low")}> */}
+          {/* Price High to Low */}
+        {/* </button> */}
         {/* <h3>Categories</h3>
         <button onClick={() => handleSort("all")}>All</button> 
         <button onClick={() => handleSort("main-course")}>Main Course</button>
         <button onClick={() => handleSort("dessert")}>Dessert</button>
         <button onClick={() => handleSort("salad")}>Salad</button>
         <button onClick={() => handleSort("bread")}>Bread</button> */}
-      </div>
+      {/* </div> */}
     </div>
   );
 };

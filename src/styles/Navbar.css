@@ -21,7 +21,7 @@
   top: 0; /* Align to the top */
   left: 0; /* Align to the left */
   right: 0; /* Align to the right */
-  background-color: white;
+  background-color: #f5f5f4;
   transition: background-color 0.3s ease; /* Smooth transition */
   z-index: 1000; /* Ensure it stays on top of other content */
 }
@@ -39,7 +39,7 @@
   font-size: 2rem;
   color: green;
   font-weight: 900;
-  background-color: white;
+  /* background-color: white; */
   border-radius: 5%;
   padding: 5px;
 }

@@ -86,18 +86,18 @@ const MenuPage = () => {
       case "price-high-to-low":
         newSortedMenu = [...menu].sort((a, b) => b.amount - a.amount);
         break;
-      case "main-course":
-        newSortedMenu = menu.filter((item) => item.category === "Main Course");
-        break;
-      case "dessert":
-        newSortedMenu = menu.filter((item) => item.category === "Dessert");
-        break;
-      case "salad":
-        newSortedMenu = menu.filter((item) => item.category === "Salad");
-        break;
-      case "bread":
-        newSortedMenu = menu.filter((item) => item.category === "Bread");
-        break;
+      // case "main-course":
+      //   newSortedMenu = menu.filter((item) => item.category === "Main Course");
+      //   break;
+      // case "dessert":
+      //   newSortedMenu = menu.filter((item) => item.category === "Dessert");
+      //   break;
+      // case "salad":
+      //   newSortedMenu = menu.filter((item) => item.category === "Salad");
+      //   break;
+      // case "bread":
+      //   newSortedMenu = menu.filter((item) => item.category === "Bread");
+      //   break;
       default: // For the "All" option or any unrecognized sort option
         newSortedMenu = menu;
     }
@@ -107,6 +107,15 @@ const MenuPage = () => {
 
   return (
     <div className="menu-page-container">
+      <div className="sort-options">
+        <h3>Sort By</h3>
+        <button onClick={() => handleSort("price-low-to-high")}>
+          Price Low to High
+        </button>
+        <button onClick={() => handleSort("price-high-to-low")}>
+          Price High to Low
+        </button>
+      </div>
        {message && <p className="cart-message">{message}</p>} {/* Display success/error message */}
       <div className="menu-list-container">
         {sortedMenu.length > 0 ? (
@@ -131,7 +140,7 @@ const MenuPage = () => {
         )}
       </div>
 
-      <div className="sort-options">
+      {/* <div className="sort-options">
         <h3>Sort By</h3>
         <button onClick={() => handleSort("price-low-to-high")}>
           Price Low to High
@@ -139,13 +148,7 @@ const MenuPage = () => {
         <button onClick={() => handleSort("price-high-to-low")}>
           Price High to Low
         </button>
-        {/* <h3>Categories</h3>
-        <button onClick={() => handleSort("all")}>All</button> 
-        <button onClick={() => handleSort("main-course")}>Main Course</button>
-        <button onClick={() => handleSort("dessert")}>Dessert</button>
-        <button onClick={() => handleSort("salad")}>Salad</button>
-        <button onClick={() => handleSort("bread")}>Bread</button> */}
-      </div>
+      </div> */}
     </div>
   );
 };
