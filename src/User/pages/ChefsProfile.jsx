@@ -38,6 +38,10 @@ function UserChefProfile() {
 
   const [preOrders, setPreOrders] = useState([]);
 
+  const baseURL = process.env.NODE_ENV === "development" 
+  ? 'http://localhost:4000' // Localhost URL
+  : 'https://dineathomebackend.vercel.app'; // Deployed URL
+
   // useEffect(() => {
   //   const fetchPreOrders = async () => {
   //     try {
@@ -117,36 +121,37 @@ checkLoginStatus();
   // };
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-
+  
+    const token = localStorage.getItem('token');  // Ensure that you're retrieving the token correctly
+  
     try {
-      await axiosInstance.post(`/preOrderRoutes/preOrder`, {
+      await axiosInstance.post(`/preOrder/add-preOrder`, {
         ...customizedOrder,
-        // priceRange: {
-        //   minPrice: parseFloat(customizedOrder.priceRange.minPrice),
-        //   maxPrice: parseFloat(customizedOrder.priceRange.maxPrice),
-        // },
-        deliveryDate: selectedDate, // Ensure deliveryDate is set to selected date
+        deliveryDate: selectedDate,
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`  // Add the token in the Authorization header
+        }
       });
-      // alert("Customized order request sent successfully!");
-      triggerNotification('Customized order request sent successfully!','green')
+  
+      triggerNotification('Customized order request sent successfully!', 'green');
       setShowCustomizedForm(false);
       setCustomizedOrder({
         name: "",
         description: "",
         quantity: "",
-        // priceRange: { minPrice: "", maxPrice: "" },
         deliveryDate: new Date(),
       });
     } catch (error) {
       console.error("Error sending customized order:", error);
-      // alert("Failed to send customized order.");
-      triggerNotification('Failed to send customized order.','red')
+      triggerNotification('Failed to send customized order.', 'red');
     }
   };
+  
 
   const updatePreOrder = async (id, updatedData) => {
     try {
-      const response = await axiosInstance.put(`/preOrderRoutes/edit-preOrder/${id}`, updatedData);
+      const response = await axiosInstance.put(`/preOrder/edit-preOrder/${id}`, updatedData);
       // alert("Pre-order updated successfully!");
       triggerNotification('Pre-order updated successfully!','green')
       // Update local state as needed
@@ -157,7 +162,7 @@ checkLoginStatus();
 
   const deletePreOrder = async (id) => {
     try {
-      await axiosInstance.delete(`/preOrderRoutes/delete-preOrder/${id}`);
+      await axiosInstance.delete(`/preOrder/delete-preOrder/${id}`);
       // alert("Pre-order deleted successfully!");
       triggerNotification('Pre-order deleted successfully!','green')
       // Update local state as needed
@@ -196,7 +201,7 @@ checkLoginStatus();
             {/* <h1>{chefData.name}</h1> */}
             {chefData.coverImage && (
                     <img
-                    src={`https://dineathomebackend.vercel.app/coverImage-uploads/${chefData.coverImage}`}  // Make sure this matches your backend
+                    src={`${baseURL}/coverImage-uploads/${chefData.coverImage}`}  // Make sure this matches your backend
                         alt={`${chefData.name}'s Cover Image`}
                         style={{ width: "100%", height: "300px", objectFit: "cover",padding:"10px" }}
                     />
@@ -240,7 +245,7 @@ checkLoginStatus();
             <div key={item._id} style={styles.menuItem}>
               {item.foodPhoto ? (
           <img 
-            src={`https://dineathomebackend.vercel.app${item.foodPhoto}`} // Ensure correct URL
+            src={`${baseURL}${item.foodPhoto}`} // Ensure correct URL
             alt={item.foodName} 
             style={styles.image} 
           />

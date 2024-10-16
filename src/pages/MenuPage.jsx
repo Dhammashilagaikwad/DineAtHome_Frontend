@@ -9,6 +9,10 @@ const MenuPage = () => {
   const [sortedMenu, setSortedMenu] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { triggerNotification } = useNotification();
+  const baseURL = process.env.NODE_ENV === "development" 
+  ? 'http://localhost:4000' // Localhost URL
+  : 'https://dineathomebackend.vercel.app'; // Deployed URL
+
 
   useEffect(() => {
     // Scroll to the top when the page is loaded
@@ -77,10 +81,10 @@ const MenuPage = () => {
             <div key={dish._id} className="menu-card">
               {dish.foodPhoto ? (
         <img
-          src={`https://dineathomebackend.vercel.app${dish.foodPhoto}`}
-          alt={dish.foodName}
-          className="dish-image"
-        />
+        src={`${baseURL}${dish.foodPhoto}`} // Dynamically set image source
+        alt={dish.foodName}
+        className="dish-image"
+      />
       ) : (
         <img
           src="/default-image.jpg" // Provide a fallback image
