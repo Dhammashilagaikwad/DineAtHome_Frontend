@@ -15,6 +15,10 @@ function ChefsNearYou() {
   const [chefs, setChefs] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const baseURL = process.env.NODE_ENV === "development" 
+  ? 'http://localhost:4000' // Localhost URL
+  : 'https://dineathomebackend.vercel.app'; // Deployed URL
+
   useEffect(() => {
     const fetchChefs = async () => {
       try {
@@ -62,7 +66,7 @@ function ChefsNearYou() {
             return (
               <RestaurantCard
                 key={chef._id}
-                image={chef.coverImage ? `https://dineathomebackend.vercel.app/coverImage-uploads/${chef.coverImage}` : "https://via.placeholder.com/150"} // Use coverImage // Use a default image if not provided
+                image={chef.coverImage ? `${baseURL}/coverImage-uploads/${chef.coverImage}` : "https://via.placeholder.com/150"} // Use coverImage // Use a default image if not provided
                 rating={chef.average_rating}
                 name={`${chef.name}`}
                 cuisine={cuisines} // Set the cuisine directly

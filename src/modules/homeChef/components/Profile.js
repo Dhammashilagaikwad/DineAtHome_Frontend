@@ -3,6 +3,7 @@ import "../styles/Profile.css";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import Navbar from '../components/Navbar'
+import axiosInstance from "../../../utils/axiosService";
 
 const ProfileForm = () => {
   const [chefId, setChefId] = useState(null);
@@ -26,6 +27,11 @@ const [profilePhotoFile, setProfilePhotoFile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const baseURL = process.env.NODE_ENV === "development" 
+  ? 'http://localhost:4000' // Localhost URL
+  : 'https://dineathomebackend.vercel.app'; // Deployed URL
+
+
   // Fetch chefId from JWT token
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -46,8 +52,8 @@ const [profilePhotoFile, setProfilePhotoFile] = useState(null);
 
     const fetchProfile = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:4000/api/chefs/${chefId}`
+        const response = await axiosInstance.get(
+          `/api/chefs/${chefId}`
         );
         const chefData = response.data;
         console.log("API Response:", response.data);
@@ -71,12 +77,12 @@ const [profilePhotoFile, setProfilePhotoFile] = useState(null);
         setActiveButton(chefData.activeButton || "Veg");
         if (chefData.coverImage) {
           setCoverPhoto(
-            `http://localhost:4000/coverImage-uploads/${chefData.coverImage}`
+            `${baseURL}/coverImage-uploads/${chefData.coverImage}`
           );
         }
         if (chefData.profilePhoto) {
           setProfilePhoto(
-           `http://localhost:4000/coverImage-uploads/${chefData.profilePhoto}`
+           `${baseURL}/coverImage-uploads/${chefData.profilePhoto}`
           );
         }
         console.log(chefData);
@@ -120,7 +126,7 @@ const [profilePhotoFile, setProfilePhotoFile] = useState(null);
       const updatedSpecialities = [...specialities, newSpeciality];
 
       try {
-        await axios.put(`http://localhost:4000/api/chefs/${chefId}`, {
+        await axiosInstance.put(`/api/chefs/${chefId}`, {
           specialities: updatedSpecialities,
         });
         setSpecialities(updatedSpecialities);
@@ -160,7 +166,7 @@ const [profilePhotoFile, setProfilePhotoFile] = useState(null);
     }
 
     try {
-        const response = await axios.put(`http://localhost:4000/api/chefs/${chefId}`, formData, {
+        const response = await axiosInstance.put(`/api/chefs/${chefId}`, formData, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
@@ -189,7 +195,7 @@ const [profilePhotoFile, setProfilePhotoFile] = useState(null);
   const handleDone = async () => {
     const payload = { address1: address1 };
     try {
-      await axios.put(`http://localhost:4000/api/chefs/${chefId}`, payload);
+      await axiosInstance.put(`/api/chefs/${chefId}`, payload);
       setDisplayAddress(address1);
       setAddress1("");
       toggleEditAddress();

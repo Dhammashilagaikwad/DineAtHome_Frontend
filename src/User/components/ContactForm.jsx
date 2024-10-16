@@ -24,7 +24,7 @@ const ContactForm = () => {
     console.log('Form Data:', formData); // Log the form data
 
     try {
-        const response = await fetch('http://localhost:4000/api/contact/data/contact-us', {
+        const response = await fetch('/api/contact/data/contact-us', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
