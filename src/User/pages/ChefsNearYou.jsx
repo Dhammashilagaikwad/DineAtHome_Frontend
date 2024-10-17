@@ -110,11 +110,11 @@ const RestaurantCard = ({
         <p style={styles.cuisine}>Cuisine: {cuisine}</p> {/* Display Cuisine */}
         <p style={styles.speciality}>Speciality: {specialities}</p> {/* Display Speciality */}
         <div style={styles.info}>
-          <span style={styles.icon}>
+          {/* <span style={styles.icon}>
             {isOpen ? <img src={opendoor} alt="Open" /> : <img src={closedoor} alt="Closed" />}
-          </span>
-          <span style={styles.status}>{isOpen ? "OPEN" : "CLOSED"}</span>
-          <span style={styles.hours}>{hours}</span>
+          </span> */}
+          {/* <span style={styles.status}>{isOpen ? "OPEN" : "CLOSED"}</span> */}
+          {/* <span style={styles.hours}>{hours}</span> */}
         </div>
         <p style={styles.location}>{location}</p> {/* Display the dynamic location */}
       </div>

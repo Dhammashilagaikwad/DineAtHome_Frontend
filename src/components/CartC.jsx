@@ -41,9 +41,11 @@ const CartC = (props) => {
             <button className="decrease-button" onClick={handleDecrease}>
               -
             </button>
+
             <button className="increase-button" onClick={handleIncrease}>
               +
             </button>
+
             <button className="delete-button" onClick={handleDelete}>
               Delete
             </button>
