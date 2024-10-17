@@ -130,7 +130,7 @@ function UserOurInfo() {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    Shivam Gupta
+                    Satyam Gupta
                   </a>
                 </span>{" "}
                 – UI/UX Developer, responsible for managing the platform’s

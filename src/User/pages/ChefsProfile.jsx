@@ -291,7 +291,7 @@ function UserChefProfile() {
             minDate={today}
             maxDate={maxDate}
             dateFormat="MMMM d, yyyy"
-            style={styles.datePicker}
+            className="date-picker-custom" 
           />
           {isFutureDate && (
             <button
@@ -510,6 +510,7 @@ const styles = {
   datePicker: {
     width: '100%',
     padding: '8px',
+    border:'1px solid black'
   },
   customized_submit_button: {
     backgroundColor: "#4CAF50",
