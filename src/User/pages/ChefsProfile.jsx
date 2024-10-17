@@ -36,6 +36,7 @@ function UserChefProfile() {
   });
 
   const [preOrders, setPreOrders] = useState([]);
+  const navigate = useNavigate(); // Define navigate
 
   const baseURL =
     process.env.NODE_ENV === "development"
@@ -121,40 +122,41 @@ function UserChefProfile() {
   // };
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-
-    const token = localStorage.getItem("token"); // Ensure that you're retrieving the token correctly
-
+    
+    // Client-side validation
+    if (!customizedOrder.name || !customizedOrder.description || !customizedOrder.quantity || !selectedDate) {
+      // alert("All fields are required.");
+      triggerNotification('All fields are required.','red')
+      return;
+    }
+  
+    // Proceed with sending the request if validation passes
     try {
-      await axiosInstance.post(
-        `/preOrder/add-preOrder`,
-        {
-          ...customizedOrder,
-          deliveryDate: selectedDate,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`, // Add the token in the Authorization header
-          },
-        }
-      );
-
-      triggerNotification(
-        "Customized order request sent successfully!",
-        "green"
-      );
-      setShowCustomizedForm(false);
-      setCustomizedOrder({
-        name: "",
-        description: "",
-        quantity: "",
-        deliveryDate: new Date(),
+      const token = localStorage.getItem('token');
+      if (!token) {
+        alert("Token not found. Please log in again.");
+        return;
+      }
+  
+      await axiosInstance.post('/preOrder/add-preOrder', {
+        ...customizedOrder,
+        deliveryDate: selectedDate,
+        chefId: chefData._id // Include chefId from chefData
+      },
+      {
+        headers: { Authorization: `Bearer ${token}` }
       });
+  
+      // alert("Customized order request sent successfully!");
+      triggerNotification('Customized order request sent successfully!','green')
+      setShowCustomizedForm(false);
+      setCustomizedOrder({ name: "", description: "", quantity: "", deliveryDate: new Date() });
     } catch (error) {
       console.error("Error sending customized order:", error);
-      triggerNotification("Failed to send customized order.", "red");
+      // alert("Failed to send customized order: " + error.response?.data?.message || error.message);
+      triggerNotification('Failed to send customized order','red')
     }
   };
-
   const updatePreOrder = async (id, updatedData) => {
     try {
       const response = await axiosInstance.put(
@@ -184,15 +186,52 @@ function UserChefProfile() {
     setShowCustomizedForm(false);
   };
 
-  const handleAddToCart = (item) => {
-    if (!isLoggedIn) {
-      // alert("Please log in to add items to the cart.");
-      triggerNotification("Please log in to add items to the cart.", "red");
-      return;
+  const handleAddToCart = async(itemId,price) => {
+    // if (!isLoggedIn) {
+    //   // alert("Please log in to add items to the cart.");
+    //   triggerNotification("Please log in to add items to the cart.", "red");
+    //   return;
+    // }
+
+    try {
+      const token = localStorage.getItem('token');
+      
+      if (!token) {
+        alert("Token not found. Please log in again.");
+        return;
+      }
+  
+      const decodedToken = jwtDecode(token);
+      const userId = decodedToken.id;
+  
+      if (!userId || !itemId) {
+        alert("User ID or Item ID is missing.");
+        return;
+      }
+  
+      const response = await axiosInstance.post("/api/menuCart/addToMenuCart", { itemId, userId, price }, 
+        { headers: { Authorization: `Bearer ${token}` } });
+  
+      if (response.status === 200) {
+        // setMessage("Item added to cart successfully!");
+        // alert("Item added to the cart successfully!");
+        triggerNotification('Item added to the cart successfully!','green')
+        navigate('/user/usercart');
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 401) { // Unauthorized error
+        alert("Session expired. Please log in again.");
+        // Redirect to login page or refresh token logic
+        navigate('/login');
+      } else {
+        console.error("Error adding item to cart:", error);
+        // setMessage("Failed to add item to cart.");
+        triggerNotification('Failed to add item to cart.','red')
+      }
     }
 
     // Add item to cart logic here
-    console.log(`Item added to cart: ${item.foodName}`);
+    // console.log(`Item added to cart: ${item.foodName}`);
   };
 
   return (
@@ -297,7 +336,7 @@ function UserChefProfile() {
                 )}
                 <button
                   className="addtocart"
-                  onClick={() => handleAddToCart(item)}
+                  onClick={() => handleAddToCart(item._id)}
                 >
                   Add to Cart
                 </button>

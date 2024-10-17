@@ -79,10 +79,10 @@ export default function Design() {
 
   return (
     <>
-      <div className="w-full min-h-screen flex-col bg-stone-100 sm:w-full xl:flex-row">
+      <div className="w-full min-h-screen flex-col bg-white sm:w-full xl:flex-row">
         <div className="flex flex-wrap min-h-screen items-center">
           {/* First section with text and image */}
-          <div className="bg-stone-100 m-0 p-0 w-full sm:w-1/2 flex flex-col justify-center sm:justify-start items-center sm:items-start">
+          <div className="bg-white m-0 p-0 w-full sm:w-1/2 flex flex-col justify-center sm:justify-start items-center sm:items-start">
             <div className="sm:ml-20 text-center sm:text-left">
               <img
                 className="w-auto h-auto -ml-36 sm:w-auto sm:-ml-20 sm:-mt-56 relative"
@@ -98,12 +98,12 @@ export default function Design() {
                   {displayedText}
                 </h1>
               </div>
-              <div className="mt-6 sm:mt-24 ml-0 sm:ml-28 border-2 border-green-800 bg-white p-2 sm:p-4 shadow-[5px_5px_rgba(2,104,0,0.8)] lg:shadow-[5px_5px_rgba(2,104,0,0.8)]">
+              <div className="mt-6 sm:mt-24 sm:rounded-lg ml-0 sm:ml-28 border-2 border-green-800 bg-white p-2 sm:p-4 shadow-[5px_5px_rgba(2,104,0,0.8)] lg:shadow-[5px_5px_rgba(2,104,0,0.8)]">
                 <button className="text-xs sm:text-sm md:text-base lg:text-lg 2xl:text-xl" onClick={handleStartOrderClick}>
                   Order Now
                 </button>
               </div>
-              <div className="mt-4 ml-0 sm:ml-28 border-2 border-green-800 bg-white p-2 sm:p-4 sm:mt-24 md:mt-36 lg:mt-48 shadow-[5px_5px_rgba(2,104,0,0.8)] lg:shadow-[5px_5px_rgba(2,104,0,0.8)]">
+              <div className="mt-4 ml-0 sm:ml-28 sm:rounded-lg border-2 border-green-800 bg-white p-2 sm:p-4 sm:mt-24 md:mt-36 lg:mt-48 shadow-[5px_5px_rgba(2,104,0,0.8)] lg:shadow-[5px_5px_rgba(2,104,0,0.8)]">
                 <button className="text-xs sm:text-sm md:text-base lg:text-lg 2xl:text-xl" onClick={handleContactUsClick}>
                   Contact Us
                 </button>

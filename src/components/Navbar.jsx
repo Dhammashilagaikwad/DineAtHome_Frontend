@@ -1,19 +1,18 @@
-
-import React, { useState, useEffect,useRef } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from "react";
+import { NavLink, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "../styles/Navbar.css";
-import '../styles/SearchPage.css'
-import { useNotification } from './NotificationContext';
+import "../styles/SearchPage.css";
+import { useNotification } from "./NotificationContext";
 
 const Navbar = () => {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isJoinUsDropdownOpen, setJoinUsDropdownOpen] = useState(false);
   // const [isLanguageDropdownOpen, setLanguageDropdownOpen] = useState(false);
-  const [isAboutUsDropdownOpen,setAboutUSDropdownOpen]=useState(false);
+  const [isAboutUsDropdownOpen, setAboutUSDropdownOpen] = useState(false);
   // const [selectedLanguage, setSelectedLanguage] = useState("en");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
@@ -30,7 +29,7 @@ const Navbar = () => {
   const searchRef = useRef(null);
   const joinUsRef = useRef(null);
   // const languageRef = useRef(null);
-  const aboutusRef=useRef(null);
+  const aboutusRef = useRef(null);
   const panelRef = useRef(null);
 
   const toggleJoinUsDropdown = () => {
@@ -39,9 +38,9 @@ const Navbar = () => {
   // const toggleLanguageDropdown = () => {
   //   setLanguageDropdownOpen(!isLanguageDropdownOpen);
   // };
-  const toggleAboutUsDropdown = () =>{
+  const toggleAboutUsDropdown = () => {
     setAboutUSDropdownOpen(!isAboutUsDropdownOpen);
-  }
+  };
 
   const handleScroll = () => {
     if (window.scrollY > 45) {
@@ -52,22 +51,22 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   const handleSearchIconClick = () => {
     setIsSearchOpen(!isSearchOpen);
-    setIsOpen(false); 
+    setIsOpen(false);
   };
 
   const handleInputChange = (event) => {
     const value = event.target.value;
     setQuery(value);
 
-  const searchResults = [
+    const searchResults = [
       "Apple",
       "Banana",
       "Orange",
@@ -77,7 +76,6 @@ const Navbar = () => {
     setItems(searchResults);
   };
 
-  
   const handleClickOutside = (event) => {
     if (joinUsRef.current && !joinUsRef.current.contains(event.target)) {
       setJoinUsDropdownOpen(false);
@@ -91,7 +89,7 @@ const Navbar = () => {
     if (panelRef.current && !panelRef.current.contains(event.target)) {
       setIsPanelVisible(false);
     }
-    if(aboutusRef.current && !aboutusRef.current.contains(event.target)){
+    if (aboutusRef.current && !aboutusRef.current.contains(event.target)) {
       setAboutUSDropdownOpen(false);
     }
     // if (!document.querySelector('.nav-links').contains(event.target)) {
@@ -107,17 +105,58 @@ const Navbar = () => {
     };
   }, []);
 
-const [selectedCity, setSelectedCity] = useState("Mumbai");
+  const [selectedCity, setSelectedCity] = useState("Mumbai");
   const [showCityList, setShowCityList] = useState(false);
-  
-  const cities = [
-    "Colaba","Bandra","Andheri","Juhu","Churchgate","Dadar","Kurla","Goregaon","Malad",
-    "Powai","Lower Parel","Vashi","Borivali","Khar","Santacruz","Marine Drive","Versova",
-    "Matunga","Mahim","Worli","Sion","Parel","Ghatkopar","Mulund","Kandivali","Dahisar",
-    "Bhayandar","Jogeshwari","Oshiwara","Saki Naka","Mahalaxmi","Chor Bazaar","Malabar Hill",
-    "Wadala","Marine Drive","Ballard Estate","Kala Ghoda","Fort","Crawford Market","Byculla",
-    "Mazgaon","Bhandup","Charni Road","Grant Road","Mumbai Central","Elphinstone Road","Vile Parle",
-];
+
+  // const cities = [
+  //   "Colaba",
+  //   "Bandra",
+  //   "Andheri",
+  //   "Juhu",
+  //   "Churchgate",
+  //   "Dadar",
+  //   "Kurla",
+  //   "Goregaon",
+  //   "Malad",
+  //   "Powai",
+  //   "Lower Parel",
+  //   "Vashi",
+  //   "Borivali",
+  //   "Khar",
+  //   "Santacruz",
+  //   "Marine Drive",
+  //   "Versova",
+  //   "Matunga",
+  //   "Mahim",
+  //   "Worli",
+  //   "Sion",
+  //   "Parel",
+  //   "Ghatkopar",
+  //   "Mulund",
+  //   "Kandivali",
+  //   "Dahisar",
+  //   "Bhayandar",
+  //   "Jogeshwari",
+  //   "Oshiwara",
+  //   "Saki Naka",
+  //   "Mahalaxmi",
+  //   "Chor Bazaar",
+  //   "Malabar Hill",
+  //   "Wadala",
+  //   "Marine Drive",
+  //   "Ballard Estate",
+  //   "Kala Ghoda",
+  //   "Fort",
+  //   "Crawford Market",
+  //   "Byculla",
+  //   "Mazgaon",
+  //   "Bhandup",
+  //   "Charni Road",
+  //   "Grant Road",
+  //   "Mumbai Central",
+  //   "Elphinstone Road",
+  //   "Vile Parle",
+  // ];
   const handleCityChange = (city) => {
     setSelectedCity(city);
     setShowCityList(false); // Close the dropdown after selection
@@ -127,18 +166,20 @@ const [selectedCity, setSelectedCity] = useState("Mumbai");
     setShowCityList(!showCityList); // Toggle the city list display
   };
 
-  const Cart=()=>{
+  const Cart = () => {
     if (!isLoggedIn) {
       // alert("Please log in to add items to your cart.");
-      triggerNotification('Please log in to open your cart.','red')
+      triggerNotification("Please log in to open your cart.", "red");
       return;
     }
-  }
+  };
 
   return (
-    <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
+    <nav className={`navbar ${isScrolled ? "scrolled" : ""}`}>
       <div className="logo">
-        <h3>DineAtHome</h3>
+        <Link to="/">
+          <h3>DineAtHome</h3>
+        </Link>
         {/* <div className="mumbaiLocation">
         <i
           className="fa-solid fa-location-dot minilocation"
@@ -148,56 +189,67 @@ const [selectedCity, setSelectedCity] = useState("Mumbai");
         <p id="Mumbai" onClick={toggleCityList}>{selectedCity}</p>
         <i class="fa-regular fa-square-caret-down mumbaiNearminilocation"  onClick={toggleCityList}></i>
       </div> */}
-        </div>
+      </div>
 
-      <div className={`nav-links ${isOpen ? "open" : ""}`}>
+      <div className={`nav-links ${isOpen ? "open" : ""}`} >
         <li>
-          <NavLink to="/" exact activeClassName="active" onClick={toggleMenu}>Home</NavLink>
+          <NavLink to="/" exact  onClick={toggleMenu}>
+            Home
+          </NavLink>
         </li>
-        <li id="navs"
+        <li
+          id="navs"
           onClick={(e) => {
             e.stopPropagation(); // Prevents event from bubbling to the parent toggleMenu
             toggleAboutUsDropdown();
           }}
-          ref={aboutusRef}>
-          {/* <NavLink to="/faqs" activeClassName="active" onClick={toggleMenu}>FQAs</NavLink> */}
-          <div className={`aboutdropdown ${isAboutUsDropdownOpen ? "show" : ""}`}>
-            <NavLink to="#" onClick={(e) => e.preventDefault()}>
+          ref={aboutusRef}
+        >
+          <div
+            className={`aboutdropdown ${isAboutUsDropdownOpen ? "show" : ""}`}
+          >
+            <NavLink to="#" onClick={(e) => e.preventDefault()} >
               About Us
             </NavLink>{" "}
             {/* Prevents link default action */}
             <div className="aboutdropdown-options">
-              <NavLink to="/ourinfo" onClick={toggleMenu}>
+              <NavLink to="/ourinfo" onClick={toggleMenu} >
                 Behind the Kitchen
               </NavLink>
-              <NavLink to="/ourchefsinfo" onClick={toggleMenu}>
+              <NavLink to="/ourchefsinfo" onClick={toggleMenu} >
                 Meet The Chefs
               </NavLink>
             </div>
           </div>
         </li>
         <li>
-          <NavLink to="/shop" activeClassName="active" onClick={toggleMenu}>Shop</NavLink>
+          <NavLink to="/shop" activeClassName="active" onClick={toggleMenu}>
+            Shop
+          </NavLink>
         </li>
         <li>
-          <NavLink to="/faqs" activeClassName="active" onClick={toggleMenu}>Faqs</NavLink>
+          <NavLink to="/faqs" activeClassName="active" onClick={toggleMenu}>
+            Faqs
+          </NavLink>
         </li>
-        <li id="navs"
+        <li
+          id="navs"
           onClick={(e) => {
             e.stopPropagation(); // Prevents event from bubbling to the parent toggleMenu
             toggleJoinUsDropdown();
           }}
-          ref={joinUsRef}>
-            <div className={`dropdown ${isJoinUsDropdownOpen ? "show" : ""}`}>
-            <NavLink to="#" onClick={(e) => e.preventDefault()}>
+          ref={joinUsRef}
+        >
+          <div className={`dropdown ${isJoinUsDropdownOpen ? "show" : ""}`}>
+            <NavLink to="#" onClick={(e) => e.preventDefault()} >
               Join Us
             </NavLink>{" "}
             {/* Prevents link default action */}
             <div className="dropdown-options">
-              <NavLink id="joinus" to="/home" onClick={toggleMenu}>
+              <NavLink id="joinus" to="/home" onClick={toggleMenu} >
                 HomeChef
               </NavLink>
-              <NavLink id="joinus" to="/delivery" onClick={toggleMenu}>
+              <NavLink id="joinus" to="/delivery" onClick={toggleMenu} >
                 Delivery Executive
               </NavLink>
             </div>
@@ -207,21 +259,25 @@ const [selectedCity, setSelectedCity] = useState("Mumbai");
       </div>
 
       <div className="profile">
-          {/* <li>
+        {/* <li>
             <NavLink onClick={handleSearchIconClick} id="navs-icons">
               <i className="fa-solid fa-magnifying-glass"></i>
             </NavLink>
           </li> */}
-          {/* <li>
+        {/* <li>
             <NavLink id="navs-icons" onClick={Cart}>
               <i className="fa-solid fa-cart-shopping"></i>
             </NavLink>
           </li> */}
         <li>
-          <button id='navs-icons' onClick={() => navigate('/login')}>Log in</button>
+          <button id="navs-icons" onClick={() => navigate("/login")}>
+            Log in
+          </button>
         </li>
         <li>
-          <button id='navs-icons' onClick={() => navigate('/signup')}>Sign up</button>
+          <button id="navs-icons" onClick={() => navigate("/signup")}>
+            Sign up
+          </button>
         </li>
       </div>
 
@@ -229,23 +285,23 @@ const [selectedCity, setSelectedCity] = useState("Mumbai");
         <i className={`fas ${isOpen ? "fa-times" : "fa-bars"}`}></i>
       </div>
       <div
-          ref={searchRef}
-          className={`search-slider ${isSearchOpen ? "open" : ""}`}
-        >
-          <input
-            type="text"
-            value={query}
-            onChange={handleInputChange}
-            placeholder="Search for items..."
-          />
-          <div className="search-results">
-            {items.map((item, index) => (
-              <div key={index} className="search-item">
-                {item}
-              </div>
-            ))}
-          </div>
+        ref={searchRef}
+        className={`search-slider ${isSearchOpen ? "open" : ""}`}
+      >
+        <input
+          type="text"
+          value={query}
+          onChange={handleInputChange}
+          placeholder="Search for items..."
+        />
+        <div className="search-results">
+          {items.map((item, index) => (
+            <div key={index} className="search-item">
+              {item}
+            </div>
+          ))}
         </div>
+      </div>
     </nav>
   );
 };

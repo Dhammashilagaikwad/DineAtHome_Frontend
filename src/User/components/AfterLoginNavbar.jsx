@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link,NavLink } from "react-router-dom";
 import "../styles/AfterLoginNavbar.css";
 import "../styles/SearchPage.css";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +7,6 @@ import axiosInstance from "../../utils/axiosService";
 import { useNotification } from "../../components/NotificationContext";
 
 const AfterLoginNavbar = () => {
-
   // const navigate=useNavigate();
 
   // const [isJoinUsDropdownOpen, setJoinUsDropdownOpen] = useState(false);
@@ -19,10 +18,12 @@ const AfterLoginNavbar = () => {
   const [cartItems, setCartItems] = useState([]);
   const { triggerNotification } = useNotification();
 
-  const [isUserDropdownOpen,setUserDropdownOpen]=useState(false);
-//   const [isPanelVisible, setIsPanelVisible] = useState(false);
-//   const [isLoginForm, setIsLoginForm] = useState(true);
+  const [isUserDropdownOpen, setUserDropdownOpen] = useState(false);
+  //   const [isPanelVisible, setIsPanelVisible] = useState(false);
+  //   const [isLoginForm, setIsLoginForm] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
+  const [isAboutUsDropdownOpen, setAboutUSDropdownOpen] = useState(false);
+
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -30,11 +31,13 @@ const AfterLoginNavbar = () => {
 
   const searchRef = useRef(null);
   // const languageRef = useRef(null);
-  const userRef=useRef(null);
+  const userRef = useRef(null);
+  const aboutusRef = useRef(null);
 
-  const toggleUserDropdown=()=>{
+
+  const toggleUserDropdown = () => {
     setUserDropdownOpen(!isUserDropdownOpen);
-  }
+  };
   // const toggleLanguageDropdown = () => {
   //   setLanguageDropdownOpen(!isLanguageDropdownOpen);
   // };
@@ -46,6 +49,9 @@ const AfterLoginNavbar = () => {
 
   const handleSearchIconClick = () => {
     setIsSearchOpen(!isSearchOpen);
+  };
+  const toggleAboutUsDropdown = () => {
+    setAboutUSDropdownOpen(!isAboutUsDropdownOpen);
   };
 
   const handleInputChange = (event) => {
@@ -62,7 +68,6 @@ const AfterLoginNavbar = () => {
     setItems(searchResults);
   };
 
-
   const handleClickOutside = (event) => {
     if (searchRef.current && !searchRef.current.contains(event.target)) {
       setIsSearchOpen(false);
@@ -71,8 +76,11 @@ const AfterLoginNavbar = () => {
     //   setLanguageDropdownOpen(false);
     // }
     if (userRef.current && !userRef.current.contains(event.target)) {
-        setUserDropdownOpen(false);
-      }
+      setUserDropdownOpen(false);
+    }
+    if (aboutusRef.current && !aboutusRef.current.contains(event.target)) {
+      setAboutUSDropdownOpen(false);
+    }
   };
 
   useEffect(() => {
@@ -83,7 +91,7 @@ const AfterLoginNavbar = () => {
     };
   }, []);
 
-const navigate = useNavigate();
+  const navigate = useNavigate();
   const handleLogout = async () => {
     try {
       // Make a request to the backend to clear the token
@@ -92,53 +100,75 @@ const navigate = useNavigate();
       });
 
       if (response.status === 200) {
-        
         localStorage.removeItem("token"); // Remove token
         localStorage.removeItem("username"); // Remove username (adjust the key if needed)
         // alert("Logged out successfully");
-        triggerNotification('Logged out successfully','green')
+        triggerNotification("Logged out successfully", "green");
         // Redirect to the homepage or login page after successful logout
         navigate("/");
       }
     } catch (error) {
       console.error("Logout failed:", error);
       // alert("Logout failed. Please try again.");
-      triggerNotification('Logout failed. Please try again.','red')
+      triggerNotification("Logout failed. Please try again.", "red");
     }
   };
-
 
   return (
     <nav className="navbar2">
       <div className="userlogo">
-        <h3>DineAtHome</h3>
+        <NavLink to="/user/afterloginpage">
+          <h3>DineAtHome</h3>
+        </NavLink>{" "}
       </div>
 
       <div className={`nav-links1 ${isOpen ? "open" : ""}`}>
         <li>
-          <Link to="/user/afterloginpage" onClick={toggleMenu}>
+          <NavLink to="/user/afterloginpage" onClick={toggleMenu}>
             Home
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to="/user/userourinfo" onClick={toggleMenu}>
-            Our Info
-          </Link>
+        <li
+          id="navs"
+          onClick={(e) => {
+            e.stopPropagation(); // Prevents event from bubbling to the parent toggleMenu
+            toggleAboutUsDropdown();
+          }}
+          ref={aboutusRef}
+        >
+          <div
+            className={`user-aboutdropdown ${isAboutUsDropdownOpen ? "show" : ""}`}
+          >
+            <NavLink to="#" onClick={(e) => e.preventDefault()} >
+              About Us
+            </NavLink>{" "}
+            {/* Prevents link default action */}
+            <div className="user-aboutdropdown-options">
+              <NavLink to="/user/userourinfo" onClick={toggleMenu} >
+                Behind the Kitchen
+              </NavLink>
+              <NavLink to="/user/userchefinfo" onClick={toggleMenu} >
+                Meet The Chefs
+              </NavLink>
+            </div>
+          </div>
+        </li>
         </li>
         <li>
-          <Link to="/user/usershop" onClick={toggleMenu}>
+          <NavLink to="/user/usershop" onClick={toggleMenu}>
             Shop
-          </Link>
+          </NavLink>
         </li>
-        <li>
-          <Link to="/user/userfaqs" onClick={toggleMenu}>
+        {/* <li>
+          <NavLink to="/user/userfaqs" onClick={toggleMenu}>
             FAQs
-          </Link>
-        </li>
+          </NavLink>
+        </li> */}
         <li>
-          <Link to="/user/userchefsnearyou" onClick={toggleMenu}>
+          <NavLink to="/user/userchefsnearyou" onClick={toggleMenu}>
             Pre-Order
-          </Link>
+          </NavLink>
         </li>
 
         {/* <li
@@ -164,7 +194,7 @@ const navigate = useNavigate();
           </div>
         </li> */}
 
-      <div className="icons1">
+        <div className="icons1">
           {/* <li ref={languageRef}>
             <div
               className={`language-dropdown ${
@@ -190,21 +220,24 @@ const navigate = useNavigate();
             </div>
           </li> */}
 
-          <li onClick={toggleUserDropdown}
-          ref={userRef}>
-            <Link
+          <li onClick={toggleUserDropdown} ref={userRef}>
+            <NavLink
               id="navs-icons"
-              className={`user-icon ${isUserDropdownOpen ? "show":""}`}>
-              <i className="fa-solid fa-user" style={{color:"orange",paddingTop:"0"}}></i>
+              className={`user-icon ${isUserDropdownOpen ? "show" : ""}`}
+            >
+              <i
+                className="fa-solid fa-user"
+                style={{ color: "blue", paddingTop: "0" }}
+              ></i>
               <div className="userdropdown-options">
-              <Link id="editprofile" to="/user/editprofile">
-                Profile
-              </Link>
-              <Link id="logout" to="/" onClick={handleLogout}>
-                Logout
-              </Link>
-            </div>
-            </Link>
+                <NavLink id="editprofile" to="/user/editprofile">
+                  Profile
+                </NavLink>
+                <NavLink id="logout" to="/" onClick={handleLogout}>
+                  Logout
+                </NavLink>
+              </div>
+            </NavLink>
           </li>
 
           {/* <li>
@@ -213,47 +246,47 @@ const navigate = useNavigate();
             </Link>
           </li> */}
           <li>
-            <Link id="navs-icons" to="/user/usercart">
-              <i className="fa-solid fa-cart-shopping"></i>
+            <NavLink id="navs-icons" to="/user/usercart">
+              <i style={{color:"black"}} className="fa-solid fa-cart-shopping"></i>
               {/* <span>Cart Items: {cartItems.length}</span> Example use of cartItems */}
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link id="navs-icons" to='/user/afterloginhowtoorder' onClick={toggleMenu}>
-            <button className="howorder">How To Order</button>
-            </Link>
-        </li>
+            <NavLink
+              id="navs-icons"
+              to="/user/afterloginhowtoorder"
+              onClick={toggleMenu}
+            >
+              <button className="howorder" style={{color:"black"}}>How To Order</button>
+            </NavLink>
+          </li>
         </div>
-        </div>
-
+      </div>
 
       <div className="menu-toggle" onClick={toggleMenu}>
         <i className={`fas ${isOpen ? "fa-times" : "fa-bars"}`}></i>
       </div>
 
       <div
-          ref={searchRef}
-          className={`search-slider ${isSearchOpen ? "open" : ""}`}
-        >
-          <input
-            type="text"
-            value={query}
-            onChange={handleInputChange}
-            placeholder="Search for items..."
-          />
-          <div className="search-results">
-            {items.map((item, index) => (
-              <div key={index} className="search-item">
-                {item}
-              </div>
-            ))}
-          </div>
+        ref={searchRef}
+        className={`search-slider ${isSearchOpen ? "open" : ""}`}
+      >
+        <input
+          type="text"
+          value={query}
+          onChange={handleInputChange}
+          placeholder="Search for items..."
+        />
+        <div className="search-results">
+          {items.map((item, index) => (
+            <div key={index} className="search-item">
+              {item}
+            </div>
+          ))}
         </div>
+      </div>
     </nav>
   );
 };
 
-
-
 export default AfterLoginNavbar;
-
