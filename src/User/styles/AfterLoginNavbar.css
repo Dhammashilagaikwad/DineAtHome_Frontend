@@ -31,7 +31,7 @@
   font-size: 38px;
   font-weight: bolder;
   /* color: #218838; */
-  color: orange;
+  color: green;
   font-family: 'Dancing Script';
 }
 /* 
@@ -51,12 +51,14 @@
   list-style: none;
   transition: all 0.3s ease;
   padding: 0;
-  justify-content: center;
-  align-items: center;
+  /* justify-content: center;
+  align-items: center; */
+  justify-content: space-between;
 }
 
 .nav-links1 li {
   margin: 0 30px;
+  justify-content: space-between;
 }
 
 .nav-links1 {
@@ -122,13 +124,13 @@
 
 #navs1 #joinus {
   /* color: black; */
-  padding: 5px;
+  /* padding: 5px; */
 }
 
 .icons1 {
   display: flex;
   justify-content: space-around;
-  padding-left: 50px;
+  /* padding-left: 100px; */
   list-style: none;
   font-size: 10px;
 }
@@ -311,6 +313,8 @@
   background-color: #218838;
 }
    */
+
+
 
 /* Mobile Styles */
 @media (max-width: 850px) {

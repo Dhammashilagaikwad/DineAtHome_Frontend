@@ -1,3 +1,10 @@
+.date-picker-custom {
+  border: 1px solid #000; /* Black 1px border */
+  padding: 8px; /* Optional: Add padding for better spacing */
+  border-radius: 4px; /* Optional: Rounding the corners */
+  width: 100%; /* Optional: Full width */
+  box-sizing: border-box; /* Ensure proper padding and border sizing */
+}
 
 .customized-form-overlay {
   position: fixed;

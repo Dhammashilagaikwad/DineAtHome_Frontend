@@ -4,6 +4,7 @@ import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import Navbar from '../components/Navbar'
 import axiosInstance from "../../../utils/axiosService";
+import { useNotification } from "../../../components/NotificationContext";
 
 const ProfileForm = () => {
   const [chefId, setChefId] = useState(null);
@@ -26,6 +27,8 @@ const [profilePhotoFile, setProfilePhotoFile] = useState(null);
   const [displayAddress, setDisplayAddress] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { triggerNotification } = useNotification();
+
 
   const baseURL = process.env.NODE_ENV === "development" 
   ? 'http://localhost:4000' // Localhost URL
@@ -133,10 +136,12 @@ const [profilePhotoFile, setProfilePhotoFile] = useState(null);
         setNewSpeciality("");
       } catch (error) {
         console.error("Error adding speciality:", error);
-        alert("Failed to add speciality.");
+        // alert("Failed to add speciality.");
+        triggerNotification('Failed to add speciality.','red')
       }
     } else if (specialities.includes(newSpeciality)) {
-      alert("Speciality already added!");
+      // alert("Speciality already added!");
+      triggerNotification('Speciality already added!','green')
     }
   };
 
@@ -172,13 +177,15 @@ const [profilePhotoFile, setProfilePhotoFile] = useState(null);
             },
         });
         console.log(response.data); // Log the response data after the request
-        alert("Profile updated successfully!");
+        // alert("Profile updated successfully!");
+        triggerNotification('Profile updated successfully!','green')
     } catch (error) {
         console.error("Error updating profile:", error);
-        alert(
-            "Error updating profile: " +
-            (error.response.data.message || "An error occurred")
-        );
+        // alert(
+        //     "Error updating profile: " +
+        //     (error.response.data.message || "An error occurred")
+        // );
+        triggerNotification('Error updating profile' ,'red')
     }
 };
 
@@ -201,7 +208,8 @@ const [profilePhotoFile, setProfilePhotoFile] = useState(null);
       toggleEditAddress();
     } catch (error) {
       console.error("Error updating address:", error);
-      alert("Failed to update address.");
+      // alert("Failed to update address.");
+      triggerNotification('Failed to update address.','red')
     }
   };
 

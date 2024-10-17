@@ -8,22 +8,8 @@ const CardsView = () => {
       id: 123,
       userName: "Rushikesh Dhanawade",
       userAdd: "Navi Mumbai",
-      amount: 143,
+      amount: 183,
       buttonStatus: "View",
-    },
-    {
-      id: 12356,
-      userName: "John doe",
-      userAdd: "Thane",
-      amount: 453,
-      buttonStatus: "Ready",
-    },
-    {
-      id: 12453,
-      userName: "Shubham veer",
-      userAdd: "Navi Mumbai",
-      amount: 483,
-      buttonStatus: "Ready",
     },
   ];
 

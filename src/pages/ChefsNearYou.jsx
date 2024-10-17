@@ -68,8 +68,8 @@ function ChefsNearYou() {
                 cuisine={cuisines} // Set the cuisine directly
                 specialities={specialities} // Set the specialities directly
                 isOpen={chef.is_active}
-                hours="Operating Hours" // Customize if you have specific hours
-                location={location} // Set the location dynamically
+                // hours="Operating Hours" // Customize if you have specific hours
+                // location={location} // Set the location dynamically
                 onClick={() => handleCardClick(chef)}
               />
             );
@@ -111,7 +111,7 @@ const RestaurantCard = ({
           <span style={styles.status}>{isOpen ? "OPEN" : "CLOSED"}</span>
           <span style={styles.hours}>{hours}</span>
         </div> */}
-        <p style={styles.location}>{location}</p> {/* Display the dynamic location */}
+        {/* <p style={styles.location}>{location}</p> Display the dynamic location */}
       </div>
     </div>
   );
