@@ -116,9 +116,12 @@
 
 .left-team-content {
     width: 55%;
+    padding: 0 0 0 1rem
+    ;
 }
 
 .left-team-content img {
+    
     width: 100%;
     height: 100%;
     border-radius: 50px;
@@ -126,10 +129,12 @@
 }
 
 .right-team-content {
+    padding: 2rem 0 0 0;
     width: 40%;
     font-size: 17px;
     padding-left: 30px;
     font-family: 'Nunito';
+    text-align: justify;
 }
 
 .right-team-content span {

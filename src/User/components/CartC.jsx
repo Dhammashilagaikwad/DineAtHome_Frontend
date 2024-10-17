@@ -56,12 +56,12 @@ const CartC = ({ foodName, foodName2, rate, imageSrc, quantity, itemId, onDelete
               <h3>{foodName}</h3>
               <p>{foodName2}</p>
               <p>Rate: {rate}</p>
-              <p>Quantity: {itemQuantity}</p>
+              <p> {itemQuantity}</p>
             </div>
           </div>
           <div className="cart-buttons">
-            <button className="decrease-button" onClick={handleDecrease}>-</button>
-            <button className="increase-button" onClick={handleIncrease}>+</button>
+            {/* <button className="decrease-button" onClick={handleDecrease}>-</button> */}
+            {/* <button className="increase-button" onClick={handleIncrease}>+</button> */}
             <button className="delete-button" onClick={handleDelete}>Delete</button>
           </div>
         </div>
