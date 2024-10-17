@@ -98,7 +98,7 @@ function OurInfo() {
                 collaborating with the Co-Leader to manage and optimize backend
                 operations, ensuring a stable and scalable platform.
                 <br/><br/> <span>
-                  <a href="https://www.linkedin.com/in/satyam-gupta-webd/" target="_blank" rel="noopener noreferrer">Shivam Gupta</a> 
+                  <a href="https://www.linkedin.com/in/satyam-gupta-webd/" target="_blank" rel="noopener noreferrer">Satyam Gupta</a> 
                 </span> – UI/UX Developer, responsible for managing the platform’s
                 interface design and functionality to create an intuitive and
                 user-friendly experience.

@@ -4,10 +4,12 @@ import axiosInstance from "../../../utils/axiosService.js";
 import Navbar from "./Navbar";
 import "../styles/NotificationP.css";
 import "../styles/PreNotification.css";
+import { useNotification } from "../../../components/NotificationContext.js";
 // import '../../../HomeChef/Styles/NotificationR.css'
 
 export default function ChefPreOrders() {
   const [preOrders, setPreOrders] = useState([]);
+  const { triggerNotification } = useNotification();
   const [price, setPrice] = useState({}); // Store price for each pre-order
 
   useEffect(() => {
@@ -62,7 +64,8 @@ export default function ChefPreOrders() {
         }
       );
 
-      alert("Pre-order accepted and price updated!");
+      // alert("Pre-order accepted and price updated!");
+      triggerNotification('Pre-order accepted and price updated!','green')
 
       // Update the state
       const updatedPreOrders = preOrders.map((preOrder) =>
@@ -73,9 +76,11 @@ export default function ChefPreOrders() {
       setPreOrders(updatedPreOrders);
     } catch (error) {
       if (error.response?.status === 403) {
-        alert("Forbidden: You are not authorized to update this pre-order.");
+        // alert("Forbidden: You are not authorized to update this pre-order.");
+        triggerNotification('Forbidden: You are not authorized to update this pre-order.','red')
       } else if (error.response?.status === 401) {
-        alert("Unauthorized: Please log in again.");
+        // alert("Unauthorized: Please log in again.");
+        triggerNotification('Unauthorized: Please log in again.','red')
       } else {
         alert("An error occurred: " + error.message);
       }
@@ -117,29 +122,28 @@ export default function ChefPreOrders() {
 
                 {preOrder.status === "pending" && (
                   <div className="PreOrderInModule-AcceptSetPrice">
-                    <input
+                  <input
                       className="PreOrderInModule-Input"
                       type="number"
                       placeholder="Set price"
                       value={price[preOrder._id] || ""}
-                      onChange={(e) =>
-                        handlePriceChange(preOrder._id, e.target.value)
-                      }
-                    />
-
-                    <div className="PreOrderInModule-AcceptDeclineBtn">
+                      onChange={(e) => handlePriceChange(preOrder._id, e.target.value)}
+                  />
+              
+                  <div className="PreOrderInModule-AcceptDeclineBtn">
                       <button
-                        className="PreOrderInModule-AcceptSetPriceBtn"
-                        onClick={() => handleAccept(preOrder._id)}
+                          className="PreOrderInModule-AcceptSetPriceBtn"
+                          onClick={() => handleAccept(preOrder._id)}
                       >
-                        Accept & Set Price
+                          Accept & Set Price
                       </button>
-
+              
                       <button className="PreOrderInModule-DeclineNotSetPriceBtn">
-                        Decline
+                          Decline
                       </button>
-                    </div>
                   </div>
+              </div>
+              
                 )}
 
                 {preOrder.status === "accepted" && (

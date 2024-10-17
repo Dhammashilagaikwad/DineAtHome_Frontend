@@ -257,7 +257,8 @@ return (
     imageSrc={itemData.foodPhoto ? `${baseURL}${itemData.foodPhoto}` : ''} // Ensure food photo is displayed
     itemId={item._id} // Pass the itemId
     onDelete={(deletedItemId) => {
-      setCartItems(prevItems => prevItems.filter(item => item._id !== deletedItemId)); // Remove item from state
+      setCartItems(prevItems => prevItems.filter(item => item._id !== deletedItemId));
+      window.location.reload();
     }}
       />
 );
@@ -281,7 +282,8 @@ return (
                 imageSrc={itemData.image? `${baseURL}${itemData.image}` : "defaultImage.jpg"} // Provide a fallback image source
                 itemId={item._id} // Pass the itemId
                 onDelete={(deletedItemId) => {
-                  setShopCartItems(prevItems => prevItems.filter(item => item._id !== deletedItemId)); // Remove item from state
+                  setShopCartItems(prevItems => prevItems.filter(item => item._id !== deletedItemId)); 
+                  window.location.reload();
                 }}
               
               />
@@ -340,43 +342,6 @@ return (
       </div>
     </div>
     <hr />
-{/* 
-    <div className="chargesContainermain">
-      <div className="chargesContainer">
-        <div className="dishChargesBox">
-          <p>Dish Charges</p>
-          <p>₹ {dishCharges.toFixed(2)}</p>
-        </div>
-
-        <div className="deliveryAndPackagingChargesBox">
-          <p>Delivery & Packaging Charges</p>
-          <p>₹ {deliveryCharges}</p>
-        </div>
-
-        <div className="tipTORiderBox">
-          <p>Tip to Rider</p>
-          <div className='incAndDesTip'>
-            <button className='tipIncBtn' onClick={increaseTip} disabled={tip >= 50}>
-              +
-            </button>
-            <p>₹ {tip}</p>
-            <button className='tipDecBtn' onClick={decreaseTip} disabled={tip <= 0}>
-              -
-            </button>
-          </div>
-        </div>
-
-        <div className="taxChargesBox">
-          <p>Tax (10%)</p>
-          <p>₹ {taxCharges.toFixed(2)}</p>
-        </div>
-      </div>
-    </div>
-
-    <div className="totalAmountForCart">
-<h3>Total Amount: ₹ {totalAmount.toFixed(2)}</h3>
-</div> */}
-
 
 <div className="chargesDisplay">
        <div className="dishChargesBox">
