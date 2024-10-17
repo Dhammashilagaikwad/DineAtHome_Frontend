@@ -1,5 +1,6 @@
 .PreOrderInModule-Height{
-  height: auto ;
+  /* height: auto ; */
+  min-height: 100vh;
 }
 
 .PreOrderInModule-type {
