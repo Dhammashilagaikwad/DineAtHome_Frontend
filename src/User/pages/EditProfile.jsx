@@ -163,21 +163,115 @@ export default function EditProfile() {
 
   console.log(preorders);
 
+
+  const makepayment = async (order) => {
+    try {
+      // Ensure the price exists for this specific order
+      if (!order.price) {
+        alert("Price is not available for this order. Please wait for the chef's confirmation.");
+        return;
+      }
+  
+      // Fetch Razorpay API Key from your backend
+      const { data: { key } } = await axiosInstance.get('/api/payments/getkey');
+  
+      // Create a new order on your backend with the correct order ID and amount for this specific order
+      const { data: { order: createdOrder } } = await axiosInstance.post('/api/payments/create-order', {
+        amount: order.price , // Convert to paise (multiply by 100)
+        currency: 'INR',
+        orderId: order._id, // Send the specific order ID
+      });
+  
+      // Get token from localStorage
+      const token = localStorage.getItem('token');
+      
+      if (!token) {
+        alert("Token not found. Please log in again.");
+        return;
+      }
+  
+      const decodedToken = jwtDecode(token);
+      const userId = decodedToken.id; // Extract user ID from the token
+  
+      // Configure Razorpay Checkout with the details of the specific order
+      const options = {
+        key,  // Razorpay API key
+        amount: createdOrder.amount,  // Amount in paise
+        currency: createdOrder.currency,
+        name: 'DINE AT HOME',
+        description: `Payment for Order ${order._id}`,  // Describe payment for this specific order
+        order_id: createdOrder.id, // Razorpay Order ID from your backend
+        handler: async function (response) {
+          const { razorpay_payment_id, razorpay_order_id, razorpay_signature } = response;
+  
+          try {
+            // Process the payment on your backend
+            const paymentResponse = await axiosInstance.post(
+              '/api/payments/process-payment', 
+              {
+                amount: createdOrder.amount,  // Amount for this specific order
+                orderId: razorpay_order_id,
+                paymentId: razorpay_payment_id,
+                signature: razorpay_signature,
+              }, 
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`, // Include token in the headers
+                }
+              }
+            );
+  
+            if (paymentResponse.data.status) {
+              alert('Payment Successful!');
+            } else {
+              alert('Payment Failed: ' + paymentResponse.data.message);
+            }
+          } catch (paymentError) {
+            console.error('Error processing payment:', paymentError);
+            alert('Payment failed during processing.');
+          }
+        },
+        prefill: {
+          name: 'DINE AT HOME',  // Optional: prefill user details in Razorpay modal
+          email: 'dhammashila025@gmail.com',  // Replace with actual user email
+          contact: '9324486349',  // Replace with actual user contact
+        },
+        theme: {
+          color: '#3399cc',
+        },
+      };
+  
+      // Open Razorpay Checkout modal
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } catch (error) {
+      console.error('Error during checkout:', error);
+      alert('Something went wrong. Please try again.');
+    }
+  };
+  
   const renderPreorders = () => (
     <div className="orders-list">
       <h3>Preorders</h3>
       {preorders.length > 0 ? (
         preorders.map((order) => (
-          <div className="order-item" key={order._id}> {/* Use order._id instead of order.orderId */}
-            <img src={order.foodImage} alt={order.dishname} /> {/* Adjust based on your pre-order structure */}
+          <div className="order-item" key={order._id}>
+            <img src={order.foodImage} alt={order.dishname} /> 
             <div>
-            
-              <p>Order ID: {order._id}</p> {/* Use order._id */}
-              <h5>Dish Name:{order.name}</h5> {/* Display dishname */}
+              <p>Order ID: {order._id}</p>
+              <h5>Dish Name: {order.name}</h5>
               <p>Quantity: {order.quantity}</p>
-              <p>Chef Name: {order.chefId ? order.chefId.name : "Unknown"}</p> 
-              <p>Status: {order.status}</p> {/* Display order status */}
+              <p>Chef Name: {order.chefId ? order.chefId.name : "Unknown"}</p>
+              <p>Status: {order.status}</p>
               <p>Delivery Date: {new Date(order.deliveryDate).toISOString().split('T')[0]}</p>
+              {order.price ? (
+                <p>Price: {order.price}</p>
+              ) : (
+                <p>Price: Awaiting chef's confirmation</p>
+              )}
+              {/* Payment button only for the specific order */}
+              <button className="makepayment" onClick={() => makepayment(order)}>Make Payment</button>
+              <button className="cancel-preorder">Cancel</button>
             </div>
           </div>
         ))
@@ -404,6 +498,7 @@ const handleConfirmDelete = async (e) => {
     setNewAddress(""); // Clear the input field
   };
 
+  
   
 
   return (

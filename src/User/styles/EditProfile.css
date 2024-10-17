@@ -2,6 +2,20 @@
     width: 100%;
     height: auto;
 }
+.order-item{
+    padding: 5px;
+}
+.makepayment{
+    padding: 5px;
+    background-color: green;
+    color: white;
+    margin-right: 5px;
+}
+.cancel-preorder{
+    padding: 5px;
+    background-color: red;
+    color: white;
+}
 .details{
     width: 100%;
     height: 150px;
